@@ -6,6 +6,9 @@ if you want
 something that actually works, you need 
 [ruby-vips](https://github.com/jcupitt/ruby-vips).
 
+This one is based on `gobject-introspection`. Try `gir_ffi-vips` for one 
+based on `gir_ffi`.
+
 # To try it out
 
 Make sure you have vips-7.42 or later installed and that `Vips-8.0.typelib` is
