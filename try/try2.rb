@@ -94,8 +94,9 @@ module Vips
     end
 end
 
-a = Vips::Image.new
-a = nil
+10000.times do
+    Vips::Image.new
+end
 GC.start
 
 
