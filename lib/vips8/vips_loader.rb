@@ -1,17 +1,3 @@
-#!/usr/bin/ruby
-
-require 'gobject-introspection'
-
-# about as crude as you could get
-$debug = true
-#$debug = false
-
-def log str # :nodoc:
-    if $debug
-        puts str
-    end
-end
-
 # copied from ruby-gnome2/gstreamer/lib/gst.rb without much understanding
 
 module Vips
@@ -93,26 +79,3 @@ module Vips
 
     end
 end
-
-puts ""
-puts "starting up:"
-# this makes vips keep a list of all active objects whcih we can print out
-Vips::leak_set true
-
-puts ""
-puts "creating object:"
-x = Vips::Image.new
-x.print_dump
-Vips::Object::print_all
-
-puts ""
-puts "freeing object:"
-x = nil
-GC.start
-Vips::Object::print_all
-
-puts ""
-puts "shutting down:"
-GC.start
-Vips::shutdown
-GC.start
