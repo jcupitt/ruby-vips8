@@ -19,6 +19,8 @@ x = nil
 GC.start
 Vips::Object::print_all
 
+x = Vips::Image.new_from_file "/home/john/pics/k2.jpg"
+
 puts ""
 puts "shutting down:"
 GC.start
