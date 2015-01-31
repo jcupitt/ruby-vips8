@@ -12,21 +12,24 @@ def log str # :nodoc:
     end
 end
 
-module Vips
-    LOG_DOMAIN = "Vips"
-    GLib::Log.set_log_domain(LOG_DOMAIN)
+# copied from ruby-gnome2/gstreamer/lib/gst.rb without much understanding
 
+module Vips
     class << self
         def const_missing(name)
+            log "Vips::const_missing: #{name}"
+        
             init()
             if const_defined?(name)
                 const_get(name)
             else
-                super
+              super
             end
         end
 
         def method_missing(name, *args, &block)
+            log "Vips::method_missing: #{name}, #{args}, #{block}"
+
             init()
             if respond_to?(name)
                 __send__(name, *args, &block)
@@ -36,6 +39,8 @@ module Vips
         end
 
         def init(*argv)
+            log "Vips::init: #{argv}"
+
             class << self
                 remove_method(:init)
                 remove_method(:const_missing)
@@ -44,19 +49,22 @@ module Vips
 
             loader = Loader.new(self, argv)
             loader.load("Vips")
-            #require "gst/bin"
+            # require "gst/bin"
         end
-
     end
 
     class Loader < GObjectIntrospection::Loader
         def initialize(base_module, init_arguments)
+            log "Vips::Loader.initialize: #{base_module}, #{init_arguments}"
+
             super(base_module)
             @init_arguments = init_arguments
         end
 
         private
         def pre_load(repository, namespace)
+            log "Vips::Loader.pre_load: #{repository}, #{namespace}"
+
             call_init_function(repository, namespace)
             define_value_modules
         end
@@ -74,21 +82,52 @@ module Vips
 
         def define_value_modules
             @value_functions_module = Module.new
-            @value_methods_module   = Module.new
+            @value_methods_module = Module.new
             @base_module.const_set("ValueFunctions", @value_functions_module)
             @base_module.const_set("ValueMethods",   @value_methods_module)
         end
 
         def post_load(repository, namespace)
-            log "Vips::Loader.post_load: #{repository}, #{namespace}"
+            log "Vips::Loader.post_load:"
         end
 
     end
 end
 
-10000.times do
-    Vips::Image.new
-end
+puts ""
+puts "starting up:"
+# this makes vips keep a list of all active objects whcih we can print out
+Vips::leak_set true
+
+puts ""
+puts "creating object:"
+x = Vips::Image.new
+x.print_dump
+Vips::Object::print_all
+
+puts ""
+puts "freeing object:"
+x = nil
 GC.start
+Vips::Object::print_all
 
 
+puts ""
+puts "creating operation:"
+x = Vips::Operation.new "black"
+
+
+x.unref_outputs
+x = nil
+
+require 'glib2'
+
+
+
+
+
+puts ""
+puts "shutting down:"
+GC.start
+Vips::shutdown
+GC.start
