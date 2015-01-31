@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-require 'ruby-vips8'
+require 'vips8'
 
 puts ""
 puts "starting up:"
