@@ -593,12 +593,8 @@ module Vips
 
         generate_operation = lambda do |op|
             flags = op.get_flags
-            # need a bit pattern, not a symbolic name
-            flags = Vips::OperationFlags.to_native flags, 1
-            return if (flags & Vips::OperationFlags[:deprecated]) != 0
-
-            gtype = GObject::type_from_instance op
-            nickname = Vips::nickname_find gtype
+            return if (flags & :deprecated) != 0
+            nickname = Vips::nickname_find op.gtype
 
             return if no_generate.include? nickname
 
@@ -607,43 +603,43 @@ module Vips
             # separate args into various categories
  
             required_input = all_args.select do |arg|
-                (arg.flags & Vips::ArgumentFlags[:input]) != 0 and
-                (arg.flags & Vips::ArgumentFlags[:required]) != 0 
+                (arg.flags & :input) != 0 and
+                (arg.flags & :required) != 0 
             end
 
             optional_input = all_args.select do |arg|
-                (arg.flags & Vips::ArgumentFlags[:input]) != 0 and
-                (arg.flags & Vips::ArgumentFlags[:required]) == 0 
+                (arg.flags & :input) != 0 and
+                (arg.flags & :required) == 0 
             end
 
             required_output = all_args.select do |arg|
-                (arg.flags & Vips::ArgumentFlags[:output]) != 0 and
-                (arg.flags & Vips::ArgumentFlags[:required]) != 0 
+                (arg.flags & :output) != 0 and
+                (arg.flags & :required) != 0 
             end
 
             # required input args with :modify are copied and appended to 
             # output
             modified_required_input = required_input.select do |arg|
-                (arg.flags & Vips::ArgumentFlags[:modify]) != 0 
+                (arg.flags & :modify) != 0 
             end
             required_output += modified_required_input
 
             optional_output = all_args.select do |arg|
-                (arg.flags & Vips::ArgumentFlags[:output]) != 0 and
-                (arg.flags & Vips::ArgumentFlags[:required]) == 0 
+                (arg.flags & :output) != 0 and
+                (arg.flags & :required) == 0 
             end
 
             # optional input args with :modify are copied and appended to 
             # output
             modified_optional_input = optional_input.select do |arg|
-                (arg.flags & Vips::ArgumentFlags[:modify]) != 0 
+                (arg.flags & :modify) != 0 
             end
             optional_output += modified_optional_input
 
             # find the first input image, if any ... we will be a method of this
             # instance
             member_x = required_input.find do |x|
-                GObject::type_is_a(x.prop.value_type, Vips::TYPE_IMAGE)
+                x.prop.value_type.type_is_a? GLib::Type["VipsImage"]
             end
             if member_x != nil
                 required_input.delete member_x
@@ -687,15 +683,14 @@ module Vips
         end
 
         generate_class = lambda do |gtype|
-            name = GObject::type_name gtype
             # can be nil for abstract types
             # can't find a way to get to #abstract? from a gtype
-            op = Vips::Operation.new name
+            op = Vips::Operation.new gtype.name
             Vips::error_clear
 
             generate_operation.(op) if op != nil
 
-            (GObject::type_children gtype).each do |x|
+            gtype.children.each do |x|
                 generate_class.(x)
             end
         end
@@ -705,7 +700,7 @@ module Vips
         puts "#++"
         puts ""
 
-        generate_class.(TYPE_OPERATION)
+        generate_class.(GLib::Type["VipsOperation"])
     end
 
 end

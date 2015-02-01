@@ -6,19 +6,13 @@ puts ""
 puts "starting up:"
 # this makes vips keep a list of all active objects whcih we can print out
 Vips::leak_set true
+Vips::cache_set_max 0
 
-100.times do |i|
-    puts ""
-    puts "call #{i} ..."
-    Vips::call "black", 200, 200
-    #GC.start
-    Vips::Object::print_all
-end
+im = Vips::Image.new_from_file "/home/john/pics/k2.jpg", :access => :sequential
 
-puts ""
-puts "after 100 calls:"
-GC.start
-Vips::Object::print_all
+im = im.embed 100, 100, 3000, 3000, :extend => :mirror
+
+im.write_to_file "x.v"
 
 puts ""
 puts "shutting down:"

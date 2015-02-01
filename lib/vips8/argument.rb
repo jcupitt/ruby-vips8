@@ -73,6 +73,8 @@ module Vips
                 end
             end
 
+            puts "TODO: unwrap other array output, eg. profiles?"
+
             # we could try to unpack GirFFI::SizedArray with to_a, but that's 
             # not the right thing to do for blobs like profiles
 
@@ -113,7 +115,7 @@ module Vips
         end
 
         def get_value
-            Argument::unwrap(@op.get_property(@name))
+            Argument::unwrap @op.get_property(@name)
         end
 
         def description

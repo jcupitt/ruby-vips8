@@ -130,8 +130,13 @@ module Vips
         end
 
         # call
-        log "building ..."
+        log "before build ..."
+        GC.start
+        Vips::Object::print_all
         op2 = Vips::cache_operation_build op
+        log "after build ..."
+        GC.start
+        Vips::Object::print_all
 
         # cases:
         #   cache miss 
@@ -139,7 +144,7 @@ module Vips
         #       after: op count 2 (plus another ref for each output image)
         #
         #       + op is reffed, built, added to cache and returned as op2 
-        #       + gir_ffi spots that op and op2 are the same
+        #       + gobject-introspection spots that op and op2 are the same
         #       and shares the pointer
         #       + we will therefore only get a single unref on GC, we need to do
         #       another unref explicitly
@@ -162,15 +167,12 @@ module Vips
         end
 
         # are op and op2 the same underlying object? ie. we had a cache miss?
-        puts "TODO: detect cache miss"
-        #miss = op.to_ptr == op2.to_ptr
-        miss = true
+        miss = op == op2
 
-        # see above, in the case of a miss we need an explcit extra unref
+        # see above, in the case of a miss we need an explicit extra unref
         if miss
             log "extra unref on cache miss"
-            puts "TODO: what do we do here?"
-            #GObject::Lib.g_object_unref op
+            #op.unref
         end
 
         # rescan args 
@@ -223,6 +225,7 @@ module Vips
         end
 
         # unref everything now we have refs to all outputs we want
+        log "unreffing outputs ... "
         op2.unref_outputs
 
         log "success! #{name}.out = #{out}"
