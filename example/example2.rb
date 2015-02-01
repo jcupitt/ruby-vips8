@@ -7,16 +7,27 @@ puts "starting up:"
 # this makes vips keep a list of all active objects whcih we can print out
 Vips::leak_set true
 
-100.times do |i|
+# disable the operation cache
+#Vips::cache_set_max 0
+
+n = 2
+
+n.times do |i|
     puts ""
     puts "call #{i} ..."
-    Vips::call "black", 200, 200
-    #GC.start
+    out = Vips::call "black", 200, 200
+    GC.start
     Vips::Object::print_all
 end
 
 puts ""
-puts "after 100 calls:"
+puts "after #{n} calls:"
+GC.start
+Vips::Object::print_all
+
+puts ""
+puts "freeing:"
+out = nil
 GC.start
 Vips::Object::print_all
 

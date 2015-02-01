@@ -21,48 +21,18 @@ Vips::Object::print_all
 
 puts ""
 puts "creating operation:"
-x = Vips::Operation.new "black"
+op = Vips::Operation.new "black"
+op.set_property "width", 100
+op.set_property "height", 100
+op2 = Vips::cache_operation_build op
+GC.start
+Vips::Object::print_all
 
-gobject_class = x.gtype.to_class
-
-props = gobject_class.properties
-
-puts "seen props: #{props}"
-
-args = props.select do |name|
-    flags = x.get_argument_flags name
-    io = ((flags & :input) | (flags & :output)) != 0
-    dep = (flags & :deprecated) != 0
-    io & (not dep)
-end
-
-args.each do |name|
-    flags = x.get_argument_flags name
-    puts "#{name} - #{flags.inspect}"
-end
-
-class Argument # :nodoc:
-    attr_reader :op, :prop, :name, :flags, :priority, :isset
-
-    def initialize(op, name)
-        gobject_class = op.gtype.to_class
-        @op = op 
-        @name = name.tr '-', '_'
-        @prop = gobject_class.property name
-        @flags = op.get_argument_flags name
-        @priority = op.get_argument_priority @name
-        @isset = op.argument_isset @name
-    end
-end
-
-props = args.map {|name| Argument.new x, name}
-
-props.each do |prop|
-    puts "#{prop.name} - #{prop.inspect}"
-end
-
-x.unref_outputs
-x = nil
+puts ""
+puts "freeing operation:"
+op = nil
+GC.start
+Vips::Object::print_all
 
 puts ""
 puts "shutting down:"

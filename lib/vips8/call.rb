@@ -133,52 +133,13 @@ module Vips
         log "before build ..."
         GC.start
         Vips::Object::print_all
-        op2 = Vips::cache_operation_build op
-        log "after build ..."
-        GC.start
-        Vips::Object::print_all
 
-        # cases:
-        #   cache miss 
-        #       before: op count 1
-        #       after: op count 2 (plus another ref for each output image)
-        #
-        #       + op is reffed, built, added to cache and returned as op2 
-        #       + gobject-introspection spots that op and op2 are the same
-        #       and shares the pointer
-        #       + we will therefore only get a single unref on GC, we need to do
-        #       another unref explicitly
-        #
-        #   cache hit
-        #       before: op count 1
-        #       after: op count 1, op2 count 1 plus another ref for each 
-        #           output image
-        #
-        #       + no need to do anything
-        #
-        #   build error
-        #       before: op count 1
-        #       after: op count 1
-        #
-        #       + it'll be unreffed on GC, no need to do anything
+        op2 = Vips::cache_operation_lookup op
+        if op2
+            log "cache hit"
+            op = op2
 
-        if op2 == nil
-            raise Vips::Error
-        end
-
-        # are op and op2 the same underlying object? ie. we had a cache miss?
-        miss = op == op2
-
-        # see above, in the case of a miss we need an explicit extra unref
-        if miss
-            log "extra unref on cache miss"
-            #op.unref
-        end
-
-        # rescan args 
-        if not miss
-            log "rescanning args ..."
-            all_args = op2.get_args()
+            all_args = op.get_args
 
             # find optional output args
             optional_output = all_args.select do |arg|
@@ -187,7 +148,21 @@ module Vips
             end
             optional_output = Hash[
                 optional_output.map(&:name).zip(optional_output)]
+        else
+            log "cache miss ... building"
+            if not op.build
+                raise Vips::Error
+            end
+            GC.start
+            Vips::Object::print_all
+
+            log "adding to cache ... "
+            Vips::cache_operation_add op
         end
+
+        log "after build ..."
+        GC.start
+        Vips::Object::print_all
 
         # gather output args 
         out = []
@@ -226,7 +201,7 @@ module Vips
 
         # unref everything now we have refs to all outputs we want
         log "unreffing outputs ... "
-        op2.unref_outputs
+        op.unref_outputs
 
         log "success! #{name}.out = #{out}"
 
