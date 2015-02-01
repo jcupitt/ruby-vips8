@@ -116,6 +116,21 @@ puts ""
 puts "creating operation:"
 x = Vips::Operation.new "black"
 
+gobject_class = x.gtype.to_class
+
+props = gobject_class.properties
+
+args = props.select do |name|
+    flags = x.get_argument_flags name
+    puts "testing #{name} - #{flags}"
+    (((flags & :input) | (flags & :output)) & (~flags & :deprecated)) != 0
+end
+
+args.each do |name|
+    flags = x.get_argument_flags name
+    puts "#{name} - #{flags}"
+end
+
 
 x.unref_outputs
 x = nil

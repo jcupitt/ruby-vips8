@@ -6,13 +6,12 @@ module Vips
     class Argument # :nodoc:
         attr_reader :op, :prop, :name, :flags, :priority, :isset
 
-        def initialize(op, prop)
+        def initialize(op, name)
+            gobject_class = op.gtype.to_class
             @op = op
-            @prop = prop
-            @name = prop.name.tr '-', '_'
-            @flags = op.get_argument_flags @name
-            # we need a bit pattern, not a symbolic name
-            @flags = Vips::ArgumentFlags.to_native @flags, 1
+            @name = name.tr '-', '_'
+            @prop = gobject_class.property name
+            @flags = op.get_argument_flags name
             @priority = op.get_argument_priority @name
             @isset = op.argument_isset @name
         end
@@ -49,9 +48,9 @@ module Vips
         # if this gtype needs an array, try to transform the value into one
         def self.arrayize(gtype, value)
             arrayize_map = {
-                Vips::TYPE_ARRAY_DOUBLE => Vips::ArrayDouble,
-                Vips::TYPE_ARRAY_INT => Vips::ArrayInt,
-                Vips::TYPE_ARRAY_IMAGE => ArrayImageConst
+                GLib::Type["VipsArrayDouble"] => Vips::ArrayDouble,
+                GLib::Type["VipsArrayInt"] => Vips::ArrayInt,
+                GLib::Type["VipsArrayImage"] => ArrayImageConst
             }
 
             if arrayize_map.has_key? gtype
@@ -87,21 +86,21 @@ module Vips
             value = Argument::arrayize prop.value_type, value
 
             # blob-ize
-            if GObject::type_is_a(prop.value_type, Vips::TYPE_BLOB)
+            if prop.value_type.type_is_a? GLib::Type["VipsBlob"]
                 if not value.is_a? Vips::Blob
                     value = Vips::Blob.new(nil, value)
                 end
             end
 
             # image-ize
-            if GObject::type_is_a(prop.value_type, Vips::TYPE_IMAGE)
+            if prop.value_type.type_is_a? GLib::Type["VipsImage"]
                 if not value.is_a? Vips::Image
                     value = imageize match_image, value
                 end
             end
 
             # MODIFY input images need to be copied before assigning them
-            if (flags & Vips::ArgumentFlags[:modify]) != 0
+            if (flags & :modify) != 0
                 # don't use .copy(): we want to make a new pipeline with no
                 # reference back to the old stuff ... this way we can free the
                 # previous image earlier 
@@ -114,15 +113,14 @@ module Vips
         end
 
         def get_value
-            Argument::unwrap(@op.property(@name).get_value)
+            Argument::unwrap(@op.get_property(@name))
         end
 
         def description
             name = @name
             blurb = @prop.get_blurb
-            direction = @flags & Vips::ArgumentFlags[:input] != 0 ? 
-                "input" : "output"
-            type = GObject::type_name(@prop.value_type)
+            direction = (@flags & :input) != 0 ?  "input" : "output"
+            type = @prop.value_type.name
 
             result = "[#{name}] #{blurb}, #{direction} #{type}"
         end

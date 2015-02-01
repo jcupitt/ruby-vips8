@@ -1,5 +1,5 @@
 
-moudule Vips
+module Vips
 
     # internal call entry ... see Vips::call for the public entry point
     private
@@ -24,6 +24,7 @@ moudule Vips
         end
 
         # set string options first 
+        log "setting string options ..."
         if option_string
             if op.set_from_string(option_string) != 0
                 raise Error
@@ -41,6 +42,7 @@ moudule Vips
         # if the op needs images but the user supplies constants, we expand
         # them to match the first input image argument ... find the first
         # image
+        log "searching for first image argument ..."
         match_image = instance
         if match_image == nil
             match_image = supplied_values.find {|x| x.is_a? Vips::Image}
@@ -56,16 +58,18 @@ moudule Vips
         end
 
         # find unassigned required input args
+        log "finding unassigned required input arguments ..."
         required_input = all_args.select do |arg|
             not arg.isset and
-            (arg.flags & Vips::ArgumentFlags[:input]) != 0 and
-            (arg.flags & Vips::ArgumentFlags[:required]) != 0 
+            (arg.flags & :input) != 0 and
+            (arg.flags & :required) != 0 
         end
 
         # do we have a non-nil instance? set the first image arg with this
+        log "setting first image arg with instance ..."
         if instance != nil
             x = required_input.find do |x|
-                GObject::type_is_a(x.prop.value_type, Vips::TYPE_IMAGE)
+                x.prop.value_type.type_is_a? GLib::Type["VipsImage"]
             end
             if x == nil
                 raise Vips::Error, 
@@ -82,15 +86,17 @@ moudule Vips
                 "#{supplied_values.length}."
         end
 
+        log "setting required input arguments ..."
         required_input.zip(supplied_values).each do |arg, value|
             arg.set_value match_image, value
         end
 
         # find optional unassigned input args
+        log "finding optional unassigned input arguments ..."
         optional_input = all_args.select do |arg|
             not arg.isset and
-            (arg.flags & Vips::ArgumentFlags[:input]) != 0 and
-            (arg.flags & Vips::ArgumentFlags[:required]) == 0 
+            (arg.flags & :input) != 0 and
+            (arg.flags & :required) == 0 
         end
 
         # make a hash from name to arg
@@ -98,10 +104,11 @@ moudule Vips
             optional_input.map(&:name).zip(optional_input)]
 
         # find optional unassigned output args
+        log "finding optional unassigned output arguments ..."
         optional_output = all_args.select do |arg|
             not arg.isset and
-            (arg.flags & Vips::ArgumentFlags[:output]) != 0 and
-            (arg.flags & Vips::ArgumentFlags[:required]) == 0 
+            (arg.flags & :output) != 0 and
+            (arg.flags & :required) == 0 
         end
         optional_output = Hash[
             optional_output.map(&:name).zip(optional_output)]
@@ -123,6 +130,7 @@ moudule Vips
         end
 
         # call
+        log "building ..."
         op2 = Vips::cache_operation_build op
 
         # cases:
@@ -154,22 +162,26 @@ moudule Vips
         end
 
         # are op and op2 the same underlying object? ie. we had a cache miss?
-        miss = op.to_ptr == op2.to_ptr
+        puts "TODO: detect cache miss"
+        #miss = op.to_ptr == op2.to_ptr
+        miss = true
 
         # see above, in the case of a miss we need an explcit extra unref
         if miss
             log "extra unref on cache miss"
-            GObject::Lib.g_object_unref op
+            puts "TODO: what do we do here?"
+            #GObject::Lib.g_object_unref op
         end
 
         # rescan args 
         if not miss
+            log "rescanning args ..."
             all_args = op2.get_args()
 
             # find optional output args
             optional_output = all_args.select do |arg|
-                (arg.flags & Vips::ArgumentFlags[:output]) != 0 and
-                (arg.flags & Vips::ArgumentFlags[:required]) == 0 
+                (arg.flags & :output) != 0 and
+                (arg.flags & :required) == 0 
             end
             optional_output = Hash[
                 optional_output.map(&:name).zip(optional_output)]
@@ -180,16 +192,17 @@ moudule Vips
 
         all_args.each do |arg|
             # required output
-            if (arg.flags & Vips::ArgumentFlags[:output]) != 0 and
-                (arg.flags & Vips::ArgumentFlags[:required]) != 0 
+            if (arg.flags & :output) != 0 and
+                (arg.flags & :required) != 0 
                 log "fetching required output #{arg.name}"
                 out << arg.get_value
             end
 
             # modified input arg ... this will get the result of the 
             # copy() we did in Argument.set_value above
-            if (arg.flags & Vips::ArgumentFlags[:input]) != 0 and
-                (arg.flags & Vips::ArgumentFlags[:modify]) != 0 
+            if (arg.flags & :input) != 0 and
+                (arg.flags & :modify) != 0 
+                log "fetching modified input arg ..."
                 out << arg.get_value
             end
         end
@@ -198,6 +211,7 @@ moudule Vips
             # we are passed symbols as keys
             name = name.to_s
             if optional_output.has_key? name
+                log "fetching optional output arg ..."
                 out << optional_output[name].get_value
             end
         end

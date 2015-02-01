@@ -3,15 +3,14 @@ module Vips
     class Operation
         # Fetch arg list, remove boring ones, sort into priority order.
         def get_args
-            object_class = GObject::object_class_from_instance self
-            io_bits = Vips::ArgumentFlags[:input] | Vips::ArgumentFlags[:output]
-            props = object_class.list_properties.select do |prop|
-                flags = get_argument_flags prop.name
-                flags = Vips::ArgumentFlags.to_native flags, 1
-                (flags & io_bits != 0) &&
-                    (flags & Vips::ArgumentFlags[:deprecated] == 0)
+            gobject_class = gtype.to_class
+            props = gobject_class.properties.select do |name|
+                flags = get_argument_flags name
+                io = ((flags & :input) | (flags & :output)) != 0
+                dep = (flags & :deprecated) != 0
+                io & (not dep)
             end
-            args = props.map {|x| Argument.new self, x}
+            args = props.map {|name| Argument.new self, name}
             args.sort! {|a, b| a.priority - b.priority}
         end
     end

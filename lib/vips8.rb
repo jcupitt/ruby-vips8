@@ -59,6 +59,10 @@ module Vips
             loader = Loader.new(self, argv)
             loader.load("Vips")
 
+            require 'vips8/error'
+            require 'vips8/argument'
+            require 'vips8/operation'
+            require 'vips8/call'
             require 'vips8/image'
         end
     end
