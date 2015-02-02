@@ -4,7 +4,7 @@ require 'vips8'
 
 puts ""
 puts "starting up:"
-# this makes vips keep a list of all active objects whcih we can print out
+# this makes vips keep a list of all active objects which we can print out
 Vips::leak_set true
 
 # disable the operation cache
