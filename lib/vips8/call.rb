@@ -131,8 +131,8 @@ module Vips
 
         # call
         log "before build ..."
-        GC.start if $debug
-        Vips::Object::print_all if $debug
+        GC.start if $vips_debug
+        Vips::Object::print_all if $vips_debug
 
         op2 = Vips::cache_operation_lookup op
         if op2
@@ -153,16 +153,16 @@ module Vips
             if not op.build
                 raise Vips::Error
             end
-            GC.start if $debug
-            Vips::Object::print_all if $debug
+            GC.start if $vips_debug
+            Vips::Object::print_all if $vips_debug
 
             log "adding to cache ... "
             Vips::cache_operation_add op
         end
 
         log "after build ..."
-        GC.start if $debug
-        Vips::Object::print_all if $debug
+        GC.start if $vips_debug
+        Vips::Object::print_all if $vips_debug
 
         # gather output args 
         out = []

@@ -1,11 +1,11 @@
 require 'gobject-introspection'
 
 # about as crude as you could get
-#$debug = true
-$debug = false
+#$vips_debug = true
+$vips_debug = false
 
 def log str # :nodoc:
-    if $debug
+    if $vips_debug
         puts str
     end
 end
