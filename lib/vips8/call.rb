@@ -18,9 +18,10 @@ module Vips
             optional_values = {}
         end
 
-        op = Vips::Operation.new name
-        if op == nil
-            raise Vips::Error
+        begin
+            op = Vips::Operation.new name
+        rescue
+            raise Vips::Error, "no operator '#{name}'"
         end
 
         # set string options first 
@@ -184,14 +185,16 @@ module Vips
             end
         end
 
+        opts = {}
         optional_values.each do |name, value|
             # we are passed symbols as keys
             name = name.to_s
             if optional_output.has_key? name
                 log "fetching optional output arg ..."
-                out << optional_output[name].get_value
+                opts[name] = optional_output[name].get_value
             end
         end
+        out << opts if opts != {}
 
         if out.length == 1
             out = out[0]
