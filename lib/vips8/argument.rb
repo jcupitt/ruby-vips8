@@ -104,12 +104,9 @@ module Vips
                 # don't use .copy(): we want to make a new pipeline with no
                 # reference back to the old stuff ... this way we can free the
                 # previous image earlier 
-                puts "copying image ..."
-                new_image = Vips::Image.new_memory
-                puts "... built new memory image"
+                new_image = Vips::Image.memory
                 value.write new_image
                 value = new_image
-                puts "... image copied OK"
             end
 
             op.set_property @name, value

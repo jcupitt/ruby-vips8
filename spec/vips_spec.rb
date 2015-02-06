@@ -61,8 +61,8 @@ RSpec.describe Vips do
             black = Vips::call "black", 100, 100
             test = Vips::call "draw_rect", black, 255, 10, 10, 1, 1
 
-            max_black Vips::call "max", black
-            max_test Vips::call "max", test
+            max_black = Vips::call "max", black
+            max_test = Vips::call "max", test
 
             expect(max_black).to eq(0)
             expect(max_test).to eq(255)
