@@ -8,9 +8,9 @@ puts "starting up:"
 Vips::leak_set true
 
 # disable the operation cache
-#Vips::cache_set_max 0
+Vips::cache_set_max 0
 
-n = 2
+n = 100
 
 n.times do |i|
     puts ""

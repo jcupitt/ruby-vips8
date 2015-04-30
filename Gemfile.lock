@@ -71,7 +71,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0)
-  gobject-introspection (~> 2.2.5)
-  jeweler (~> 2.0.1)
+  gobject-introspection (~> 2.2)
+  jeweler (~> 2.0)
   rdoc (~> 3.12)
-  rspec
+  rspec (~> 3.2)

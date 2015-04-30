@@ -1,9 +1,6 @@
 #!/usr/bin/ruby
 
-puts "testing libvips with gir_ffi-vips8"
-
 require 'vips8'
-$vips_debug = true
 
 puts ""
 puts "starting up:"
@@ -12,16 +9,33 @@ puts "starting up:"
 Vips::leak_set true
 
 # disable the operation cache
-Vips::cache_set_max 0
+#Vips::cache_set_max 0
 
 puts ""
 puts "creating object:"
 x = Vips::Image.new
+x.print_dump
 Vips::Object::print_all
 
 puts ""
 puts "freeing object:"
 x = nil
+GC.start
+Vips::Object::print_all
+
+puts ""
+puts "creating operation:"
+op = Vips::Operation.new "black"
+op.set_property "width", 100
+op.set_property "height", 100
+op = Vips::cache_operation_build op
+GC.start
+Vips::Object::print_all
+
+puts ""
+puts "freeing operation:"
+op.unref_outputs
+op = nil
 GC.start
 Vips::Object::print_all
 
