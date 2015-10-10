@@ -1,3 +1,13 @@
+- need to add [] and () overloads to Ruby bindings
+
+- ruby () overload could accept ranges, eg.
+
+        x = im(2..100, 2..100)
+
+  and return an image, cf. crop
+
+
+
 - array args to boxed types seem not to be implemented
 
 irb(main):015:0> Vips::ArrayInt.new [1,2,3]
