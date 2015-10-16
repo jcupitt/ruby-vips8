@@ -1,7 +1,19 @@
+- need to add [] and () overloads to Ruby bindings
+
+- ruby () overload could accept ranges, eg.
+
+        x = im(2..100, 2..100)
+
+  and return an image, cf. crop
+
+
+
 - array args to boxed types seem not to be implemented
 
 irb(main):015:0> Vips::ArrayInt.new [1,2,3]
 NotImplementedError: TODO: Ruby -> GIArgument(array)[gint32]
 	from /home/john/packages/gems/gems/gobject-introspection-2.2.5/lib/gobject-introspection/loader.rb:278:in `invoke'
+
+  implemented in goi 3.0 !! get refcounting working
 
 - add auto wrap / unwrap, eg. ICC profiles
