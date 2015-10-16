@@ -1,7 +1,5 @@
 #!/usr/bin/ruby
 
-puts "testing libvips with gir_ffi-vips8"
-
 require 'vips8'
 $vips_debug = true
 

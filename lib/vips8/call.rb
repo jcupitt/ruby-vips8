@@ -132,8 +132,7 @@ module Vips
 
         # call
         log "before build ..."
-        GC.start if $vips_debug
-        Vips::Object::print_all if $vips_debug
+        showall
 
         op2 = Vips::cache_operation_lookup op
         if op2
@@ -154,16 +153,14 @@ module Vips
             if not op.build
                 raise Vips::Error
             end
-            GC.start if $vips_debug
-            Vips::Object::print_all if $vips_debug
+            showall
 
             log "adding to cache ... "
             Vips::cache_operation_add op
         end
 
         log "after build ..."
-        GC.start if $vips_debug
-        Vips::Object::print_all if $vips_debug
+        showall
 
         # gather output args 
         out = []
@@ -202,9 +199,16 @@ module Vips
             out = nil
         end
 
-        # unref everything now we have refs to all outputs we want
-        log "unreffing outputs ... "
+        log "after fetch outputs ..."
+        showall
+
+        log "cleaning up ..."
         op.unref_outputs
+        op.unref
+        op = nil
+
+        log "after cleanup ..."
+        showall
 
         log "success! #{name}.out = #{out}"
 

@@ -112,4 +112,13 @@ at_exit {
         Vips::shutdown
 }
 
+# this makes vips keep a list of all active objects which we can print out
+Vips::leak_set true if $vips_debug
+
+def showall # :nodoc:
+    if $vips_debug
+        GC.start 
+        Vips::Object::print_all 
+    end
+end
 
