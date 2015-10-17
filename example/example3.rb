@@ -10,12 +10,9 @@ Vips::leak_set true
 # disable the operation cache
 Vips::cache_set_max 0
 
-
-$debug = true
-
 100.times do |i|
     puts "loop #{i} ..."
-    im = Vips::Image.new_from_file "/data/john/pics/k2.jpg", :access => :sequential
+    im = Vips::Image.new_from_file "/home/john/pics/k2.jpg", :access => :sequential
 
     im = im.embed 100, 100, 3000, 3000, :extend => :mirror
 

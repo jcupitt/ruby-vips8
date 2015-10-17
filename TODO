@@ -1,3 +1,20 @@
+- segv in example3.rb
+
+	loop 5 ...
+	segv argument.rb:86
+
+	loop 5 ...
+	segv call.rb:76
+
+	loop 5 ...
+	segv call.rb:73
+
+  add a GC.start to the loop, it works fine
+
+  I guess we are triggering a GC at an unexpected time when things are in an
+  inconsistent state
+
+
 - need to add [] and () overloads to Ruby bindings
 
 - ruby () overload could accept ranges, eg.

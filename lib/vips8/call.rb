@@ -202,12 +202,11 @@ module Vips
         log "after fetch outputs ..."
         showall
 
-        log "cleaning up ..."
+        log "unreffing outputs ..."
         op.unref_outputs
-        op.unref
         op = nil
 
-        log "after cleanup ..."
+        log "after output unref ..."
         showall
 
         log "success! #{name}.out = #{out}"
