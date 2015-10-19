@@ -130,9 +130,7 @@ module Vips
             end
         end
 
-        # call
-        log "before build ..."
-        showall
+        log "building ..."
 
         op2 = Vips::cache_operation_lookup op
         if op2
@@ -159,8 +157,7 @@ module Vips
             Vips::cache_operation_add op
         end
 
-        log "after build ..."
-        showall
+        log "fetching outputs ..."
 
         # gather output args 
         out = []
@@ -199,15 +196,10 @@ module Vips
             out = nil
         end
 
-        log "after fetch outputs ..."
-        showall
-
         log "unreffing outputs ..."
         op.unref_outputs
         op = nil
-
-        log "after output unref ..."
-        showall
+        # showall
 
         log "success! #{name}.out = #{out}"
 

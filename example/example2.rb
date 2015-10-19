@@ -11,9 +11,7 @@ Vips::leak_set true
 # disable the operation cache
 Vips::cache_set_max 0
 
-n = 1
-
-out = nil
+n = 100
 
 n.times do |i|
     puts ""
@@ -22,8 +20,6 @@ n.times do |i|
     if out.width != 200 or out.height != 300
         puts "bad image result from black"
     end
-    out = nil
-    GC.start
 end
 
 puts ""

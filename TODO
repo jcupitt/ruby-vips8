@@ -1,3 +1,16 @@
+- seems to often be here:
+
+	x = required_input.find do |x|
+	    x.prop.value_type.type_is_a? GLib::Type["VipsImage"]
+	end
+
+  on the type_is_a? ... 
+
+
+  why would this segv? 
+
+
+
 - segv in example3.rb
 
 	loop 5 ...
