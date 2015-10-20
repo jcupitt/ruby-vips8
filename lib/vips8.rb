@@ -1,9 +1,5 @@
 require 'gobject-introspection'
 
-# about as crude as you could get
-#$vips_debug = true
-$vips_debug = false
-
 def log str # :nodoc:
     if $vips_debug
         puts str
@@ -23,6 +19,13 @@ GObjectIntrospection.prepend_typelib_path(vendor_girepository_dir)
 module Vips
     LOG_DOMAIN = "VIPS"
     GLib::Log.set_log_domain(LOG_DOMAIN)
+
+    # about as crude as you could get
+    $vips_debug = false
+
+    def self.set_debug dbg # :nodoc:
+        $vips_debug = dbg
+    end
 
     class << self
         def const_missing(name)
