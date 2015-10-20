@@ -1,7 +1,7 @@
 require 'gobject-introspection'
 
 # about as crude as you could get
-# $vips_debug = true
+#$vips_debug = true
 $vips_debug = false
 
 def log str # :nodoc:

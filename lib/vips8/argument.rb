@@ -4,16 +4,19 @@
 module Vips
 
     class Argument # :nodoc:
-        attr_reader :op, :prop, :name, :flags, :priority, :isset
+        attr_reader :op, :name, :flags, :priority, :isset, :cls
 
         def initialize(op, name)
-            gobject_class = op.gtype.to_class
             @op = op
             @name = name.tr '-', '_'
-            @prop = gobject_class.property name
+            @cls = op.gtype.to_class
             @flags = op.get_argument_flags name
             @priority = op.get_argument_priority @name
             @isset = op.argument_isset @name
+
+            # we were keeping (@prop = cls.property name), but it seems to 
+            # segv with 3.0.7, pointers get junked on GC when they shouldn't
+            # instead, refetch the property each time
         end
 
         private
@@ -83,6 +86,7 @@ module Vips
 
         def set_value(match_image, value)
             # array-ize
+            prop = cls.property name
             value = Argument::arrayize prop.value_type, value
 
             # blob-ize
@@ -117,10 +121,10 @@ module Vips
         end
 
         def description
-            name = @name
-            blurb = @prop.get_blurb
-            direction = (@flags & :input) != 0 ?  "input" : "output"
-            type = @prop.value_type.name
+            prop = cls.property name
+            blurb = prop.get_blurb
+            direction = (flags & :input) != 0 ?  "input" : "output"
+            type = prop.value_type.name
 
             result = "[#{name}] #{blurb}, #{direction} #{type}"
         end

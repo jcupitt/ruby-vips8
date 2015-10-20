@@ -67,10 +67,14 @@ module Vips
         end
 
         # do we have a non-nil instance? set the first image arg with this
-        log "setting first image arg with instance ..."
         if instance != nil
-            x = required_input.find do |x|
-                x.prop.value_type.type_is_a? GLib::Type["VipsImage"]
+            log "setting first image arg with instance ..."
+            x = required_input.find do |arg|
+                gtype = GLib::Type["VipsImage"]
+                prop = arg.cls.property arg.name
+                vtype = prop.value_type
+
+                vtype.type_is_a? gtype
             end
             if x == nil
                 raise Vips::Error, 
