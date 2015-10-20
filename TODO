@@ -1,32 +1,18 @@
-- seems to often be here:
+- metadata get, we see:
 
-	x = required_input.find do |x|
-	    x.prop.value_type.type_is_a? GLib::Type["VipsImage"]
-	end
+	require 'vips8'
+	im = Vips::Image.new_from_file "/data/john/pics/wtc.jpg"
+	im.get "icc-profile-data"
+	=> [0, #<GLib::Value:0x1661df8 ptr=0x1e93c00 own=true>]
 
-  on the type_is_a? ... 
+  strange, what's the [0, ] doing there?
+
+  affects get_value in image.rb, needs to extract the 1st element before
+  unwrapping
 
 
-  why would this segv? 
 
-
-
-- segv in example3.rb
-
-	loop 5 ...
-	segv argument.rb:86
-
-	loop 5 ...
-	segv call.rb:76
-
-	loop 5 ...
-	segv call.rb:73
-
-  add a GC.start to the loop, it works fine
-
-  I guess we are triggering a GC at an unexpected time when things are in an
-  inconsistent state
-
+- try getting ICC profiles ... do they come out as strings? should we unwrap?
 
 - need to add [] and () overloads to Ruby bindings
 
@@ -36,14 +22,3 @@
 
   and return an image, cf. crop
 
-
-
-- array args to boxed types seem not to be implemented
-
-irb(main):015:0> Vips::ArrayInt.new [1,2,3]
-NotImplementedError: TODO: Ruby -> GIArgument(array)[gint32]
-	from /home/john/packages/gems/gems/gobject-introspection-2.2.5/lib/gobject-introspection/loader.rb:278:in `invoke'
-
-  implemented in goi 3.0 !! get refcounting working
-
-- add auto wrap / unwrap, eg. ICC profiles

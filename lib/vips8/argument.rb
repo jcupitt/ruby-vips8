@@ -69,15 +69,12 @@ module Vips
 
         def self.unwrap value
             [Vips::Blob, Vips::ArrayDouble, Vips::ArrayImage, 
-                Vips::ArrayInt].each do |cls|
+                Vips::ArrayInt, Vips::RefString].each do |cls|
                 if value.is_a? cls
                     value = value.get
                     break 
                 end
             end
-
-            # we could try to unpack GirFFI::SizedArray with to_a, but that's 
-            # not the right thing to do for blobs like profiles
 
             value
         end
