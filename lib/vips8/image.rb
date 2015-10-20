@@ -297,11 +297,13 @@ module Vips
         #
         # Use #get to fetch a GValue directly.
         def get_value(name)
-            # get the GValue
-            value = get name
-
-            # pull out the value
-            value = value.get_value
+            # get the GValue ... we always get a two-element list with 0 in the
+            # first element, for some reason
+            ret, gval = get name
+            if ret[0] != 0
+                raise Vips::Error, "Field #{name} not found."
+            end
+            value = gval.value
 
             Argument::unwrap(value)
         end

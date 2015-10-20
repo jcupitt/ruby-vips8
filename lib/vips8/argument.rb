@@ -71,7 +71,9 @@ module Vips
             [Vips::Blob, Vips::ArrayDouble, Vips::ArrayImage, 
                 Vips::ArrayInt, Vips::RefString].each do |cls|
                 if value.is_a? cls
-                    value = value.get
+                    value, length = value.get
+
+                    return value
                     break 
                 end
             end

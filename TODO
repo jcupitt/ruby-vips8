@@ -1,18 +1,5 @@
-- metadata get, we see:
 
-	require 'vips8'
-	im = Vips::Image.new_from_file "/data/john/pics/wtc.jpg"
-	im.get "icc-profile-data"
-	=> [0, #<GLib::Value:0x1661df8 ptr=0x1e93c00 own=true>]
-
-  strange, what's the [0, ] doing there?
-
-  affects get_value in image.rb, needs to extract the 1st element before
-  unwrapping
-
-
-
-- try getting ICC profiles ... do they come out as strings? should we unwrap?
+- example3.rb segvs around loop 500
 
 - need to add [] and () overloads to Ruby bindings
 
