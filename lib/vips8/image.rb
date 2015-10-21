@@ -293,7 +293,7 @@ module Vips
         #
         #    profile = image.get_value "icc-profile-data"
         #
-        # and profile will be a binary string containing the profile. 
+        # and profile will be an array containing the profile. 
         #
         # Use #get to fetch a GValue directly.
         def get_value(name)
@@ -370,6 +370,19 @@ module Vips
         def ^(other)
             other.is_a?(Vips::Image) ? 
                 boolean(other, :eor) : boolean_const(other, :eor)
+        end
+
+        # Fetch bands using a number or a range
+        def [](index)
+            if index.is_a? Range
+                n = index.end - index.begin
+                n += 1 if not index.exclude_end?
+                extract_band index.begin, :n => n
+            elsif index.is_a? Numeric
+                extract_band index 
+            else
+                raise Vips::Error, "[] index is not range or numeric."
+            end
         end
 
         # Equivalent to image ^ -1

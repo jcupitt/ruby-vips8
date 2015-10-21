@@ -1,11 +1,17 @@
-
 - example3.rb segvs around loop 500
 
-- need to add [] and () overloads to Ruby bindings
+  seems to be still related to prop GC
 
-- ruby () overload could accept ranges, eg.
+  posted a bug report, need to wait for a fix
 
-        x = im(2..100, 2..100)
+  http://sourceforge.net/p/ruby-gnome2/mailman/message/34555949/
 
-  and return an image, cf. crop
+  follow up in Nov if no response
 
+- rebuild docs
+
+- add more tests
+
+- write a better README
+
+- more examples, more realistic examples
