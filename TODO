@@ -4,6 +4,30 @@
 	/home/john/.gem/gems/ruby-vips8-0.1.0/lib/vips8/call.rb:24:in `rescue in
 	call_base': no operator 'new_matrix_from_array' (Vips::Error)
 
+	image = Vips::Image.new_matrix_from_array width, height, array
+
+ vips_image_new_matrix_from_array() seems not to be bound
+
+
+/**
+ * vips_image_new_matrix_from_array:
+ * @width: image width
+ * @height: image height
+ * @array: (array length=size) (transfer none): array of elements
+ * @size: number of elements
+ *
+ * A binding-friendly version of vips_image_new_matrixv().
+ *
+ * Returns: the new #VipsImage, or %NULL on error.
+ */
+VipsImage *
+vips_image_new_matrix_from_array( int width, int height,
+	double *array, int size )
+
+do we need to set the element type? see vips_blob_get()
+
+
+
 - test set icc profile
 
   seem to be using prop still
