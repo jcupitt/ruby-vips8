@@ -1,3 +1,8 @@
+- example5 fails
+
+	$ ./example5.rb /data/john/pics/k2.jpg x.jpg
+	/home/john/.gem/gems/ruby-vips8-0.1.0/lib/vips8/call.rb:24:in `rescue in
+	call_base': no operator 'new_matrix_from_array' (Vips::Error)
 
 - test set icc profile
 
