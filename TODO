@@ -1,3 +1,8 @@
+
+- test set icc profile
+
+  seem to be using prop still
+
 - example3.rb segvs around loop 500
 
   seems to be still related to prop GC
@@ -8,10 +13,6 @@
 
   follow up in Nov if no response
 
-- rebuild docs
-
 - add more tests
-
-- write a better README
 
 - more examples, more realistic examples

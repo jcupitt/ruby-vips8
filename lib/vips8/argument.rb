@@ -121,7 +121,7 @@ module Vips
 
         def description
             prop = cls.property name
-            blurb = prop.get_blurb
+            blurb = prop.blurb
             direction = (flags & :input) != 0 ?  "input" : "output"
             type = prop.value_type.name
 

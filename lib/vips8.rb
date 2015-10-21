@@ -1,3 +1,9 @@
+# This module provides a set of overrides for the vips image processing library
+# used via the gobject-introspection gem. 
+#
+# Author::    John Cupitt  (mailto:jcupitt@gmail.com)
+# License::   MIT
+
 require 'gobject-introspection'
 
 def log str # :nodoc:
