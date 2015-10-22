@@ -77,8 +77,6 @@ module Vips
     end
 
     class Loader < GObjectIntrospection::Loader
-        NAMESPACE = "Vips"
-
         def initialize(base_module, init_arguments)
             log "Vips::Loader.initialize: #{base_module}, #{init_arguments}"
 
@@ -86,30 +84,7 @@ module Vips
             @init_arguments = init_arguments
         end
 
-        def load
-            super(NAMESPACE)
-        end
-
         private
-        def call_init_function(repository, namespace)
-            log "Vips::Loader.call_init_function: #{repository}, #{namespace}"
-
-            # call Vips::init
-            init = repository.find(namespace, "init")
-            succeeded, argv, error = init.invoke(:arguments => [$PROGRAM_NAME])
-
-            # ought to fetch vips_errorbuffer() and use that string
-            puts "TODO Vips::call_init_function needs the vips error buffer"
-            raise error unless succeeded
-        end
-
-        def define_value_modules
-            @value_functions_module = Module.new
-            @value_methods_module = Module.new
-            @base_module.const_set("ValueFunctions", @value_functions_module)
-            @base_module.const_set("ValueMethods", @value_methods_module)
-        end
-
         def pre_load(repository, namespace)
             log "Vips::Loader.pre_load: #{repository}, #{namespace}"
 
@@ -117,40 +92,26 @@ module Vips
             define_value_modules
         end
 
+        def call_init_function(repository, namespace)
+            log "Vips::Loader.call_init_function: #{repository}, #{namespace}"
+
+            # call Vips::init
+            init = repository.find(namespace, "init")
+            succeeded, argv, error = init.invoke(:arguments => [$PROGRAM_NAME])
+
+            # TODO get the vips error buffer
+            raise error unless succeeded
+        end
+
+        def define_value_modules
+            @value_functions_module = Module.new
+            @value_methods_module = Module.new
+            @base_module.const_set("ValueFunctions", @value_functions_module)
+            @base_module.const_set("ValueMethods",   @value_methods_module)
+        end
+
         def post_load(repository, namespace)
             log "Vips::Loader.post_load:"
-        end
-
-        def initialize_post(object)
-            log "Vips::Loader.initialize_post: #{object}"
-
-            super
-            return unless object.is_a?(GLib::Object)
-            self.class.reference_gobject(object, :sink => true)
-        end
-
-        def load_value_function_info(info, method_name)
-            value_functions_module = @value_functions_module
-            define_module_function(value_functions_module, method_name, info)
-            @value_methods_module.module_eval do
-                define_method(method_name) do |*arguments, &block|
-                    value_functions_module.send(method_name, self, *arguments, &block)
-                end
-            end
-        end
-
-        def load_function_info(info)
-            log "Vips::Loader.load_function_info: #{info}"
-
-            case info.name
-            when "init"
-                # ignore
-            when /\Avalue_/
-                method_name = $POSTMATCH
-                load_value_function_info(info, method_name)
-            else
-                super
-            end
         end
 
     end

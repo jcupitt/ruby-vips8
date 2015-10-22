@@ -237,14 +237,14 @@ module Vips
 
         # Invoke a vips operation with Vips::call, using #self as the first 
         # input image argument. 
-        def method_missing(name, *args)
-            Vips::call_base(name.to_s, self, "", args)
-        end
+#        def method_missing(name, *args)
+#            Vips::call_base(name.to_s, self, "", args)
+#        end
 
         # Invoke a vips operation with ::call.
-        def self.method_missing(name, *args)
-            Vips::call_base name.to_s, nil, "", args
-        end
+#        def self.method_missing(name, *args)
+#            Vips::call_base name.to_s, nil, "", args
+#        end
 
         # Return a new Vips::Image for a file on disc. This method can load
         # images in any format supported by vips. The filename can include
