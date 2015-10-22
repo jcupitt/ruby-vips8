@@ -1,6 +1,7 @@
 # This module provides a set of overrides for the {vips image processing 
 # library}[http://www.vips.ecs.soton.ac.uk]
-# used via the {gir_ffi gem}[https://rubygems.org/gems/gir_ffi]. 
+# used via the {gobject-introspection
+# gem}[https://rubygems.org/gems/gobject-introspection]. 
 #
 # It needs vips-7.42 or later to be installed, 
 # and <tt>Vips-8.0.typelib</tt>, the vips typelib, needs to be on your 
@@ -59,8 +60,9 @@
 # gobject-introspection generates <tt>Vips-8.0.typelib</tt>, a file 
 # describing how to use libvips.
 #
-# gir_ffi loads this typelib and uses it to let you call functions in libvips
-# directly from Ruby. However, the interface you get from raw gir_ffi is 
+# The gobject-introspection gem loads this typelib and uses it to let you call functions in libvips
+# directly from Ruby. However, the interface you get from raw
+# gobject-introspection is 
 # rather ugly, so ruby-vips8 adds a set of overrides which try to make it 
 # nicer to use. 
 #
@@ -109,7 +111,7 @@
 #
 #   result_image = image.imag.cos
 #
-# to calculate the cosing of the imaginary part of a complex image. 
+# to calculate the cosine of the imaginary part of a complex image. 
 # There are also a full set
 # of arithmetic operator overloads, see below.
 #
@@ -155,7 +157,7 @@
 #
 #   rgba = rgb.bandjoin 255
 #
-# to add a constant 255 band to an image, perhaps to add an alpha channel. Of
+# to append a constant 255 band to an image, perhaps to add an alpha channel. Of
 # course you can also write:
 #
 #   result_image = image1.bandjoin image2
