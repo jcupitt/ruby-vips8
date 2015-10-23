@@ -73,9 +73,14 @@ module Vips
                 if value.is_a? cls
                     value, length = value.get
 
-                    return value
-                    break 
+                    # blobs come from gobject-introspection as arrays ... 
+                    # repack as strings for convenience
+                    if value and cls == Vips::Blob
+                        value = value.pack("C*")
+                    end
+
                 end
+
             end
 
             value
@@ -91,7 +96,7 @@ module Vips
             # blob-ize
             if prop.value_type.type_is_a? GLib::Type["VipsBlob"]
                 if not value.is_a? Vips::Blob
-                    value = Vips::Blob.new(nil, value)
+                    value = Vips::Blob.new(value)
                 end
             end
 
