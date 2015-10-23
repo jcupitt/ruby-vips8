@@ -240,9 +240,9 @@ module Vips
         end
 
         # Invoke a vips operation with ::call.
-        def self.method_missing(name, *args)
-            Vips::call_base name.to_s, nil, "", args
-        end
+#        def self.method_missing(name, *args)
+#            Vips::call_base name.to_s, nil, "", args
+#        end
 
         # Return a new Vips::Image for a file on disc. This method can load
         # images in any format supported by vips. The filename can include
@@ -350,7 +350,10 @@ module Vips
                 raise Vips::Error, "Not all array elements are Numeric."
             end
 
-            image = Vips::Image.new_matrix_from_array width, height, array
+            image = Vips::Image.matrix_from_array width, height, array
+            if image == nil
+                raise Vips::Error
+            end
 
             # be careful to set them as double
             image.set_double 'scale', scale.to_f
