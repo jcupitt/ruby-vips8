@@ -46,6 +46,32 @@ RSpec.describe Vips::Image do
             expect(x.height).to eq(16)
         end
 
+        it 'can make an image from a 2d array' do
+            image = Vips::Image.new_from_array [[1, 2], [3, 4]]
+            expect(image.width).to eq(2)
+            expect(image.height).to eq(2)
+            expect(image.bands).to eq(1)
+            expect(image.avg).to eq(2.5)
+        end
+
+        it 'can make an image from a 1d array' do
+            image = Vips::Image.new_from_array [1, 2]
+            expect(image.width).to eq(2)
+            expect(image.height).to eq(1)
+            expect(image.bands).to eq(1)
+            expect(image.avg).to eq(1.5)
+        end
+
+        it 'can set scale and offset on a convolution mask' do
+            image = Vips::Image.new_from_array [1, 2], 8, 2
+            expect(image.width).to eq(2)
+            expect(image.height).to eq(1)
+            expect(image.bands).to eq(1)
+            expect(image.scale).to eq(8)
+            expect(image.offset).to eq(2)
+            expect(image.avg).to eq(1.5)
+        end
+
     end
 
 end

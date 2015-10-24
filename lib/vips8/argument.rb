@@ -94,13 +94,15 @@ module Vips
             value = Argument::arrayize prop.value_type, value
 
             # blob-ize
+            prop = cls.property name
             if prop.value_type.type_is_a? GLib::Type["VipsBlob"]
                 if not value.is_a? Vips::Blob
-                    value = Vips::Blob.copy(value)
+                    value = Vips::Blob.copy value
                 end
             end
 
             # image-ize
+            prop = cls.property name
             if prop.value_type.type_is_a? GLib::Type["VipsImage"]
                 if not value.is_a? Vips::Image
                     value = imageize match_image, value
