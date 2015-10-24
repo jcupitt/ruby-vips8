@@ -96,7 +96,7 @@ module Vips
             # blob-ize
             if prop.value_type.type_is_a? GLib::Type["VipsBlob"]
                 if not value.is_a? Vips::Blob
-                    value = Vips::Blob.new(value)
+                    value = Vips::Blob.copy(value)
                 end
             end
 

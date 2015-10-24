@@ -304,8 +304,6 @@ module Vips
                 raise Vips::Error
             end
 
-            puts "VIps::Image.new_from_buffer: picked loader #{loader}"
-
             Vips::call_base loader, nil, option_string, [data] + args
         end
 
