@@ -491,21 +491,22 @@ module Vips
             gtype = get_typeof name
             if gtype != 0
                 # array-ize
-                value = Argument::arrayize prop.value_type, value
+                value = Argument::arrayize gtype, value
 
                 # blob-ize
-                if GObject::type_is_a(gtype, Vips::TYPE_BLOB)
+                if gtype.type_is_a? GLib::Type["VipsBlob"]
                     if not value.is_a? Vips::Blob
-                        value = Vips::Blob.new(nil, value)
+                        value = Vips::Blob.copy value
                     end
                 end
 
                 # image-ize
-                if GObject::type_is_a(gtype, Vips::TYPE_IMAGE)
+                if gtype.type_is_a? GLib::Type["VipsImage"]
                     if not value.is_a? Vips::Image
-                        value = Argument::imageize self, value
+                        value = imageize match_image, value
                     end
                 end
+
             end
 
             set name, value

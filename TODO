@@ -1,17 +1,5 @@
+- need a test for get/set icc profile
 
-
-- test set icc profile
-
-  seem to be using prop still
-
-  get
-
-	irb(main):012:0> Vips::Blob.new "13948"
-	NotImplementedError: TODO: in transfer (array)
-	irb(main):012:0> Vips::Blob.new [1,2,3]
-	NotImplementedError: TODO: in transfer (array)
-
-  breaks load from buffer spec
 
 
 - example3.rb segvs around loop 500
