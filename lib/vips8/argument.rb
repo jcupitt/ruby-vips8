@@ -44,9 +44,14 @@ module Vips
 
                 value = value.map {|x| Argument::imageize match_image, x}
 
-                puts "ArrayImageConst.new: value = #{value}"
+                # we'd like to just 
+                #   super(value)
+                # to construct, but the gobject-introspection gem does not
+                # support new from object array ... instead, we build in stages
+                array = Vips::ArrayImage.empty
+                value.each {|x| array = array.append(x)}
 
-                super(value)
+                return array
             end
         end
 
