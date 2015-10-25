@@ -268,6 +268,25 @@ RSpec.describe Vips::Image do
 
         end
 
+        it 'has minpos/maxpos' do
+            image = Vips::Image.black(16, 16) + 128
+            image = image.draw_rect 255, 10, 12, 1, 1
+            v, x, y = image.maxpos
+
+            expect(v).to eq(255)
+            expect(x).to eq(10)
+            expect(y).to eq(12)
+
+            image = Vips::Image.black(16, 16) + 128
+            image = image.draw_rect 12, 10, 12, 1, 1
+            v, x, y = image.minpos
+
+            expect(v).to eq(12)
+            expect(x).to eq(10)
+            expect(y).to eq(12)
+
+        end
+
     end
 
 end

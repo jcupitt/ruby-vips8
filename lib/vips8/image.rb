@@ -713,7 +713,7 @@ module Vips
 
         # Return the coordinates of the image maximum.
         def maxpos
-            v, opts = max :x => True, :y => True
+            v, opts = max :x => true, :y => true
             x = opts['x']
             y = opts['y']
             return v, x, y
@@ -721,7 +721,7 @@ module Vips
 
         # Return the coordinates of the image minimum.
         def minpos
-            v, opts = min :x => True, :y => True
+            v, opts = min :x => true, :y => true
             x = opts['x']
             y = opts['y']
             return v, x, y
