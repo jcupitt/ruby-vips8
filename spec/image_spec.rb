@@ -72,6 +72,45 @@ RSpec.describe Vips::Image do
             expect(image.avg).to eq(1.5)
         end
 
+        it 'can load a sample jpg image' do
+            filename = simg("wagon.jpg")
+            x = Vips::Image.new_from_file filename
+            expect(x.width).to eq(685)
+            expect(x.height).to eq(478)
+            expect(x.bands).to eq(3)
+            expect(x.avg).to be_within(0.001).of(109.789)
+        end
+
+        it 'can extract an ICC profile from a jpg image' do
+            filename = simg("icc.jpg")
+            x = Vips::Image.new_from_file filename
+            expect(x.width).to eq(2800)
+            expect(x.height).to eq(2100)
+            expect(x.bands).to eq(3)
+            expect(x.avg).to be_within(0.001).of(109.189)
+
+            profile = x.get_value "icc-profile-data"
+            expect(profile.class).to eq(String)
+            expect(profile.length).to eq(2360)
+        end
+
+        it 'can set an ICC profile on a jpg image' do
+            x = Vips::Image.new_from_file simg("icc.jpg")
+            profile = File.open(simg("lcd.icc"), "rb").read
+            x.set_value "icc-profile-data", profile
+            x.write_to_file(timg("x.jpg"))
+
+            x = Vips::Image.new_from_file timg("x.jpg")
+            expect(x.width).to eq(2800)
+            expect(x.height).to eq(2100)
+            expect(x.bands).to eq(3)
+            expect(x.avg).to be_within(0.1).of(109.189)
+
+            profile = x.get_value "icc-profile-data"
+            expect(profile.class).to eq(String)
+            expect(profile.length).to eq(3048)
+        end
+
     end
 
 end

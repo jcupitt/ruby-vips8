@@ -1,6 +1,6 @@
-- need a test for get/set icc profile
+- test operator overloads
 
-
+- add more tests
 
 - example3.rb segvs around loop 500
 
@@ -11,7 +11,5 @@
   http://sourceforge.net/p/ruby-gnome2/mailman/message/34555949/
 
   follow up in Nov if no response
-
-- add more tests
 
 - more examples, more realistic examples
