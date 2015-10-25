@@ -1,8 +1,9 @@
 - test operator overloads
 
-  bandjoin is broken ... no image array args work
+- add complex constants, eg. 
 
-  what else will this break?
+	Complex(1, 2)
+	=> (1+2i)
 
 - test for presence of jpegload before testing jpg
 

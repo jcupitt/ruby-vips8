@@ -246,6 +246,28 @@ RSpec.describe Vips::Image do
             expect(x[2].avg).to eq(130)
         end
 
+        it 'can bandjoin constants' do
+            image = Vips::Image.black(16, 16, :bands => 3) + [100, 128, 130]
+
+            x = image.bandjoin 255
+
+            expect(x[0].avg).to eq(100)
+            expect(x[1].avg).to eq(128)
+            expect(x[2].avg).to eq(130)
+            expect(x[3].avg).to eq(255)
+            expect(x.bands).to eq(4)
+
+            x = image.bandjoin [1, 2]
+
+            expect(x[0].avg).to eq(100)
+            expect(x[1].avg).to eq(128)
+            expect(x[2].avg).to eq(130)
+            expect(x[3].avg).to eq(1)
+            expect(x[4].avg).to eq(2)
+            expect(x.bands).to eq(5)
+
+        end
+
     end
 
 end
