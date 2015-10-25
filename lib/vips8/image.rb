@@ -540,7 +540,7 @@ module Vips
         # Subtract an image, constant or array. 
         def -(other)
             other.is_a?(Vips::Image) ? 
-                subtract(other) : linear(1, smap(other) {|x| x * -1})
+                subtract(other) : linear(1, Image::smap(other) {|x| x * -1})
         end
 
         # Multiply an image, constant or array. 
@@ -551,7 +551,7 @@ module Vips
         # Divide an image, constant or array. 
         def /(other)
             other.is_a?(Vips::Image) ? 
-                divide(other) : linear(smap(other) {|x| 1.0 / x}, 0)
+                divide(other) : linear(Image::smap(other) {|x| 1.0 / x}, 0)
         end
 
         # Remainder after integer division with an image, constant or array. 
@@ -596,19 +596,6 @@ module Vips
                 boolean(other, :eor) : boolean_const(other, :eor)
         end
 
-        # Fetch bands using a number or a range
-        def [](index)
-            if index.is_a? Range
-                n = index.end - index.begin
-                n += 1 if not index.exclude_end?
-                extract_band index.begin, :n => n
-            elsif index.is_a? Numeric
-                extract_band index 
-            else
-                raise Vips::Error, "[] index is not range or numeric."
-            end
-        end
-
         # Equivalent to image ^ -1
         def !
             self ^ -1
@@ -647,7 +634,7 @@ module Vips
         end
 
         # Relational more than or equal to with an image, constant or array. 
-        def >(other)
+        def >=(other)
             other.is_a?(Vips::Image) ? 
                 relational(other, :moreeq) : relational_const(other, :moreeq)
         end
@@ -671,6 +658,19 @@ module Vips
                 relational(other, :noteq) 
             else
                 relational_const(other, :noteq)
+            end
+        end
+
+        # Fetch bands using a number or a range
+        def [](index)
+            if index.is_a? Range
+                n = index.end - index.begin
+                n += 1 if not index.exclude_end?
+                extract_band index.begin, :n => n
+            elsif index.is_a? Numeric
+                extract_band index 
+            else
+                raise Vips::Error, "[] index is not range or numeric."
             end
         end
 

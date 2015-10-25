@@ -44,6 +44,8 @@ module Vips
 
                 value = value.map {|x| Argument::imageize match_image, x}
 
+                puts "ArrayImageConst.new: value = #{value}"
+
                 super(value)
             end
         end

@@ -11,7 +11,7 @@ RSpec.describe Vips::Image do
         end
 
         it 'can save an image to a file' do
-            filename = "/tmp/test.v"
+            filename = timg "x.v"
 
             image = Vips::Image.black(16, 16) + 128
             image.write_to_file filename
@@ -20,7 +20,7 @@ RSpec.describe Vips::Image do
         end
 
         it 'can load an image from a file' do
-            filename = "/tmp/test.v"
+            filename = timg "x.v"
 
             image = Vips::Image.black(16, 16) + 128
             image.write_to_file(filename)
@@ -73,8 +73,7 @@ RSpec.describe Vips::Image do
         end
 
         it 'can load a sample jpg image' do
-            filename = simg("wagon.jpg")
-            x = Vips::Image.new_from_file filename
+            x = Vips::Image.new_from_file simg("wagon.jpg")
             expect(x.width).to eq(685)
             expect(x.height).to eq(478)
             expect(x.bands).to eq(3)
@@ -82,8 +81,7 @@ RSpec.describe Vips::Image do
         end
 
         it 'can extract an ICC profile from a jpg image' do
-            filename = simg("icc.jpg")
-            x = Vips::Image.new_from_file filename
+            x = Vips::Image.new_from_file simg("icc.jpg")
             expect(x.width).to eq(2800)
             expect(x.height).to eq(2100)
             expect(x.bands).to eq(3)
@@ -109,6 +107,143 @@ RSpec.describe Vips::Image do
             profile = x.get_value "icc-profile-data"
             expect(profile.class).to eq(String)
             expect(profile.length).to eq(3048)
+        end
+
+        it 'can load a sample jpg image' do
+            x = Vips::Image.new_from_file simg("wagon.jpg")
+            expect(x.width).to eq(685)
+            expect(x.height).to eq(478)
+            expect(x.bands).to eq(3)
+            expect(x.avg).to be_within(0.001).of(109.789)
+        end
+
+        it 'has binary arithmetic operator overloads with constants' do
+            image = Vips::Image.black(16, 16) + 128
+
+            image += 128
+            image -= 128
+            image *= 2
+            image /= 2
+            image %= 100
+            image += 100
+            image **= 2
+            image **= 0.5
+            image <<= 1
+            image >>= 1
+            image |= 64
+            image &= 32
+            image ^= 128
+
+            expect(image.avg).to eq(128) 
+        end
+
+        it 'has binary arithmetic operator overloads with array constants' do
+            image = Vips::Image.black(16, 16, :bands => 3) + 128
+
+            image += [128, 0, 0]
+            image -= [128, 0, 0]
+            image *= [2, 1, 1]
+            image /= [2, 1, 1]
+            image %= [100, 99, 98]
+            image += [100, 99, 98]
+            image **= [2, 3, 4]
+            image **= [1.0 / 2.0, 1.0 / 3.0, 1.0 / 4.0]
+            image <<= [1, 2, 3]
+            image >>= [1, 2, 3]
+            image |= [64, 128, 256]
+            image &= [64, 128, 256]
+            image ^= [64 + 128, 0, 256 + 128]
+
+            expect(image.avg).to eq(128) 
+        end
+
+        it 'has binary arithmetic operator overloads with image args' do
+            image = Vips::Image.black(16, 16) + 128
+            x = image
+
+            x += image
+            x -= image
+            x *= image
+            x /= image
+            x %= image
+            x += image
+            x |= image
+            x &= image
+            x ^= image
+
+            expect(image.avg).to eq(128) 
+        end
+
+        it 'has relational operator overloads with constants' do
+            image = Vips::Image.black(16, 16) + 128
+
+            expect((image > 128).avg).to eq(0) 
+            expect((image >= 128).avg).to eq(255) 
+            expect((image < 128).avg).to eq(0) 
+            expect((image <= 128).avg).to eq(255) 
+            expect((image == 128).avg).to eq(255) 
+            expect((image != 128).avg).to eq(0) 
+        end
+
+        it 'has relational operator overloads with array constants' do
+            image = Vips::Image.black(16, 16, :bands => 3) + [100, 128, 130]
+
+            expect((image > [100, 128, 130]).avg).to eq(0) 
+            expect((image >= [100, 128, 130]).avg).to eq(255) 
+            expect((image < [100, 128, 130]).avg).to eq(0) 
+            expect((image <= [100, 128, 130]).avg).to eq(255) 
+            expect((image == [100, 128, 130]).avg).to eq(255) 
+            expect((image != [100, 128, 130]).avg).to eq(0) 
+        end
+
+        it 'has relational operator overloads with image args' do
+            image = Vips::Image.black(16, 16) + 128
+
+            expect((image > image).avg).to eq(0) 
+            expect((image >= image).avg).to eq(255) 
+            expect((image < image).avg).to eq(0) 
+            expect((image <= image).avg).to eq(255) 
+            expect((image == image).avg).to eq(255) 
+            expect((image != image).avg).to eq(0) 
+        end
+
+        it 'has band extract with numeric arg' do
+            image = Vips::Image.black(16, 16, :bands => 3) + [100, 128, 130]
+            x = image[1]
+
+            expect(x.width).to eq(16)
+            expect(x.height).to eq(16)
+            expect(x.bands).to eq(1)
+            expect(x.avg).to eq(128)
+        end
+
+        it 'has band extract with range arg' do
+            image = Vips::Image.black(16, 16, :bands => 3) + [100, 128, 130]
+            x = image[1..2]
+
+            expect(x.width).to eq(16)
+            expect(x.height).to eq(16)
+            expect(x.bands).to eq(2)
+            expect(x.avg).to eq(129)
+        end
+
+        it 'has rounding members' do
+            image = Vips::Image.black(16, 16) + 0.5
+
+            expect(image.floor.avg).to eq(0)
+            expect(image.ceil.avg).to eq(1)
+            expect(image.rint.avg).to eq(1)
+        end
+
+        it 'has bandsplit and bandjoin' do
+            image = Vips::Image.black(16, 16, :bands => 3) + [100, 128, 130]
+
+            split = image.bandsplit
+            x = split[0].bandjoin split[1..2]
+
+            expect(x[0].avg).to eq(100)
+            expect(x[1].avg).to eq(128)
+            expect(x[2].avg).to eq(130)
         end
 
     end

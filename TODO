@@ -1,5 +1,11 @@
 - test operator overloads
 
+  bandjoin is broken ... no image array args work
+
+  what else will this break?
+
+- test for presence of jpegload before testing jpg
+
 - add more tests
 
 - example3.rb segvs around loop 500
