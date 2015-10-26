@@ -1,5 +1,9 @@
 require 'spec_helper.rb'
 
+def has_jpeg?
+    Vips::type_find("VipsOperation", "jpegload") != nil
+end
+
 RSpec.describe Vips::Image do
     describe '#new' do
         it 'can make an empty image' do
@@ -32,18 +36,22 @@ RSpec.describe Vips::Image do
             expect(x.avg).to eq(128)
         end
 
-        it 'can save an image to a buffer' do
-            image = Vips::Image.black(16, 16) + 128
-            buffer = image.write_to_buffer ".jpg"
-            expect(buffer.length).to be > 100
+        if has_jpeg?
+            it 'can save an image to a buffer' do
+                image = Vips::Image.black(16, 16) + 128
+                buffer = image.write_to_buffer ".jpg"
+                expect(buffer.length).to be > 100
+            end
         end
 
-        it 'can load an image from a buffer' do
-            image = Vips::Image.black(16, 16) + 128
-            buffer = image.write_to_buffer ".jpg"
-            x = Vips::Image.new_from_buffer buffer, ""
-            expect(x.width).to eq(16)
-            expect(x.height).to eq(16)
+        if has_jpeg?
+            it 'can load an image from a buffer' do
+                image = Vips::Image.black(16, 16) + 128
+                buffer = image.write_to_buffer ".jpg"
+                x = Vips::Image.new_from_buffer buffer, ""
+                expect(x.width).to eq(16)
+                expect(x.height).to eq(16)
+            end
         end
 
         it 'can make an image from a 2d array' do
@@ -72,49 +80,57 @@ RSpec.describe Vips::Image do
             expect(image.avg).to eq(1.5)
         end
 
-        it 'can load a sample jpg image' do
-            x = Vips::Image.new_from_file simg("wagon.jpg")
-            expect(x.width).to eq(685)
-            expect(x.height).to eq(478)
-            expect(x.bands).to eq(3)
-            expect(x.avg).to be_within(0.001).of(109.789)
+        if has_jpeg?
+            it 'can load a sample jpg image' do
+                x = Vips::Image.new_from_file simg("wagon.jpg")
+                expect(x.width).to eq(685)
+                expect(x.height).to eq(478)
+                expect(x.bands).to eq(3)
+                expect(x.avg).to be_within(0.001).of(109.789)
+            end
         end
 
-        it 'can extract an ICC profile from a jpg image' do
-            x = Vips::Image.new_from_file simg("icc.jpg")
-            expect(x.width).to eq(2800)
-            expect(x.height).to eq(2100)
-            expect(x.bands).to eq(3)
-            expect(x.avg).to be_within(0.001).of(109.189)
+        if has_jpeg?
+            it 'can extract an ICC profile from a jpg image' do
+                x = Vips::Image.new_from_file simg("icc.jpg")
+                expect(x.width).to eq(2800)
+                expect(x.height).to eq(2100)
+                expect(x.bands).to eq(3)
+                expect(x.avg).to be_within(0.001).of(109.189)
 
-            profile = x.get_value "icc-profile-data"
-            expect(profile.class).to eq(String)
-            expect(profile.length).to eq(2360)
+                profile = x.get_value "icc-profile-data"
+                expect(profile.class).to eq(String)
+                expect(profile.length).to eq(2360)
+            end
         end
 
-        it 'can set an ICC profile on a jpg image' do
-            x = Vips::Image.new_from_file simg("icc.jpg")
-            profile = File.open(simg("lcd.icc"), "rb").read
-            x.set_value "icc-profile-data", profile
-            x.write_to_file(timg("x.jpg"))
+        if has_jpeg?
+            it 'can set an ICC profile on a jpg image' do
+                x = Vips::Image.new_from_file simg("icc.jpg")
+                profile = File.open(simg("lcd.icc"), "rb").read
+                x.set_value "icc-profile-data", profile
+                x.write_to_file(timg("x.jpg"))
 
-            x = Vips::Image.new_from_file timg("x.jpg")
-            expect(x.width).to eq(2800)
-            expect(x.height).to eq(2100)
-            expect(x.bands).to eq(3)
-            expect(x.avg).to be_within(0.1).of(109.189)
+                x = Vips::Image.new_from_file timg("x.jpg")
+                expect(x.width).to eq(2800)
+                expect(x.height).to eq(2100)
+                expect(x.bands).to eq(3)
+                expect(x.avg).to be_within(0.1).of(109.189)
 
-            profile = x.get_value "icc-profile-data"
-            expect(profile.class).to eq(String)
-            expect(profile.length).to eq(3048)
+                profile = x.get_value "icc-profile-data"
+                expect(profile.class).to eq(String)
+                expect(profile.length).to eq(3048)
+            end
         end
 
-        it 'can load a sample jpg image' do
-            x = Vips::Image.new_from_file simg("wagon.jpg")
-            expect(x.width).to eq(685)
-            expect(x.height).to eq(478)
-            expect(x.bands).to eq(3)
-            expect(x.avg).to be_within(0.001).of(109.789)
+        if has_jpeg?
+            it 'can load a sample jpg image' do
+                x = Vips::Image.new_from_file simg("wagon.jpg")
+                expect(x.width).to eq(685)
+                expect(x.height).to eq(478)
+                expect(x.bands).to eq(3)
+                expect(x.avg).to be_within(0.001).of(109.789)
+            end
         end
 
         it 'has binary arithmetic operator overloads with constants' do
@@ -285,6 +301,98 @@ RSpec.describe Vips::Image do
             expect(x).to eq(10)
             expect(y).to eq(12)
 
+        end
+
+        it 'can form complex images' do
+            r = Vips::Image.black(16, 16) + 128
+            i = Vips::Image.black(16, 16) + 12
+            cmplx = r.complexform i 
+            re = cmplx.real
+            im = cmplx.imag
+
+            expect(re.avg).to eq(128)
+            expect(im.avg).to eq(12)
+        end
+
+        it 'can convert complex polar <-> rectangular' do
+            r = Vips::Image.black(16, 16) + 128
+            i = Vips::Image.black(16, 16) + 12
+            cmplx = r.complexform i 
+
+            cmplx = cmplx.rect.polar
+
+            expect(cmplx.real.avg).to be_within(0.001).of(128)
+            expect(cmplx.imag.avg).to be_within(0.001).of(12)
+        end
+
+        it 'can take complex conjugate' do
+            r = Vips::Image.black(16, 16) + 128
+            i = Vips::Image.black(16, 16) + 12
+            cmplx = r.complexform i 
+
+            cmplx = cmplx.conj
+
+            expect(cmplx.real.avg).to be_within(0.001).of(128)
+            expect(cmplx.imag.avg).to be_within(0.001).of(-12)
+        end
+
+        it 'has working trig functions' do
+            image = Vips::Image.black(16, 16) + 67
+
+            image = image.sin.cos.tan
+            image = image.atan.acos.asin
+
+            expect(image.avg).to be_within(0.01).of(67)
+        end
+
+        it 'has working log functions' do
+            image = Vips::Image.black(16, 16) + 67
+
+            image = image.log.exp.log10.exp10
+
+            expect(image.avg).to be_within(0.01).of(67)
+        end
+
+        it 'ifthenelse with image arguments' do
+            image = Vips::Image.black(16, 16) 
+            image = image.draw_rect 255, 10, 12, 1, 1
+            black = Vips::Image.black(16, 16) 
+            white = Vips::Image.black(16, 16) + 255
+
+            result = image.ifthenelse black, white
+
+            v, x, y = result.minpos
+
+            expect(v).to eq(0)
+            expect(x).to eq(10)
+            expect(y).to eq(12)
+        end
+
+        it 'ifthenelse with constant arguments' do
+            image = Vips::Image.black(16, 16) 
+            image = image.draw_rect 255, 10, 12, 1, 1
+
+            result = image.ifthenelse 0, 255
+
+            v, x, y = result.minpos
+
+            expect(v).to eq(0)
+            expect(x).to eq(10)
+            expect(y).to eq(12)
+        end
+
+        it 'ifthenelse with vector arguments' do
+            image = Vips::Image.black(16, 16) 
+            image = image.draw_rect 255, 10, 12, 1, 1
+            white = Vips::Image.black(16, 16) + 255
+
+            result = image.ifthenelse [255, 0, 0], white
+
+            v, x, y = result.minpos
+
+            expect(v).to eq(0)
+            expect(x).to eq(10)
+            expect(y).to eq(12)
         end
 
     end

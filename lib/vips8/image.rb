@@ -1,8 +1,9 @@
 # This module provides a set of overrides for the {vips image processing 
 # library}[http://www.vips.ecs.soton.ac.uk]
-# used via the {gir_ffi gem}[https://rubygems.org/gems/gir_ffi]. 
+# used via the {gobject-introspection
+# gem}[https://rubygems.org/gems/gobject-introspection]. 
 #
-# It needs vips-7.42 or later to be installed, 
+# It needs vips-8.2 or later to be installed, 
 # and <tt>Vips-8.0.typelib</tt>, the vips typelib, needs to be on your 
 # +GI_TYPELIB_PATH+.
 #

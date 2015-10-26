@@ -1,13 +1,9 @@
-- test operator overloads
-
 - add complex constants, eg. 
 
 	Complex(1, 2)
 	=> (1+2i)
 
-- test for presence of jpegload before testing jpg
-
-- add more tests
+- more examples, more realistic examples
 
 - example3.rb segvs around loop 500
 
@@ -19,4 +15,3 @@
 
   follow up in Nov if no response
 
-- more examples, more realistic examples
