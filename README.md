@@ -1,24 +1,27 @@
 ruby-vips8
 ==========
 
-Ruby binding for the vips8 API. This is unfinished ---
+Ruby binding for the vips8 API. This gem works, but it's currently rather slow
+due to issues with the garbage collector. 
+
 if you want 
-something that actually works, you need 
+something a bit more robust, you need 
 [ruby-vips](https://github.com/jcupitt/ruby-vips).
 
-This one is based on `gobject-introspection`. Try `gir_ffi-vips` for one 
-based on `gir_ffi`.
+This binding is based on the `gobject-introspection` gem. Try
+`gir_ffi-vips` for one based on `gir_ffi`.
 
 # To try it out
 
-Make sure you have vips-7.42 or later installed and that `Vips-8.0.typelib` is
+Make sure you have vips-8.2 or later installed and that `Vips-8.0.typelib` is
 on your `GI_TYPELIB_PATH`. Then install with:
 
 ```bash
 $ rake install
 ```
 
-And take a look in `examples/`. 
+And take a look in `examples/`. There is full rdoc documentation, take a look
+there too.
 
 # What's wrong with ruby-vips?
 
