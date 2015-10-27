@@ -1,36 +1,9 @@
-- example5 fails
+- add complex constants, eg. 
 
-	$ ./example5.rb /data/john/pics/k2.jpg x.jpg
-	/home/john/.gem/gems/ruby-vips8-0.1.0/lib/vips8/call.rb:24:in `rescue in
-	call_base': no operator 'new_matrix_from_array' (Vips::Error)
+	Complex(1, 2)
+	=> (1+2i)
 
-	image = Vips::Image.new_matrix_from_array width, height, array
-
- vips_image_new_matrix_from_array() seems not to be bound
-
-
-/**
- * vips_image_new_matrix_from_array:
- * @width: image width
- * @height: image height
- * @array: (array length=size) (transfer none): array of elements
- * @size: number of elements
- *
- * A binding-friendly version of vips_image_new_matrixv().
- *
- * Returns: the new #VipsImage, or %NULL on error.
- */
-VipsImage *
-vips_image_new_matrix_from_array( int width, int height,
-	double *array, int size )
-
-do we need to set the element type? see vips_blob_get()
-
-
-
-- test set icc profile
-
-  seem to be using prop still
+- more examples, more realistic examples
 
 - example3.rb segvs around loop 500
 
@@ -42,6 +15,3 @@ do we need to set the element type? see vips_blob_get()
 
   follow up in Nov if no response
 
-- add more tests
-
-- more examples, more realistic examples

@@ -1,9 +1,17 @@
+# remove the GC.start just below if you remove this notice
+puts "Vips::call running with a buggy gobject-introspection"
+puts "  as a workaround, this gem will GC on every call to libvips"
+puts "  fixing this bug will speed things up a lot"
+puts "  http://sourceforge.net/p/ruby-gnome2/mailman/message/34555949/"
 
 module Vips
 
     # internal call entry ... see Vips::call for the public entry point
     private
     def self.call_base(name, instance, option_string, supplied_values)
+        # see notice above
+        GC.start
+
         log "in Vips::call_base"
         log "name = #{name}"
         log "instance = #{instance}"

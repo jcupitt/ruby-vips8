@@ -3,7 +3,7 @@
 # used via the {gobject-introspection
 # gem}[https://rubygems.org/gems/gobject-introspection]. 
 #
-# It needs vips-7.42 or later to be installed, 
+# It needs vips-8.2 or later to be installed, 
 # and <tt>Vips-8.0.typelib</tt>, the vips typelib, needs to be on your 
 # +GI_TYPELIB_PATH+.
 #
@@ -352,7 +352,10 @@ module Vips
                 raise Vips::Error, "Not all array elements are Numeric."
             end
 
-            image = Vips::Image.new_matrix_from_array width, height, array
+            image = Vips::Image.matrix_from_array width, height, array
+            if image == nil
+                raise Vips::Error
+            end
 
             # be careful to set them as double
             image.set_double 'scale', scale.to_f
@@ -490,21 +493,22 @@ module Vips
             gtype = get_typeof name
             if gtype != 0
                 # array-ize
-                value = Argument::arrayize prop.value_type, value
+                value = Argument::arrayize gtype, value
 
                 # blob-ize
-                if GObject::type_is_a(gtype, Vips::TYPE_BLOB)
+                if gtype.type_is_a? GLib::Type["VipsBlob"]
                     if not value.is_a? Vips::Blob
-                        value = Vips::Blob.new(nil, value)
+                        value = Vips::Blob.copy value
                     end
                 end
 
                 # image-ize
-                if GObject::type_is_a(gtype, Vips::TYPE_IMAGE)
+                if gtype.type_is_a? GLib::Type["VipsImage"]
                     if not value.is_a? Vips::Image
-                        value = Argument::imageize self, value
+                        value = imageize match_image, value
                     end
                 end
+
             end
 
             set name, value
@@ -538,7 +542,7 @@ module Vips
         # Subtract an image, constant or array. 
         def -(other)
             other.is_a?(Vips::Image) ? 
-                subtract(other) : linear(1, smap(other) {|x| x * -1})
+                subtract(other) : linear(1, Image::smap(other) {|x| x * -1})
         end
 
         # Multiply an image, constant or array. 
@@ -549,7 +553,7 @@ module Vips
         # Divide an image, constant or array. 
         def /(other)
             other.is_a?(Vips::Image) ? 
-                divide(other) : linear(smap(other) {|x| 1.0 / x}, 0)
+                divide(other) : linear(Image::smap(other) {|x| 1.0 / x}, 0)
         end
 
         # Remainder after integer division with an image, constant or array. 
@@ -594,19 +598,6 @@ module Vips
                 boolean(other, :eor) : boolean_const(other, :eor)
         end
 
-        # Fetch bands using a number or a range
-        def [](index)
-            if index.is_a? Range
-                n = index.end - index.begin
-                n += 1 if not index.exclude_end?
-                extract_band index.begin, :n => n
-            elsif index.is_a? Numeric
-                extract_band index 
-            else
-                raise Vips::Error, "[] index is not range or numeric."
-            end
-        end
-
         # Equivalent to image ^ -1
         def !
             self ^ -1
@@ -645,7 +636,7 @@ module Vips
         end
 
         # Relational more than or equal to with an image, constant or array. 
-        def >(other)
+        def >=(other)
             other.is_a?(Vips::Image) ? 
                 relational(other, :moreeq) : relational_const(other, :moreeq)
         end
@@ -669,6 +660,19 @@ module Vips
                 relational(other, :noteq) 
             else
                 relational_const(other, :noteq)
+            end
+        end
+
+        # Fetch bands using a number or a range
+        def [](index)
+            if index.is_a? Range
+                n = index.end - index.begin
+                n += 1 if not index.exclude_end?
+                extract_band index.begin, :n => n
+            elsif index.is_a? Numeric
+                extract_band index 
+            else
+                raise Vips::Error, "[] index is not range or numeric."
             end
         end
 
@@ -711,7 +715,7 @@ module Vips
 
         # Return the coordinates of the image maximum.
         def maxpos
-            v, opts = max :x => True, :y => True
+            v, opts = max :x => true, :y => true
             x = opts['x']
             y = opts['y']
             return v, x, y
@@ -719,7 +723,7 @@ module Vips
 
         # Return the coordinates of the image minimum.
         def minpos
-            v, opts = min :x => True, :y => True
+            v, opts = min :x => true, :y => true
             x = opts['x']
             y = opts['y']
             return v, x, y

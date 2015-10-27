@@ -44,7 +44,14 @@ module Vips
 
                 value = value.map {|x| Argument::imageize match_image, x}
 
-                super(value)
+                # we'd like to just 
+                #   super(value)
+                # to construct, but the gobject-introspection gem does not
+                # support new from object array ... instead, we build in stages
+                array = Vips::ArrayImage.empty
+                value.each {|x| array = array.append(x)}
+
+                return array
             end
         end
 
@@ -73,9 +80,14 @@ module Vips
                 if value.is_a? cls
                     value, length = value.get
 
-                    return value
-                    break 
+                    # blobs come from gobject-introspection as arrays ... 
+                    # repack as strings for convenience
+                    if value and cls == Vips::Blob
+                        value = value.pack("C*")
+                    end
+
                 end
+
             end
 
             value
@@ -89,13 +101,15 @@ module Vips
             value = Argument::arrayize prop.value_type, value
 
             # blob-ize
+            prop = cls.property name
             if prop.value_type.type_is_a? GLib::Type["VipsBlob"]
                 if not value.is_a? Vips::Blob
-                    value = Vips::Blob.new(nil, value)
+                    value = Vips::Blob.copy value
                 end
             end
 
             # image-ize
+            prop = cls.property name
             if prop.value_type.type_is_a? GLib::Type["VipsImage"]
                 if not value.is_a? Vips::Image
                     value = imageize match_image, value

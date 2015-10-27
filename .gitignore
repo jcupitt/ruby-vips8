@@ -16,3 +16,6 @@ doc
 
 # jeweler generated
 pkg
+
+# tmp files from our spec tests
+spec/tmp
