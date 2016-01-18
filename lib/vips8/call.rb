@@ -1,17 +1,13 @@
-# remove the GC.start just below if you remove this notice
-puts "Vips::call running with a buggy gobject-introspection"
-puts "  as a workaround, this gem will GC on every call to libvips"
-puts "  fixing this bug will speed things up a lot"
-puts "  http://sourceforge.net/p/ruby-gnome2/mailman/message/34555949/"
-
 module Vips
 
-    # internal call entry ... see Vips::call for the public entry point
-    private
-    def self.call_base(name, instance, option_string, supplied_values)
-        # see notice above
-        GC.start
+    # call a vips operation ... this will crash if there's a GC during the call,
+    # I've really no idea why :-(
+    #
+    # Workaround: don't call this directly, use call_base (see below) instead.
+    # This will disable the GC, call this operation, then reenable it. 
 
+    private
+    def self.call_base_nogc(name, instance, option_string, supplied_values)
         log "in Vips::call_base"
         log "name = #{name}"
         log "instance = #{instance}"
@@ -216,6 +212,22 @@ module Vips
         log "success! #{name}.out = #{out}"
 
         return out
+    end
+
+    # run call_base_nogc, with the GC disabled
+    private
+    def self.call_base(name, instance, option_string, supplied_values)
+        gc_was_enabled = GC.disable
+        begin
+            result = call_base_nogc name, instance, 
+                option_string, supplied_values
+        ensure
+            if gc_was_enabled
+                GC.enable
+            end
+        end
+
+        return result
     end
 
     public

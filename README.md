@@ -1,13 +1,10 @@
 ruby-vips8
 ==========
 
-Ruby binding for the vips8 API. This gem works, but it's currently rather slow
-due to issues with the garbage collector. It has to force a full GC before
-each call to libvips. 
+Ruby binding for the vips8 API. This is still not quite done.
 
-if you want 
-something a bit more robust, you need 
-[ruby-vips](https://github.com/jcupitt/ruby-vips).
+The older vips7-based 
+[ruby-vips](https://github.com/jcupitt/ruby-vips) gem might be more robust. 
 
 This binding is based on the `gobject-introspection` gem. Try
 `gir_ffi-vips` for one based on `gir_ffi`.
@@ -24,6 +21,28 @@ $ rake install
 And take a look in `examples/`. There is full rdoc documentation, take a look
 there too.
 
+# Example
+
+```ruby
+im = Vips::Image.new_from_file filename
+# put im at position (100, 100) in a 3000 x 3000 pixel image, 
+# make the other pixels in the image by mirroring im up / down / 
+# left / right, see
+# http://www.vips.ecs.soton.ac.uk/supported/current/doc/html/libvips/libvips-conversion.html#vips-embed
+im = im.embed 100, 100, 3000, 3000, :extend => :mirror
+im.write_to_file output_filename
+
+# multiply the green (middle) band by 2, leave the other two alone
+im *= [1, 2, 1]
+
+# make an image from an array constant, convolve with it
+mask = Vips::Image.new_from_array [
+    [-1, -1, -1],
+    [-1, 16, -1],
+    [-1, -1, -1]], 8
+im = im.conv mask
+```
+
 # What's wrong with ruby-vips?
 
 There's an existing Ruby binding for vips
@@ -36,8 +55,8 @@ very useful new features:
 
 * [GObject](https://developer.gnome.org/gobject/stable/)-based API with full
   introspection. You can discover the vips8 API at runtime. This means that if
-  libvips gets a new operator, any binding that goes via vips8 will be able to
-  see the new thing immediately. With vips7, whenever libvips was changed, all
+  libvips gets a new operator, any binding that goes via vips8 will 
+  get the new thing immediately. With vips7, whenever libvips was changed, all
   the bindings needed to be changed too.
 
 * No C required. Thanks to
