@@ -2,7 +2,8 @@ ruby-vips8
 ==========
 
 Ruby binding for the vips8 API. This gem works, but it's currently rather slow
-due to issues with the garbage collector. 
+due to issues with the garbage collector. It has to force a full GC before
+each call to libvips. 
 
 if you want 
 something a bit more robust, you need 

@@ -1,3 +1,19 @@
+- GC segv ... can we ref/unref around argument property fetch? what does
+  .property return, exactly?
+
+  try
+
+	require 'vips8'
+	op = Vips::Operation.new "black"
+
+	cls = GLib::Type["VipsBlack"].to_class
+	prop = cls.property "width"
+	=> #<GLib::Param::Int: #<Class:0x0000000280a7f8>#width>
+
+  
+
+
+
 - add complex constants, eg. 
 
 	Complex(1, 2)
