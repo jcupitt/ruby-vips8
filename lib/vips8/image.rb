@@ -729,6 +729,16 @@ module Vips
             return v, x, y
         end
 
+        # get the value of a pixel as an array
+        def getpoint(x, y)
+            # vips has an operation that does this, but we can't call it via
+            # gobject-introspection 3.0.7 since it's missing array double
+            # returns
+            #
+            # remove this def when gobject-introspection updates
+            crop(x, y, 1, 1).bandsplit.map {|i| i.avg}
+        end
+_
         # Return the real part of a complex image.
         def real
             complexget :real
