@@ -678,9 +678,31 @@ module Vips
 # [background] Colour for new pixels, input VipsArrayDouble
 
 ##
-# :method: extract_area
+# :singleton-method: arrayjoin
 # :call-seq:
-#    extract_area(left, top, width, height) => out
+#    arrayjoin(in) => out
+#
+# Join an array of images.
+#
+# Input:
+# [in] Array of input images, input VipsArrayImage
+#
+# Output:
+# [out] Output image, output VipsImage
+#
+# Options:
+# [across] Number of images across grid, input gint
+# [shim] Pixels between images, input gint
+# [background] Colour for new pixels, input VipsArrayDouble
+# [halign] Align on the left, centre or right, input VipsAlign
+# [valign] Align on the top, centre or bottom, input VipsAlign
+# [hspacing] Horizontal spacing between images, input gint
+# [vspacing] Vertical spacing between images, input gint
+
+##
+# :method: crop
+# :call-seq:
+#    crop(left, top, width, height) => out
 #
 # Extract an area from an image.
 #
@@ -724,6 +746,19 @@ module Vips
 #
 # Options:
 # [n] Number of bands to extract, input gint
+
+##
+# :method: bandjoin_const
+# :call-seq:
+#    bandjoin_const(c) => out
+#
+# Append a constant band to an image.
+#
+# Input:
+# [c] Array of constants to add, input VipsArrayDouble
+#
+# Output:
+# [out] Output image, output VipsImage
 
 ##
 # :singleton-method: bandrank
@@ -2250,6 +2285,7 @@ module Vips
 # [xres] Horizontal resolution in pixels/mm, input gdouble
 # [yres] Vertical resolution in pixels/mm, input gdouble
 # [bigtiff] Write a bigtiff image, input gboolean
+# [properties] Write a properties document to IMAGEDESCRIPTION, input gboolean
 # [strip] Strip all metadata from image, input gboolean
 # [background] Background value, input VipsArrayDouble
 
@@ -2268,9 +2304,65 @@ module Vips
 # [background] Background value, input VipsArrayDouble
 
 ##
+# :method: mapim
+# :call-seq:
+#    mapim(index) => out
+#
+# Resample with an mapim image.
+#
+# Input:
+# [index] Index pixels with this, input VipsImage
+#
+# Output:
+# [out] Output image, output VipsImage
+#
+# Options:
+# [interpolate] Interpolate pixels with this, input VipsInterpolate
+
+##
 # :method: shrink
 # :call-seq:
 #    shrink(xshrink, yshrink) => out
+#
+# Shrink an image.
+#
+# Input:
+# [xshrink] Horizontal shrink factor, input gdouble
+# [yshrink] Vertical shrink factor, input gdouble
+#
+# Output:
+# [out] Output image, output VipsImage
+
+##
+# :method: shrinkh
+# :call-seq:
+#    shrinkh(xshrink) => out
+#
+# Shrink an image horizontally.
+#
+# Input:
+# [xshrink] Horizontal shrink factor, input gint
+#
+# Output:
+# [out] Output image, output VipsImage
+
+##
+# :method: shrinkv
+# :call-seq:
+#    shrinkv(yshrink) => out
+#
+# Shrink an image vertically.
+#
+# Input:
+# [yshrink] Vertical shrink factor, input gint
+#
+# Output:
+# [out] Output image, output VipsImage
+
+##
+# :method: shrink2
+# :call-seq:
+#    shrink2(xshrink, yshrink) => out
 #
 # Shrink an image.
 #
@@ -2352,6 +2444,7 @@ module Vips
 #
 # Options:
 # [interpolate] Interpolate pixels with this, input VipsInterpolate
+# [vscale] Vertical scale image by this factor, input gdouble
 # [idx] Horizontal input displacement, input gdouble
 # [idy] Vertical input displacement, input gdouble
 
