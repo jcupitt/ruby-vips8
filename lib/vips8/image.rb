@@ -691,6 +691,21 @@ module Vips
             round :rint
         end
 
+        # AND the bands of an image together
+        def bandand
+            bandbool :and
+        end
+
+        # OR the bands of an image together
+        def bandor
+            bandbool :or
+        end
+
+        # EOR the bands of an image together
+        def bandeor
+            bandbool :eor
+        end
+
         # :call-seq:
         #   bandsplit => [image]
         #
@@ -738,7 +753,12 @@ module Vips
             # remove this def when gobject-introspection updates
             crop(x, y, 1, 1).bandsplit.map {|i| i.avg}
         end
-_
+
+        # a median filter
+        def median(size = 3)
+            rank(size, size, (size * size) / 2)
+        end
+
         # Return the real part of a complex image.
         def real
             complexget :real
@@ -812,6 +832,41 @@ _
         # Return 10 ** pixel.
         def exp10
             math :exp10
+        end
+
+        # Flip horizontally.
+        def fliphor
+            flip :horizontal
+        end
+
+        # Flip vertically.
+        def flipver
+            flip :vertical
+        end
+
+        # Erode with a structuring element.
+        def erode(mask)
+            morph mask, :erode
+        end
+
+        # Dilate with a structuring element.
+        def dilate(mask)
+            morph mask, :dilate
+        end
+
+        # Rotate by 90 degrees clockwise.
+        def rot90
+            rot :d90
+        end
+
+        # Rotate by 180 degrees clockwise.
+        def rot180
+            rot :d180
+        end
+
+        # Rotate by 270 degrees clockwise.
+        def rot270
+            rot :d270
         end
 
         # Select pixels from +th+ if +self+ is non-zero and from +el+ if

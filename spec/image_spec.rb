@@ -353,6 +353,95 @@ RSpec.describe Vips::Image do
             expect(image.avg).to be_within(0.01).of(67)
         end
 
+        it 'can flip' do
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 12, 1, 1
+            b = Vips::Image.black(16, 16) 
+            b = b.draw_rect 255, 15 - 10, 12, 1, 1
+
+            expect((a - b.fliphor).abs.max).to eq(0.0)
+
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 15 - 12, 1, 1
+            b = Vips::Image.black(16, 16) 
+            b = b.draw_rect 255, 10, 12, 1, 1
+
+            expect((a - b.flipver).abs.max).to eq(0.0)
+        end
+
+        it 'can getpoint' do
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 12, 1, 1
+            b = Vips::Image.black(16, 16) 
+            b = b.draw_rect 255, 10, 10, 1, 1
+            im = a.bandjoin(b)
+
+            expect(im.getpoint(10, 12)).to eq([255, 0])
+            expect(im.getpoint(10, 10)).to eq([0, 255])
+        end
+
+        it 'can median' do
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 12, 1, 1
+            im = a.median
+
+            expect(im.max).to eq(0)
+        end
+
+        it 'can erode' do
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 12, 1, 1
+            mask = Vips::Image.new_from_array [
+                [128, 255, 128],
+                [255, 255, 255],
+                [128, 255, 128]
+            ]
+            im = a.erode mask
+
+            expect(im.max).to eq(0)
+        end
+
+        it 'can dilate' do
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 12, 1, 1
+            mask = Vips::Image.new_from_array [
+                [128, 255, 128],
+                [255, 255, 255],
+                [128, 255, 128]
+            ]
+            im = a.dilate mask
+
+            expect(im.getpoint(10, 12)).to eq([255])
+            expect(im.getpoint(11, 12)).to eq([255])
+            expect(im.getpoint(12, 12)).to eq([0])
+        end
+
+        it 'can rot' do
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 12, 1, 1
+
+            im = a.rot90.rot90.rot90.rot90
+            expect((a - im).abs.max).to eq(0.0)
+
+            im = a.rot180.rot180
+            expect((a - im).abs.max).to eq(0.0)
+
+            im = a.rot270.rot270.rot270.rot270
+            expect((a - im).abs.max).to eq(0.0)
+        end
+
+        it 'can bandbool' do
+            a = Vips::Image.black(16, 16) 
+            a = a.draw_rect 255, 10, 12, 1, 1
+            b = Vips::Image.black(16, 16) 
+            b = b.draw_rect 255, 10, 10, 1, 1
+            im = a.bandjoin(b)
+
+            expect(im.bandand.getpoint(10, 12)).to eq([0])
+            expect(im.bandor.getpoint(10, 12)).to eq([255])
+            expect(im.bandeor.getpoint(10, 12)).to eq([255])
+        end
+
         it 'ifthenelse with image arguments' do
             image = Vips::Image.black(16, 16) 
             image = image.draw_rect 255, 10, 12, 1, 1

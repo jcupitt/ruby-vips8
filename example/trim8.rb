@@ -11,18 +11,6 @@ require 'vips8'
 
 im = Vips::Image.new_from_file ARGV[0]
 
-class Vips::Image
-    # a median filter
-    def median(size = 3)
-        rank(size, size, (size * size) / 2)
-    end
-
-    # get the value of a pixel as an array
-    def getpoint(x, y)
-        crop(x, y, 1, 1).bandsplit.map {|i| i.avg}
-    end
-end
-
 # find the value of the pixel at (0, 0) ... we will search for all pixels 
 # significantly different from this
 background = im.getpoint(0, 0)
@@ -38,13 +26,13 @@ columns, rows = mask.project
 first_column, first_row = columns.profile
 left = first_row.min
 
-first_column, first_row = columns.flip(:horizontal).profile
+first_column, first_row = columns.fliphor.profile
 right = columns.width - first_row.min
 
 first_column, first_row = rows.profile
 top = first_column.min
 
-first_column, first_row = rows.flip(:vertical).profile
+first_column, first_row = rows.flipver.profile
 bottom = rows.height - first_column.min
 
 # and now crop the original image
