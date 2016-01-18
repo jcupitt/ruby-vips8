@@ -243,7 +243,7 @@ module Vips
 
         # Invoke a vips operation with ::call.
         def self.method_missing(name, *args)
-            Vips::call name.to_s, args
+            Vips::call_base name.to_s, nil, "", args
         end
 
         # Return a new Vips::Image for a file on disc. This method can load

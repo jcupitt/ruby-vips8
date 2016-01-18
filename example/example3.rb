@@ -13,7 +13,7 @@ require 'vips8'
 
 10000.times do |i|
     puts "loop #{i} ..."
-    filename = "/data/john/pics/k2.jpg"
+    filename = "/home/john/pics/k2.jpg"
     im = Vips::Image.new_from_file filename
     im = im.embed 100, 100, 3000, 3000, :extend => :mirror
     im.write_to_file "x.v"
