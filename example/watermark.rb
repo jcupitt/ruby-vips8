@@ -38,10 +38,6 @@ end
 
 marked = text.ifthenelse text_colour, im, :blend => true
 
-# that will leave marked tagged as "mono", since it's been generated from the 
-# text image ... instead, copy the interpretation from the loaded image
-marked = marked.copy :interpretation => im.interpretation
-
 # reattach alpha
 marked = marked.bandjoin alpha  if alpha
  
