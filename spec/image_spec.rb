@@ -70,6 +70,30 @@ RSpec.describe Vips::Image do
             expect(image.avg).to eq(1.5)
         end
 
+        it 'can use array consts for image args' do
+            r = Vips::Image.black(16, 16) 
+            r = r.draw_rect 255, 10, 12, 1, 1
+            g = Vips::Image.black(16, 16) 
+            g = g.draw_rect 255, 10, 11, 1, 1
+            b = Vips::Image.black(16, 16) 
+            b = b.draw_rect 255, 10, 10, 1, 1
+            im = r.bandjoin([g, b])
+
+            expect(im.width).to eq(16)
+            expect(im.height).to eq(16)
+            expect(im.bands).to eq(3)
+
+            im = im.conv [
+                [0.11, 0.11, 0.11],
+                [0.11, 0.11, 0.11],
+                [0.11, 0.11, 0.11]
+            ], :precision => :float
+
+            expect(im.width).to eq(16)
+            expect(im.height).to eq(16)
+            expect(im.bands).to eq(3)
+        end
+
         it 'can set scale and offset on a convolution mask' do
             image = Vips::Image.new_from_array [1, 2], 8, 2
             expect(image.width).to eq(2)

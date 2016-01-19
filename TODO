@@ -1,7 +1,5 @@
 - mail about the getpoint unimplemented error
 
-- add spec tests for .recomb() and .conv() with array args
-
 - add complex constants, eg. 
 
 	Complex(1, 2)
