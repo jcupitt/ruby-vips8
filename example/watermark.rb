@@ -13,29 +13,23 @@ text = text.crop 0, 0, im.width, im.height
 # we want to blend into the visible part of the image and leave any alpha
 # channels untouched ... we need to split im into two parts
 
-puts "interpretation = #{im.interpretation}"
-
 # guess how many bands from the start of im contain visible colour information
-if im.bands >= 4 and im.interpretation == Vips::Interpretation[:cmyk]
+if im.bands >= 4 and im.interpretation == :cmyk
     # cmyk image
-    puts "cmyk"
     n_visible_bands = 4
     text_colour = [0, 255, 0, 0]
 elsif im.bands >= 3
     # rgb image
-    puts "rgb"
     n_visible_bands = 3
     text_colour = [255, 0, 0]
 else
     # mono image
-    puts "mono"
     n_visible_bands = 1
     text_colour = 255
 end
 
 # split into image and alpha
 if im.bands - n_visible_bands > 0
-    puts "extracting alpha"
     alpha = im.extract_band n_visible_bands, :n => im.bands - n_visible_bands
     im = im.extract_band 0, :n => n_visible_bands
 else
