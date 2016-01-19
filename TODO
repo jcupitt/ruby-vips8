@@ -1,5 +1,7 @@
 - mail about the getpoint unimplemented error
 
+- fix up watermarking ... how do we handle enums? I forget
+
 - add complex constants, eg. 
 
 	Complex(1, 2)
