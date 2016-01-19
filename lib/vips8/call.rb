@@ -75,8 +75,7 @@ module Vips
             log "setting first image arg with instance ..."
             x = required_input.find do |arg|
                 gtype = GLib::Type["VipsImage"]
-                prop = arg.cls.property arg.name
-                vtype = prop.value_type
+                vtype = arg.prop.value_type
 
                 vtype.type_is_a? gtype
             end

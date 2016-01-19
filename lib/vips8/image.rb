@@ -948,8 +948,7 @@ module Vips
             # find the first input image, if any ... we will be a method of this
             # instance
             member_x = required_input.find do |x|
-                prop = x.cls.property x.name
-                prop.value_type.type_is_a? GLib::Type["VipsImage"]
+                x.prop.value_type.type_is_a? GLib::Type["VipsImage"]
             end
             if member_x != nil
                 required_input.delete member_x
