@@ -2,10 +2,13 @@
 
 - reread docs, esp. the explanatory parts
 
+  need to hide loads of stuff
+
 - add complex constants, eg. 
 
 	Complex(1, 2)
 	=> (1+2i)
 
 - more examples, more realistic examples
+
 

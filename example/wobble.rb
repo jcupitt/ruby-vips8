@@ -24,7 +24,7 @@ module Vips
 
             # and back to rectangular coordinates again to make a set of 
             # vectors we can apply to the original index image
-            index += d.ibandjoin(polar[1]).rect
+            index += d.bandjoin(polar[1]).rect
 
             # finally, use our modified index image to distort!
             mapim index 

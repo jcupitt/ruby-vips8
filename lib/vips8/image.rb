@@ -233,6 +233,37 @@ module Vips
             x.is_a?(Array) ? x.map {|x| smap(x, &block)} : block.(x)
         end
 
+        # run a complex operation on a complex image, or an image with an even
+        # number of bands ... handy for things like running .polar on .index
+        # images
+        def self.run_cmplx(image, &block)
+            original_format = image.format
+
+            if not Vips::band_format_iscomplex image.format
+                if image.bands % 2 != 0
+                    raise Error, "not an even number of bands"
+                end
+
+                if not Vips::band_format_isfloat image.format
+                    image = image.cast :float 
+                end
+
+                new_format = image.format == :double ? :dpcomplex : :complex
+                image = image.copy :format => new_format, 
+                    :bands => image.bands / 2
+            end
+
+            image = block.(image)
+
+            if not Vips::band_format_iscomplex original_format
+                new_format = image.format == :dpcomplex ? :double : :float
+                image = image.copy :format => new_format, 
+                    :bands => image.bands * 2
+            end
+
+            image
+        end
+
         public
 
         # Invoke a vips operation with Vips::call, using #self as the first 
@@ -771,17 +802,17 @@ module Vips
 
         # Return an image converted to polar coordinates.
         def polar
-            complex :polar
+            Image::run_cmplx(self) {|x| x.complex :polar}
         end
 
         # Return an image converted to rectangular coordinates.
         def rect
-            complex :rect 
+            Image::run_cmplx(self) {|x| x.complex :rect}
         end
 
         # Return the complex conjugate of an image.
         def conj
-            complex :conj 
+            Image::run_cmplx(self) {|x| x.complex :conj}
         end
 
         # Return the sine of an image in degrees.
