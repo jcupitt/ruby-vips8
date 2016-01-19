@@ -1,3 +1,11 @@
+- mail about the getpoint unimplemented error
+
+- Vips::Argument can now keep @prop member, perhaps?
+
+- update daltonize8.rb with final code
+
+- add spec tests for .recomb() and .conv() with array args
+
 - add complex constants, eg. 
 
 	Complex(1, 2)

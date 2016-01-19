@@ -222,9 +222,7 @@ module Vips
             result = call_base_nogc name, instance, 
                 option_string, supplied_values
         ensure
-            if gc_was_enabled
-                GC.enable
-            end
+            GC.enable if gc_was_enabled
         end
 
         return result

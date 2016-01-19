@@ -19,6 +19,9 @@ im = Vips::Image.new_from_file ARGV[0], :access => :sequential
 
 im *= [1, 2, 1]
 
+# we want to be able to specify a scale for the convolution mask, so we have to
+# make it ourselves
+# if you are OK with scale=1, you can just pass the array directly to .conv()
 mask = Vips::Image.new_from_array [
     [-1, -1, -1],
     [-1, 16, -1],

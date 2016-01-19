@@ -25,6 +25,18 @@ module Vips
             return value if match_image == nil
             return value if value.is_a? Vips::Image
 
+            # 2D array values become tiny 2D images
+            if value.is_a? Array and value[0].is_a? Array
+                return Vips::Image.new_from_array value
+            end
+
+            # if there's nothing to match to, we also make a 2D image
+            if match_image == nil
+                return Vips::Image.new_from_array value
+            end
+
+            # we have a 1D array ... use that as a pixel constant and expand 
+            # to match match_image
             pixel = (Vips::Image.black(1, 1) + value).cast(match_image.format)
             pixel.embed(0, 0, match_image.width, match_image.height, 
                         :extend => :copy)
@@ -68,7 +80,7 @@ module Vips
                     value = [value]
                 end
 
-                value = arrayize_map[gtype].new value
+                value = arrayize_map[gtype].new(value)
             end
 
             value
@@ -112,7 +124,7 @@ module Vips
             prop = cls.property name
             if prop.value_type.type_is_a? GLib::Type["VipsImage"]
                 if not value.is_a? Vips::Image
-                    value = imageize match_image, value
+                    value = Argument::imageize match_image, value
                 end
             end
 
