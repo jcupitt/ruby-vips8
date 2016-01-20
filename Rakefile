@@ -36,12 +36,14 @@ end
 
 task :default => :spec
 
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+require "github/markup"
+require "redcarpet"
+require "yard"
+require "yard/rake/yardoc_task"
 
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "ruby-vips8 #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+YARD::Rake::YardocTask.new do |yard|
+    OTHER_PATHS = %w(README.md)
+    yard.files = ['lib/**/*.rb', OTHER_PATHS]
+    yard.options = %w(--markup-provider=redcarpet --markup=markdown 
+        --main=README.md)
 end

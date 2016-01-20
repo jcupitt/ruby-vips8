@@ -1,5 +1,4 @@
-ruby-vips8
-==========
+# ruby-vips8
 
 Ruby binding for the vips8 API. This is still not quite done.
 
@@ -24,7 +23,12 @@ there too.
 # Example
 
 ```ruby
+
+
+
+
 im = Vips::Image.new_from_file filename
+
 # put im at position (100, 100) in a 3000 x 3000 pixel image, 
 # make the other pixels in the image by mirroring im up / down / 
 # left / right, see

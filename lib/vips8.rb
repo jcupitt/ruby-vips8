@@ -4,7 +4,9 @@
 # Author::    John Cupitt  (mailto:jcupitt@gmail.com)
 # License::   MIT
 
+# :stopdoc: 
 require 'gobject-introspection'
+# :startdoc: 
 
 def log str # :nodoc:
     if $vips_debug

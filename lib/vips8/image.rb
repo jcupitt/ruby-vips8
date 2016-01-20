@@ -60,11 +60,10 @@
 # gobject-introspection generates <tt>Vips-8.0.typelib</tt>, a file 
 # describing how to use libvips.
 #
-# The gobject-introspection gem loads this typelib and uses it to let you call functions in libvips
-# directly from Ruby. However, the interface you get from raw
-# gobject-introspection is 
-# rather ugly, so ruby-vips8 adds a set of overrides which try to make it 
-# nicer to use. 
+# The gobject-introspection gem loads this typelib and uses it to let you call 
+# functions in libvips directly from Ruby. However, the interface you get 
+# from raw gobject-introspection is rather ugly, so ruby-vips8 adds a set 
+# of overrides which try to make it nicer to use. 
 #
 # The API you end up with is a Ruby-ish version of the C API. Full documentation
 # on the operations and what they do is there, you can use it directly. This

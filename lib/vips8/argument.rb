@@ -1,8 +1,8 @@
-# This class is used internally to convert Ruby values to arguments to libvips
-# operations. 
 
 module Vips
 
+    # This class is used internally to convert Ruby values to arguments to 
+    # libvips operations. 
     class Argument # :nodoc:
         attr_reader :op, :name, :flags, :priority, :isset, :prop
 
