@@ -3,7 +3,8 @@ module Vips
 
     # This class is used internally to convert Ruby values to arguments to 
     # libvips operations. 
-    class Argument # :nodoc:
+    # @private
+    class Argument 
         attr_reader :op, :name, :flags, :priority, :isset, :prop
 
         def initialize(op, name)
@@ -40,7 +41,8 @@ module Vips
                         :extend => :copy)
         end
 
-        class ArrayImageConst < Vips::ArrayImage # :nodoc: 
+        # @private
+        class ArrayImageConst < Vips::ArrayImage 
             def self.new(value)
                 if not value.is_a? Array
                     value = [value]

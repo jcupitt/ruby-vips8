@@ -1,5 +1,7 @@
 module Vips
 
+    # add a conventience method to Operation
+    # @private
     class Operation
         # Fetch arg list, remove boring ones, sort into priority order.
         def get_args

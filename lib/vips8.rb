@@ -4,7 +4,8 @@
 # Author::    John Cupitt  (mailto:jcupitt@gmail.com)
 # License::   MIT
 
-def log str # :nodoc:
+# @private
+def log str 
     if $vips_debug
         puts str
     end
@@ -27,7 +28,10 @@ module Vips
     # about as crude as you could get
     $vips_debug = false
 
-    def self.set_debug dbg # :nodoc:
+    # Turn debug logging on and off.
+    #
+    # @param dbg [Boolean] Set true to print debug log messages
+    def self.set_debug dbg 
         $vips_debug = dbg
     end
 
@@ -74,6 +78,7 @@ module Vips
         end
     end
 
+    # @private
     class Loader < GObjectIntrospection::Loader
         def initialize(base_module, init_arguments)
             log "Vips::Loader.initialize: #{base_module}, #{init_arguments}"
@@ -122,7 +127,8 @@ at_exit {
 # this makes vips keep a list of all active objects which we can print out
 Vips::leak_set true if $vips_debug
 
-def showall # :nodoc:
+# @private
+def showall 
     if $vips_debug
         GC.start 
         Vips::Object::print_all 

@@ -1,31 +1,33 @@
-# This module provides a set of overrides for the {vips image processing 
-# library}[http://www.vips.ecs.soton.ac.uk]
-# used via the {gobject-introspection
-# gem}[https://rubygems.org/gems/gobject-introspection]. 
+# This module provides a set of overrides for the [vips image processing 
+# library](http://www.vips.ecs.soton.ac.uk)
+# used via the [gobject-introspection
+# gem](https://rubygems.org/gems/gobject-introspection). 
 #
 # It needs vips-8.2 or later to be installed, 
-# and <tt>Vips-8.0.typelib</tt>, the vips typelib, needs to be on your 
-# +GI_TYPELIB_PATH+.
+# and `Vips-8.0.typelib`>, the vips typelib, needs to be on your 
+# `GI_TYPELIB_PATH`.
 #
-# == Example
+# # Example
 #
-#    require 'vips8'
+# ```ruby
+# require 'vips8'
 #
-#    if ARGV.length < 2
-#        raise "usage: #{$PROGRAM_NAME}: input-file output-file"
-#    end
+# if ARGV.length < 2
+#     raise "usage: #{$PROGRAM_NAME}: input-file output-file"
+# end
 #
-#    im = Vips::Image.new_from_file ARGV[0], :access => :sequential
+# im = Vips::Image.new_from_file ARGV[0], :access => :sequential
 #
-#    im *= [1, 2, 1]
+# im *= [1, 2, 1]
 #
-#    mask = Vips::Image.new_from_array [
-#            [-1, -1, -1],
-#            [-1, 16, -1],
-#            [-1, -1, -1]], 8
-#    im = im.conv mask
+# mask = Vips::Image.new_from_array [
+#         [-1, -1, -1],
+#         [-1, 16, -1],
+#         [-1, -1, -1]], 8
+# im = im.conv mask
 #
-#    im.write_to_file ARGV[1]
+# im.write_to_file ARGV[1]
+# ```
 #
 # This example loads a file, boosts the green channel (I'm not sure why), 
 # sharpens the image, and saves it back to disc again. 
@@ -53,7 +55,7 @@
 # You can also write formatted images to memory buffers, or dump image data to a
 # raw memory array. 
 #
-# == How it works
+# # How it works
 #
 # The C sources to libvips include a set of specially formatted
 # comments which describe its interfaces. When you compile the library,
@@ -70,7 +72,7 @@
 # document explains the features of the Ruby API and lists the available libvips
 # operations very briefly. 
 #
-# == Automatic wrapping
+# # Automatic wrapping
 #
 # ruby-vips8 adds a Vips::Image.method_missing handler to Vips::Image and uses
 # it to look up vips operations. For example, the libvips operation +add+, which
@@ -89,26 +91,34 @@
 # the minimum value, has a large number of optional arguments. You can use it to
 # find the minimum value like this:
 #
-#   min_value = image.min
+# ```ruby
+# min_value = image.min
+# ```
 #
 # You can ask it to return the position of the minimum with :x and :y.
 #   
-#   min_value, x_pos, y_pos = image.min :x => true, :y => true
+# ```ruby
+# min_value, x_pos, y_pos = image.min :x => true, :y => true
+# ```
 #
 # Now x_pos and y_pos will have the coordinates of the minimum value. There's
 # actually a convenience function for this, Vips::Image.minpos.
 #
 # You can also ask for the top n minimum, for example:
 #
-#   min_value, x_pos, y_pos = image.min :size => 10,
-#       :x_array => true, :y_array => true
+# ```ruby
+# min_value, x_pos, y_pos = image.min :size => 10,
+#     :x_array => true, :y_array => true
+# ```
 #
 # Now x_pos and y_pos will be 10-element arrays. 
 #
 # Because operations are member functions and return the result image, you can
 # chain them. For example, you can write:
 #
-#   result_image = image.imag.cos
+# ```ruby
+# result_image = image.imag.cos
+# ```
 #
 # to calculate the cosine of the imaginary part of a complex image. 
 # There are also a full set
@@ -121,10 +131,12 @@
 # value as an integer, a float, or some kind of compound object and it 
 # will be converted for you. You can write:
 #
-#   result_image = image.linear 1, 3 
-#   result_image = image.linear 12.4, 13.9 
-#   result_image = image.linear [1, 2, 3], [4, 5, 6] 
-#   result_image = image.linear 1, [4, 5, 6] 
+# ```ruby
+# result_image = image.linear 1, 3 
+# result_image = image.linear 12.4, 13.9 
+# result_image = image.linear [1, 2, 3], [4, 5, 6] 
+# result_image = image.linear 1, [4, 5, 6] 
+# ```
 #
 # And so on. A set of overloads are defined for Vips::Image.linear, see below.
 #
@@ -132,7 +144,9 @@
 # to and from the various vips types, like Vips::Blob and Vips::ArrayImage. For
 # example, you can read the ICC profile out of an image like this: 
 #
-#   profile = im.get_value "icc-profile-data"
+# ```ruby
+# profile = im.get_value "icc-profile-data"
+# ```
 #
 # and profile will be a byte array.
 #
@@ -141,32 +155,40 @@
 # example, Vips::Image.ifthenelse uses a condition image to pick pixels 
 # between a then and an else image:
 #
-#   result_image = condition_image.ifthenelse then_image, else_image
+# ```ruby
+# result_image = condition_image.ifthenelse then_image, else_image
+# ```
 #
 # You can use a constant instead of either the then or the else parts and it
 # will be expanded to an image for you. If you use a constant for both then and
 # else, it will be expanded to match the condition image. For example:
 #
-#    result_image = condition_image.ifthenelse [0, 255, 0], [255, 0, 0]
+# ```ruby
+# result_image = condition_image.ifthenelse [0, 255, 0], [255, 0, 0]
+# ```
 #
 # Will make an image where true pixels are green and false pixels are red.
 #
 # This is useful for Vips::Image.bandjoin, the thing to join two or more 
 # images up bandwise. You can write:
 #
-#   rgba = rgb.bandjoin 255
+# ```ruby
+# rgba = rgb.bandjoin 255
+# ```
 #
 # to append a constant 255 band to an image, perhaps to add an alpha channel. Of
 # course you can also write:
 #
-#   result_image = image1.bandjoin image2
-#   result_image = image1.bandjoin [image2, image3]
-#   result_image = Vips::Image.bandjoin [image1, image2, image3]
-#   result_image = image1.bandjoin [image2, 255]
+# ```ruby
+# result_image = image1.bandjoin image2
+# result_image = image1.bandjoin [image2, image3]
+# result_image = Vips::Image.bandjoin [image1, image2, image3]
+# result_image = image1.bandjoin [image2, 255]
+# ```
 #
 # and so on. 
 # 
-# == Automatic rdoc documentation
+# # Automatic YARD documentation
 #
 # These API docs are generated automatically by Vips::generate_rdoc. It examines
 # libvips and writes a summary of each operation and the arguments and options
@@ -174,12 +196,12 @@
 # 
 # Use the C API docs for more detail.
 #
-# == Exceptions
+# # Exceptions
 #
 # The wrapper spots errors from vips operations and raises the Vips::Error
 # exception. You can catch it in the usual way. 
 # 
-# == Draw operations
+# # Draw operations
 #
 # Paint operations like Vips::Image.draw_circle and Vips::Image.draw_line 
 # modify their input image. This
@@ -195,27 +217,33 @@
 # If you want to avoid the copies, you'll need to call drawing operations
 # yourself.
 #
-# == Overloads
+# # Overloads
 #
 # The wrapper defines the usual set of arithmetic, boolean and relational
 # overloads on image. You can mix images, constants and lists of constants
 # (almost) freely. For example, you can write:
 #
-#   result_image = ((image * [1, 2, 3]).abs < 128) | 4
+# ```ruby
+# result_image = ((image * [1, 2, 3]).abs < 128) | 4
+# ```
 #
-# == Expansions
+# # Expansions
 #
 # Some vips operators take an enum to select an action, for example 
 # Vips::Image.math can be used to calculate sine of every pixel like this:
 #
-#   result_image = image.math :sin
+# ```ruby
+# result_image = image.math :sin
+# ```
 #
 # This is annoying, so the wrapper expands all these enums into separate members
 # named after the enum. So you can write:
 #
-#   result_image = image.sin
+# ```ruby
+# result_image = image.sin
+# ```
 #
-# == Convenience functions
+# # Convenience functions
 #
 # The wrapper defines a few extra useful utility functions: 
 # Vips::Image.get_value, Vips::Image.set_value, Vips::Image.bandsplit, 
@@ -265,8 +293,11 @@ module Vips
 
         public
 
-        # Invoke a vips operation with Vips::call, using #self as the first 
+        # Invoke a vips operation with Vips::call, using self as the first 
         # input image argument. 
+        #
+        # @param name [String] vips operation to call
+        # @return result of vips operation
         def method_missing(name, *args)
             Vips::call_base(name.to_s, self, "", args)
         end
@@ -276,25 +307,34 @@ module Vips
             Vips::call_base name.to_s, nil, "", args
         end
 
-        # Return a new Vips::Image for a file on disc. This method can load
+        # Return a new Image for a file on disc. This method can load
         # images in any format supported by vips. The filename can include
         # load options, for example:
         #
-        #   image = Vips::new_from_file "fred.jpg[shrink=2]"
+        # ```
+        # image = Vips::new_from_file "fred.jpg[shrink=2]"
+        # ```
         #
         # You can also supply options as a hash, for example:
         #
-        #   image = Vips::new_from_file "fred.jpg", :shrink => 2
+        # ```
+        # image = Vips::new_from_file "fred.jpg", :shrink => 2
+        # ```
         #
         # The options available depend upon the load operation that will be
         # executed. Try something like:
         #
-        #   $ vips jpegload
+        # ```
+        # $ vips jpegload
+        # ```
         #
         # at the command-line to see a summary of the available options.
         #
         # Loading is fast: only enough of the image is loaded to be able to fill
         # out the header. Pixels will only be processed when they are needed.
+        #
+        # @param name [String] the filename to load from
+        # @return [Image] the loaded image
         def self.new_from_file(name, *args)
             # very common, and Vips::filename_get_filename will segv if we pass
             # this
@@ -311,25 +351,35 @@ module Vips
             Vips::call_base loader, nil, option_string, [filename] + args
         end
 
-        # Create a new Vips::Image for an image encoded in a format, such as
+        # Create a new Image for an image encoded in a format, such as
         # JPEG, in a memory string. Load options may be passed encoded as
         # strings, or appended as a hash. For example:
         #
-        #   image = Vips::new_from_from_buffer memory_buffer, "shrink=2"
+        # ```
+        # image = Vips::new_from_from_buffer memory_buffer, "shrink=2"
+        # ```
         # 
         # or alternatively:
         #
-        #   image = Vips::new_from_from_buffer memory_buffer, "", :shrink => 2
+        # ```
+        # image = Vips::new_from_from_buffer memory_buffer, "", :shrink => 2
+        # ```
         #
         # The options available depend on the file format. Try something like:
         #
-        #   $ vips jpegload_buffer
+        # ```
+        # $ vips jpegload_buffer
+        # ```
         #
         # at the command-line to see the availeble options. Only JPEG, PNG and
         # TIFF images can be read from memory buffers. 
         #
         # Loading is fast: only enough of the image is loaded to be able to fill
         # out the header. Pixels will only be processed when they are needed.
+        #
+        # @param data [String] the data to load from
+        # @param option_string [String] load options as a string
+        # @return [Image] the loaded image
         def self.new_from_buffer(data, option_string, *args)
             loader = Vips::Foreign.find_load_buffer data
             if loader == nil
@@ -339,23 +389,32 @@ module Vips
             Vips::call_base loader, nil, option_string, [data] + args
         end
 
-        # Create a new Vips::Image from a 1D or 2D array. A 1D array becomes an
+        # Create a new Image from a 1D or 2D array. A 1D array becomes an
         # image with height 1. Use +scale+ and +offset+ to set the scale and
         # offset fields in the header. These are useful for integer
         # convolutions. 
         #
         # For example:
         #
-        #   image = Vips::new_from_array [1, 2, 3]
+        # ```
+        # image = Vips::new_from_array [1, 2, 3]
+        # ```
         #
         # or
         #
-        #   image = Vips::new_from_array [
-        #       [-1, -1, -1],
-        #       [-1, 16, -1],
-        #       [-1, -1, -1]], 8
+        # ```
+        # image = Vips::new_from_array [
+        #     [-1, -1, -1],
+        #     [-1, 16, -1],
+        #     [-1, -1, -1]], 8
+        # ```
         #
         # for a simple sharpening mask.
+        #
+        # @param array [Array] the pixel data as an array of numbers
+        # @param scale [Real] the convolution scale
+        # @param offset [Real] the convolution offset
+        # @return [Image] the image
         def self.new_from_array(array, scale = 1, offset = 0)
             # we accept a 1D array and assume height == 1, or a 2D array
             # and check all lines are the same length
@@ -397,17 +456,25 @@ module Vips
         # Write this image to a file. Save options may be encoded in the
         # filename or given as a hash. For example:
         #
-        #   image.write_to_file "fred.jpg[Q=90]"
+        # ```
+        # image.write_to_file "fred.jpg[Q=90]"
+        # ```
         #
         # or equivalently:
         #
-        #   image.write_to_file "fred.jpg", :Q => 90
+        # ```
+        # image.write_to_file "fred.jpg", :Q => 90
+        # ```
         #
         # The save options depend on the selected saver. Try something like:
         #
-        #   $ vips jpegsave
+        # ```
+        # $ vips jpegsave
+        # ```
         #
         # to see all the available options. 
+        #
+        # @param name [String] filename to write to
         def write_to_file(name, *args)
             filename = Vips::filename_get_filename name
             option_string = Vips::filename_get_options name
@@ -422,17 +489,26 @@ module Vips
         # Write this image to a memory buffer. Save options may be encoded in 
         # the format_string or given as a hash. For example:
         #
-        #   buffer = image.write_to_buffer ".jpg[Q=90]"
+        # ```
+        # buffer = image.write_to_buffer ".jpg[Q=90]"
+        # ```
         #
         # or equivalently:
         #
-        #   image.write_to_buffer ".jpg", :Q => 90
+        # ```
+        # image.write_to_buffer ".jpg", :Q => 90
+        # ```
         #
         # The save options depend on the selected saver. Try something like:
         #
-        #   $ vips jpegsave
+        # ```
+        # $ vips jpegsave
+        # ```
         #
         # to see all the available options. 
+        #
+        # @param format_string [String] save format plus options
+        # @return [String] the image saved in the specified format
         def write_to_buffer(format_string, *args)
             filename = Vips::filename_get_filename format_string
             option_string = Vips::filename_get_options format_string
@@ -444,69 +520,24 @@ module Vips
             Vips::call_base saver, self, option_string, args
         end
 
-        ##
-        # :method: width
-        # :call-seq:
-        #    width => integer
-        #
-        # Image width, in pixels. 
-
-        ##
-        # :method: height
-        # :call-seq:
-        #    height => integer
-        #
-        # Image height, in pixels. 
-
-        ##
-        # :method: bands
-        # :call-seq:
-        #    bands => integer
-        #
-        # Number of image bands (channels). 
-
-        ##
-        # :method: format
-        # :call-seq:
-        #    format => Vips::BandFormat
-        #
-        # Image pixel format. For example, an 8-bit unsigned image has the
-        # :uchar format. 
-
-        ##
-        # :method: interpretation
-        # :call-seq:
-        #    interpretation => Vips::Interpretation
-        #
-        # Image interpretation. 
-
-        ##
-        # :method: coding
-        # :call-seq:
-        #    coding => Vips::Coding
-        #
-        # Image coding. 
-
-        ##
-        # :method: filename
-        # :call-seq:
-        #    filename => string
-        #
-        # The name of the file this image was originally loaded from.
-
-        ##
-        # :method: xres
-        # :call-seq:
-        #    xres => float
-        #
-        # The horizontal resolution of the image, in pixels per millimetre. 
-
-        ##
-        # :method: yres
-        # :call-seq:
-        #    yres => float
-        #
-        # The vertical resolution of the image, in pixels per millimetre. 
+        # @!attribute [r] width
+        #   @return [Integer] image width, in pixels
+        # @!attribute [r] height
+        #   @return [Integer] image height, in pixels
+        # @!attribute [r] bands
+        #   @return [Integer] image bands
+        # @!attribute [r] format
+        #   @return [Vips::BandFormat] image format
+        # @!attribute [r] interpretation
+        #   @return [Vips::Interpretation] image interpretation
+        # @!attribute [r] coding
+        #   @return [Vips::Coding] image coding
+        # @!attribute [r] filename
+        #   @return [String] image filename
+        # @!attribute [r] xres
+        #   @return [Float] horizontal image resolution, in pixels per mm
+        # @!attribute [r] yres
+        #   @return [Float] vertical image resolution, in pixels per mm
 
         # Set a metadata item on an image. Ruby types are automatically
         # transformed into the matching GValue, if possible. 

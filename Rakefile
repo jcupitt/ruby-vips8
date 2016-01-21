@@ -42,8 +42,4 @@ require "yard"
 require "yard/rake/yardoc_task"
 
 YARD::Rake::YardocTask.new do |yard|
-    OTHER_PATHS = %w(README.md)
-    yard.files = ['lib/**/*.rb', OTHER_PATHS]
-    yard.options = %w(--markup-provider=redcarpet --markup=markdown 
-        --main=README.md)
 end

@@ -5,37 +5,21 @@
 
 module Vips
   class Image
-##
-# :singleton-method: system
-# :call-seq:
-#    system(cmd_format) => 
-#
-# Run an external command.
-#
-# Input:
-# [cmd_format] Command to run, input gchararray
-#
-# Options:
-# [in] Array of input images, input VipsArrayImage
-# [in_format] Format for input filename, input gchararray
-# [out_format] Format for output filename, input gchararray
-#
-# Output options:
-# [out] Output image, output VipsImage
-# [log] Command log, output gchararray
 
-##
-# :method: add
-# :call-seq:
-#    add(right) => out
-#
-# Add two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
+# @!method self.system(cmd_format, opts = {})
+#   Run an external command.
+#   @param cmd_format [String] Command to run
+#   @param [Hash] opts set of options
+#   @option opts [Array<Image>] :in Array of input images
+#   @option opts [String] :in_format Format for input filename
+#   @option opts [String] :out_format Format for output filename
+#   @return [Image, String] Output image, Command log
+
+# @!method add(right, opts = {})
+#   Add two images.
+#   @param right [Image] Right-hand image argument
+#   @param [Hash] opts set of options
+#   @return [Image] Output image
 
 ##
 # :method: subtract

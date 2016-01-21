@@ -1,8 +1,11 @@
 
 module Vips
 
-    # If +msg+ is not supplied, grab and clear the vips error buffer instead. 
     class Error < RuntimeError
+        # The ruby-vips8 error class. 
+        #
+        # @param msg [String] The error message. If this is not supplied, grab
+        #   and clear the vips error buffer and use that. 
         def initialize(msg = nil)
             if msg
                 @details = msg
