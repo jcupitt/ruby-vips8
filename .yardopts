@@ -2,6 +2,7 @@
 --markup-provider=redcarpet 
 --markup=markdown 
 --main=README.md
+--title="ruby-vips8 documentation"
 lib/**/*.rb
 -
 LICENSE.txt

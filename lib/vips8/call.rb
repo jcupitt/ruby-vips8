@@ -229,57 +229,68 @@ module Vips
 
     public
 
-    # :call-seq:
-    #   call(operation_name, required_arg1, ..., required_argn, optional_args) => result
+    # This is the public entry point for the vips8 binding. {call} will run
+    # any vips operation, for example:
     #
-    # This is the public entry point for the vips8 binding. Vips::call will run
-    # any vips operation, for example
-    #
-    #   out = Vips::call "black", 100, 100, :bands => 12
+    # ```ruby
+    # out = Vips::call "black", 100, 100, :bands => 12
+    # ```
     #
     # will call the C function 
     #
-    #   vips_black( &out, 100, 100, "bands", 12, NULL );
+    # ```C
+    # vips_black( &out, 100, 100, "bands", 12, NULL );
+    # ```
     # 
-    # There are Vips::Image#method_missing hooks which will run ::call for you 
-    # on Vips::Image for undefined instance or class methods. So you can also 
+    # There are {Image#method_missing} hooks which will run {call} for you 
+    # on {Image} for undefined instance or class methods. So you can also 
     # write:
     #
-    #   out = Vips::Image.black 100, 100, :bands => 12
+    # ```ruby
+    # out = Vips::Image.black 100, 100, :bands => 12
+    # ```
     #
     # Or perhaps:
     #
-    #   x = Vips::Image.black 100, 100
-    #   y = x.invert
+    # ```ruby
+    # x = Vips::Image.black 100, 100
+    # y = x.invert
+    # ```
     #
-    # to run the <tt>vips_invert()</tt> operator.
+    # to run the `vips_invert()` operator.
     #
     # There are also a set of operator overloads and some convenience functions,
-    # see Vips::Image. 
+    # see {Image}. 
     #
-    # If the operator needs a vector constant, ::call will turn a scalar into a
-    # vector for you. So for <tt>x.linear(a, b)</tt>, which calculates 
-    # <tt>x * a + b</tt> where +a+ and +b+ are vector constants, you can write:
+    # If the operator needs a vector constant, {call} will turn a scalar into a
+    # vector for you. So for `x.linear(a, b)`, which calculates 
+    # `x * a + b` where `a` and `b` are vector constants, you can write:
     #
-    #   x = Vips::Image.black 100, 100, bands => 3
-    #   y = x.linear(1, 2)
-    #   y = x.linear([1], 4)
-    #   y = x.linear([1, 2, 3], 4)
+    # ```ruby
+    # x = Vips::Image.black 100, 100, :bands => 3
+    # y = x.linear(1, 2)
+    # y = x.linear([1], 4)
+    # y = x.linear([1, 2, 3], 4)
+    # ```
     #
     # or any other combination. The operator overloads use this facility to
     # support all the variations on:
     #
-    #   x = Vips::Image.black 100, 100, bands => 3
-    #   y = x * 2
-    #   y = x + [1,2,3]
-    #   y = x % [1]
+    # ```ruby
+    # x = Vips::Image.black 100, 100, :bands => 3
+    # y = x * 2
+    # y = x + [1,2,3]
+    # y = x % [1]
+    # ```
     #
     # Similarly, whereever an image is required, you can use a constant. The
     # constant will be expanded to an image matching the first input image
     # argument. For example, you can write:
     #
-    #   x = Vips::Image.black 100, 100, bands => 3
-    #   y = x.bandjoin(255)
+    # ```
+    # x = Vips::Image.black 100, 100, :bands => 3
+    # y = x.bandjoin(255)
+    # ```
     #
     # to add an extra band to the image where each pixel in the new band has 
     # the constant value 255. 
