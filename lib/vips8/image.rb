@@ -50,10 +50,10 @@
 # integer convolution. See the libvips API docs for `vips_conv()` (the operation
 # invoked by {Image.conv}) for details. 
 #
-# {Image.write_to_file} writes an image back to the filesystem. It can write
-# any format supported by vips: the file type is set from the filename suffix.
-# You can also write formatted images to memory buffers, or dump image data to a
-# raw memory array. 
+# {Vips::Image.write_to_file} writes an image back to the filesystem. It can 
+# write any format supported by vips: the file type is set from the filename 
+# suffix. You can also write formatted images to memory buffers, or dump 
+# image data to a raw memory array. 
 #
 # # How it works
 #
@@ -102,7 +102,7 @@
 # ```
 #
 # Now `x_pos` and `y_pos` will have the coordinates of the minimum value. There's
-# actually a convenience function for this, {Image.minpos}.
+# actually a convenience function for this, {Vips::Image.minpos}.
 #
 # You can also ask for the top /n/ minimum, for example:
 #
@@ -153,7 +153,7 @@
 #
 # If an operation takes several input images, you can use a constant for all but
 # one of them and the wrapper will expand the constant to an image for you. For
-# example, {Image.ifthenelse} uses a condition image to pick pixels 
+# example, {Vips::Image.ifthenelse} uses a condition image to pick pixels 
 # between a then and an else image:
 #
 # ```ruby
@@ -170,7 +170,7 @@
 #
 # Will make an image where true pixels are green and false pixels are red.
 #
-# This is useful for {Image.bandjoin}, the thing to join two or more 
+# This is useful for {Vips::Image.bandjoin}, the thing to join two or more 
 # images up bandwise. You can write:
 #
 # ```ruby
@@ -247,8 +247,8 @@
 # # Convenience functions
 #
 # The wrapper defines a few extra useful utility functions: 
-# {Image.get_value}, {Image.set_value}, {Image.bandsplit}, 
-# {Image.maxpos}, {Image.minpos}. 
+# {Vips::Image.get_value}, {Vips::Image.set_value}, {Vips::Image.bandsplit}, 
+# {Vips::Image.maxpos}, {Vips::Image.minpos}. 
 
 module Vips
 
@@ -632,108 +632,162 @@ module Vips
         end
 
         # Subtract an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] Thing to subtract from self
+        # @return [Image] result of subtraction
         def -(other)
             other.is_a?(Vips::Image) ? 
                 subtract(other) : linear(1, Image::smap(other) {|x| x * -1})
         end
 
         # Multiply an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] Thing to multiply by self
+        # @return [Image] result of multiplication
         def *(other)
             other.is_a?(Vips::Image) ? multiply(other) : linear(other, 0)
         end
 
         # Divide an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] Thing to divide self by
+        # @return [Image] result of division
         def /(other)
             other.is_a?(Vips::Image) ? 
                 divide(other) : linear(Image::smap(other) {|x| 1.0 / x}, 0)
         end
 
         # Remainder after integer division with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] self modulo this
+        # @return [Image] result of modulo
         def %(other)
             other.is_a?(Vips::Image) ? 
                 remainder(other) : remainder_const(other)
         end
 
         # Raise to power of an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] self to the power of this
+        # @return [Image] result of power
         def **(other)
             other.is_a?(Vips::Image) ? 
                 math2(other, :pow) : math2_const(other, :pow)
         end
 
         # Integer left shift with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] shift left by this much
+        # @return [Image] result of left shift
         def <<(other)
             other.is_a?(Vips::Image) ? 
                 boolean(other, :lshift) : boolean_const(other, :lshift)
         end
 
         # Integer right shift with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] shift right by this much
+        # @return [Image] result of right shift
         def >>(other)
             other.is_a?(Vips::Image) ? 
                 boolean(other, :rshift) : boolean_const(other, :rshift)
         end
 
         # Integer bitwise OR with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] bitwise OR with this
+        # @return [Image] result of bitwise OR 
         def |(other)
             other.is_a?(Vips::Image) ? 
                 boolean(other, :or) : boolean_const(other, :or)
         end
 
         # Integer bitwise AND with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] bitwise AND with this
+        # @return [Image] result of bitwise AND 
         def &(other)
             other.is_a?(Vips::Image) ? 
                 boolean(other, :and) : boolean_const(other, :and)
         end
 
         # Integer bitwise EOR with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] bitwise EOR with this
+        # @return [Image] result of bitwise EOR 
         def ^(other)
             other.is_a?(Vips::Image) ? 
                 boolean(other, :eor) : boolean_const(other, :eor)
         end
 
         # Equivalent to image ^ -1
+        #
+        # @return [Image] image with bits flipped
         def !
             self ^ -1
         end
 
         # Equivalent to image ^ -1
+        #
+        # @return [Image] image with bits flipped
         def ~
             self ^ -1
         end
 
+        # @return [Image] image 
         def +@
             self
         end
 
         # Equivalent to image * -1
+        #
+        # @return [Image] negative of image 
         def -@
             self * -1
         end
 
         # Relational less than with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] relational less than with this
+        # @return [Image] result of less than
         def <(other)
             other.is_a?(Vips::Image) ? 
                 relational(other, :less) : relational_const(other, :less)
         end
 
         # Relational less than or equal to with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] relational less than or
+        #   equal to with this
+        # @return [Image] result of less than or equal to
         def <=(other)
             other.is_a?(Vips::Image) ? 
                 relational(other, :lesseq) : relational_const(other, :lesseq)
         end
 
         # Relational more than with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] relational more than with this
+        # @return [Image] result of more than
         def >(other)
             other.is_a?(Vips::Image) ? 
                 relational(other, :more) : relational_const(other, :more)
         end
 
         # Relational more than or equal to with an image, constant or array. 
+        #
+        # @param other [Image, Real, Array<Real>] relational more than or
+        #   equal to with this
+        # @return [Image] result of more than or equal to
         def >=(other)
             other.is_a?(Vips::Image) ? 
                 relational(other, :moreeq) : relational_const(other, :moreeq)
         end
 
         # Compare equality to nil, an image, constant or array.
+        #
+        # @param other [nil, Image, Real, Array<Real>] test equality to this
+        # @return [Image] result of equality
         def ==(other)
             if other == nil
                 false
@@ -745,6 +799,9 @@ module Vips
         end
 
         # Compare inequality to nil, an image, constant or array.
+        #
+        # @param other [nil, Image, Real, Array<Real>] test inequality to this
+        # @return [Image] result of inequality
         def !=(other)
             if other == nil
                 true
@@ -756,6 +813,9 @@ module Vips
         end
 
         # Fetch bands using a number or a range
+        #
+        # @param index [Numeric, Range] extract these band(s)
+        # @return [Image] extracted band(s)
         def [](index)
             if index.is_a? Range
                 n = index.end - index.begin
@@ -769,49 +829,58 @@ module Vips
         end
 
         # Return the largest integral value not greater than the argument.
+        #
+        # @return [Image] floor of image 
         def floor
             round :floor
         end
 
         # Return the smallest integral value not less than the argument.
+        #
+        # @return [Image] ceil of image 
         def ceil
             round :ceil
         end
 
         # Return the nearest integral value.
+        #
+        # @return [Image] rint of image 
         def rint
             round :rint
         end
 
         # AND the bands of an image together
+        #
+        # @return [Image] all bands ANDed together
         def bandand
             bandbool :and
         end
 
         # OR the bands of an image together
+        #
+        # @return [Image] all bands ORed together
         def bandor
             bandbool :or
         end
 
         # EOR the bands of an image together
+        #
+        # @return [Image] all bands EORed together
         def bandeor
             bandbool :eor
         end
 
-        # :call-seq:
-        #   bandsplit => [image]
-        #
         # Split an n-band image into n separate images.
+        #
+        # @return [Array<Image>] Array of n one-band images
         def bandsplit
             (0...bands).map {|i| extract_band(i)}
         end
 
-        # :call-seq:
-        #   bandjoin(image) => out
-        #   bandjoin(const_array) => out
-        #   bandjoin(image_array) => out
-        #
         # Join a set of images bandwise.
+        #
+        # @param other [Image, Array<Image>, Real, Array<Real>] bands to append
+        # @return [Image] many band image
         def bandjoin(other)
             if not other.is_a? Array
                 other = [other]
@@ -821,6 +890,9 @@ module Vips
         end
 
         # Return the coordinates of the image maximum.
+        #
+        # @return [Real, Real, Real] maximum value, x coordinate of maximum, y
+        #   coordinate of maximum
         def maxpos
             v, opts = max :x => true, :y => true
             x = opts['x']
@@ -829,6 +901,9 @@ module Vips
         end
 
         # Return the coordinates of the image minimum.
+        #
+        # @return [Real, Real, Real] minimum value, x coordinate of minimum, y
+        #   coordinate of minimum
         def minpos
             v, opts = min :x => true, :y => true
             x = opts['x']
@@ -837,6 +912,10 @@ module Vips
         end
 
         # get the value of a pixel as an array
+        #
+        # @param x [Integer] x coordinate to sample
+        # @param y [Integer] y coordinate to sample
+        # @return [Array<Float>] the pixel values as an array
         def getpoint(x, y)
             # vips has an operation that does this, but we can't call it via
             # gobject-introspection 3.0.7 since it's missing array double
@@ -847,124 +926,201 @@ module Vips
         end
 
         # a median filter
+        #
+        # @param size [Integer] size of filter window
+        # @return [Image] result of median filter
         def median(size = 3)
             rank(size, size, (size * size) / 2)
         end
 
         # Return the real part of a complex image.
+        #
+        # @return [Image] real part of complex image
         def real
             complexget :real
         end
 
         # Return the imaginary part of a complex image.
+        #
+        # @return [Image] imaginary part of complex image
         def imag
             complexget :imag
         end
 
-        # Return an image converted to polar coordinates.
+        # Return an image with rectangular pixels converted to polar. 
+        #
+        # @!macro new run_cmplx
+        #   The image
+        #   can be complex, in which case the return image will also be complex,
+        #   or must have an even number of bands, in which case pairs of 
+        #   bands are treated as (x, y) coordinates.
+        #
+        # @see xyz
+        #
+        # @return [Image] image converted to polar coordinates
         def polar
             Image::run_cmplx(self) {|x| x.complex :polar}
         end
 
-        # Return an image converted to rectangular coordinates.
+        # Return an image with polar pixels converted to rectangular.
+        #
+        # @macro run_cmplx
+        #
+        # @see xyz
+        #
+        # @return [Image] image converted to rectangular coordinates
         def rect
             Image::run_cmplx(self) {|x| x.complex :rect}
         end
 
         # Return the complex conjugate of an image.
+        #
+        # @macro run_cmplx
+        #
+        # @return [Image] complex conjugate
         def conj
             Image::run_cmplx(self) {|x| x.complex :conj}
         end
 
         # Return the sine of an image in degrees.
+        #
+        # @return [Image] sine of each pixel
         def sin
             math :sin 
         end
 
         # Return the cosine of an image in degrees.
+        #
+        # @return [Image] cosine of each pixel
         def cos
             math :cos
         end
 
         # Return the tangent of an image in degrees.
+        #
+        # @return [Image] tangent of each pixel
         def tan
             math :tan
         end
 
         # Return the inverse sine of an image in degrees.
+        #
+        # @return [Image] inverse sine of each pixel
         def asin
             math :asin
         end
 
         # Return the inverse cosine of an image in degrees.
+        #
+        # @return [Image] inverse cosine of each pixel
         def acos
             math :acos
         end
 
         # Return the inverse tangent of an image in degrees.
+        #
+        # @return [Image] inverse tangent of each pixel
         def atan
             math :atan
         end
 
         # Return the natural log of an image.
+        #
+        # @return [Image] natural log of each pixel
         def log
             math :log
         end
 
         # Return the log base 10 of an image.
+        #
+        # @return [Image] base 10 log of each pixel
         def log10
             math :log10
         end
 
         # Return e ** pixel.
+        #
+        # @return [Image] e ** pixel
         def exp
             math :exp
         end
 
         # Return 10 ** pixel.
+        #
+        # @return [Image] 10 ** pixel
         def exp10
             math :exp10
         end
 
         # Flip horizontally.
+        #
+        # @return [Image] image flipped horizontally
         def fliphor
             flip :horizontal
         end
 
         # Flip vertically.
+        #
+        # @return [Image] image flipped vertically
         def flipver
             flip :vertical
         end
 
         # Erode with a structuring element.
+        #
+        # @!macro new morph
+        #   The structuring element must be an array with 0 for black, 255 for
+        #   white and 128 for don't care.
+        #
+        # @param mask [Image, Array<Real>, Array<Array<Real>>] structuring
+        #   element
+        # @return [Image] eroded image
         def erode(mask)
             morph mask, :erode
         end
 
         # Dilate with a structuring element.
+        #
+        # @macro morph
+        #
+        # @param mask [Image, Array<Real>, Array<Array<Real>>] structuring
+        #   element
+        # @return [Image] dilated image
         def dilate(mask)
             morph mask, :dilate
         end
 
         # Rotate by 90 degrees clockwise.
+        #
+        # @return [Image] rotated image
         def rot90
             rot :d90
         end
 
         # Rotate by 180 degrees clockwise.
+        #
+        # @return [Image] rotated image
         def rot180
             rot :d180
         end
 
         # Rotate by 270 degrees clockwise.
+        #
+        # @return [Image] rotated image
         def rot270
             rot :d270
         end
 
-        # Select pixels from +th+ if +self+ is non-zero and from +el+ if
-        # +self+ is zero. Use the :blend option to fade smoothly 
-        # between +th+ and +el+. 
-        def ifthenelse(th, el, *args) 
+        # Select pixels from `th` if `self` is non-zero and from `el` if
+        # `self` is zero. Use the `:blend` option to fade smoothly 
+        # between `th` and `el`. 
+        #
+        # @param th [Image, Real, Array<Real>] true values
+        # @param el [Image, Real, Array<Real>] false values
+        # @param [Hash] opts set of options
+        # @option opts [Boolean] :blend (false) Blend smoothly between th and el
+        # @return [Image] merged image
+        def ifthenelse(th, el, opts = {}) 
             match_image = [th, el, self].find {|x| x.is_a? Vips::Image}
 
             if not th.is_a? Vips::Image
