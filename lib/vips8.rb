@@ -13,6 +13,9 @@ end
 
 # copied from ruby-gnome2/gstreamer/lib/gst.rb without much understanding
 
+require 'pathname'
+require 'gobject-introspection'
+
 # pick up a local girepository/lib in preference to the system one 
 base_dir = Pathname.new(__FILE__).dirname.dirname.expand_path
 vendor_dir = base_dir + "vendor" + "local"

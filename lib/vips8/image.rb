@@ -48,7 +48,7 @@
 # {Image.new_from_array} creates an image from an array constant. The 8 at
 # the end sets the scale: the amount to divide the image by after 
 # integer convolution. See the libvips API docs for `vips_conv()` (the operation
-# invoked by {Image.conv}) for details. 
+# invoked by {Vips::Image.conv}) for details. 
 #
 # {Vips::Image.write_to_file} writes an image back to the filesystem. It can 
 # write any format supported by vips: the file type is set from the filename 
@@ -76,7 +76,7 @@
 #
 # ruby-vips8 adds a {Image.method_missing} handler to {Image} and uses
 # it to look up vips operations. For example, the libvips operation `add`, which
-# appears in C as `vips_add()`, appears in Ruby as {Image.add}. 
+# appears in C as `vips_add()`, appears in Ruby as {Vips::Image.add}. 
 #
 # The operation's list of required arguments is searched and the first input 
 # image is set to the value of `self`. Operations which do not take an input 
@@ -87,7 +87,7 @@
 # argument if there is only one result, or an array of values if the operation
 # produces several results. 
 #
-# For example, {Image.min}, the vips operation that searches an image for 
+# For example, {Vips::Image.min}, the vips operation that searches an image for 
 # the minimum value, has a large number of optional arguments. You can use it to
 # find the minimum value like this:
 #
@@ -126,8 +126,8 @@
 #
 # libvips types are also automatically wrapped. The override looks at the type 
 # of argument required by the operation and converts the value you supply, 
-# when it can. For example, {Image.linear} takes a `VipsArrayDouble` as an 
-# argument 
+# when it can. For example, {Vips::Image.linear} takes a `VipsArrayDouble` as 
+# an argument 
 # for the set of constants to use for multiplication. You can supply this 
 # value as an integer, a float, or some kind of compound object and it 
 # will be converted for you. You can write:
@@ -139,7 +139,7 @@
 # result_image = image.linear 1, [4, 5, 6] 
 # ```
 #
-# And so on. A set of overloads are defined for {Image.linear}, see below.
+# And so on. A set of overloads are defined for {Vips::Image.linear}, see below.
 #
 # It does a couple of more ambitious conversions. It will automatically convert
 # to and from the various vips types, like `VipsBlob` and `VipsArrayImage`. For
@@ -191,7 +191,8 @@
 # 
 # # Automatic YARD documentation
 #
-# These API docs are generated automatically by {generate_rdoc}. It examines
+# These API docs are generated automatically by {Vips::generate_yard}. It 
+# examines
 # libvips and writes a summary of each operation and the arguments and options
 # that operation expects. 
 # 
@@ -204,7 +205,7 @@
 # 
 # # Draw operations
 #
-# Paint operations like {Image.draw_circle} and {Image.draw_line}
+# Paint operations like {Vips::Image.draw_circle} and {Vips::Image.draw_line}
 # modify their input image. This
 # makes them hard to use with the rest of libvips: you need to be very careful
 # about the order in which operations execute or you can get nasty crashes.
@@ -231,7 +232,7 @@
 # # Expansions
 #
 # Some vips operators take an enum to select an action, for example 
-# {Image.math} can be used to calculate sine of every pixel like this:
+# {Vips::Image.math} can be used to calculate sine of every pixel like this:
 #
 # ```ruby
 # result_image = image.math :sin
@@ -251,6 +252,9 @@
 # {Vips::Image.maxpos}, {Vips::Image.minpos}. 
 
 module Vips
+
+    # This class represents a libvips image. See the {Vips} module documentation
+    # for an introduction to using this module.
 
     class Image
         private
@@ -557,6 +561,20 @@ module Vips
         # @!attribute [r] yres
         #   @return [Float] vertical image resolution, in pixels per mm
 
+        # Set a `GValue` on an image
+        #
+        # @see set_value
+        # @!method set(name, value)
+        # @param name [String] Metadata field to set
+        # @param value [GValue] GValue to set
+
+        # Fetch a `GValue` from an image
+        #
+        # @see get_value
+        # @!method get(name)
+        # @param name [String] Metadata field to fetch
+        # @return [GValue] GValue from image
+
         # Set a metadata item on an image. Ruby types are automatically
         # transformed into the matching `GValue`, if possible. 
         #
@@ -568,9 +586,7 @@ module Vips
         #
         # where `profile` is an ICC profile held as a binary string object.
         #
-        # If you need more control over the conversion process, use {set} to 
-        # set a `GValue` directly.
-        #
+        # @see set
         # @param name [String] Metadata field to set
         # @param value [void] Value to set
         def set_value(name, value)
@@ -609,8 +625,7 @@ module Vips
         #
         # and profile will be an array containing the profile. 
         #
-        # Use {get} to fetch a `GValue` directly.
-        #
+        # @see get
         # @param name [String] Metadata field to set
         # @return [void] Value of field
         def get_value(name)
@@ -949,14 +964,12 @@ module Vips
 
         # Return an image with rectangular pixels converted to polar. 
         #
-        # @!macro new run_cmplx
-        #   The image
-        #   can be complex, in which case the return image will also be complex,
-        #   or must have an even number of bands, in which case pairs of 
-        #   bands are treated as (x, y) coordinates.
+        # The image
+        # can be complex, in which case the return image will also be complex,
+        # or must have an even number of bands, in which case pairs of 
+        # bands are treated as (x, y) coordinates.
         #
         # @see xyz
-        #
         # @return [Image] image converted to polar coordinates
         def polar
             Image::run_cmplx(self) {|x| x.complex :polar}
@@ -964,10 +977,12 @@ module Vips
 
         # Return an image with polar pixels converted to rectangular.
         #
-        # @macro run_cmplx
+        # The image
+        # can be complex, in which case the return image will also be complex,
+        # or must have an even number of bands, in which case pairs of 
+        # bands are treated as (x, y) coordinates.
         #
         # @see xyz
-        #
         # @return [Image] image converted to rectangular coordinates
         def rect
             Image::run_cmplx(self) {|x| x.complex :rect}
@@ -975,7 +990,10 @@ module Vips
 
         # Return the complex conjugate of an image.
         #
-        # @macro run_cmplx
+        # The image
+        # can be complex, in which case the return image will also be complex,
+        # or must have an even number of bands, in which case pairs of 
+        # bands are treated as (x, y) coordinates.
         #
         # @return [Image] complex conjugate
         def conj
@@ -1068,9 +1086,8 @@ module Vips
 
         # Erode with a structuring element.
         #
-        # @!macro new morph
-        #   The structuring element must be an array with 0 for black, 255 for
-        #   white and 128 for don't care.
+        # The structuring element must be an array with 0 for black, 255 for
+        # white and 128 for don't care.
         #
         # @param mask [Image, Array<Real>, Array<Array<Real>>] structuring
         #   element
@@ -1081,7 +1098,8 @@ module Vips
 
         # Dilate with a structuring element.
         #
-        # @macro morph
+        # The structuring element must be an array with 0 for black, 255 for
+        # white and 128 for don't care.
         #
         # @param mask [Image, Array<Real>, Array<Array<Real>>] structuring
         #   element
@@ -1135,17 +1153,136 @@ module Vips
 
     end
 
-    # This method generates rdoc comments for all the dynamically bound
+    # The type of access an operation has to supply. 
+    # 
+    # *   `:random` means requests can come in any order. 
+    # 
+    # *   `:sequential` means requests will be top-to-bottom, but with some
+    #     amount of buffering behind the read point for small non-local
+    #     accesses. 
+    #
+    # *   `:sequential_unbuffered` means requests will be strictly
+    #     top-to-bottom with no read-behind. This can save some memory.
+    class Access
+    end
+
+    # Operations can hint to the VIPS image IO 
+    # system about the kind of demand geometry they prefer. 
+    #   
+    # These demand styles are given below in order of increasing
+    # restrictiveness.  When demanding output from a pipeline, 
+    # vips_image_generate()
+    # will use the most restrictive of the styles requested by the operations 
+    # in the pipeline.
+    #   
+    # *   `:thinstrip` --- This operation would like to output strips 
+    #     the width of the image and a few pels high. This is option suitable 
+    #     for point-to-point operations, such as those in the arithmetic 
+    #     package.
+    #    
+    #     This option is only efficient for cases where each output pel depends 
+    #     upon the pel in the corresponding position in the input image.
+    # 
+    # * `:fatstrip` --- This operation would like to output strips 
+    #     the width of the image and as high as possible. This option is 
+    #     suitable for area operations which do not violently transform 
+    #     coordinates, such as vips_conv(). 
+    #   
+    # * `:smalltile` --- This is the most general demand format.
+    #     Output is demanded in small (around 100x100 pel) sections. This style 
+    #     works reasonably efficiently, even for bizzare operations like 45 
+    #     degree rotate.
+    #   
+    # * `:any` --- This image is not being demand-read from a disc 
+    #     file (even indirectly) so any demand style is OK. It's used for 
+    #     things like vips_black() where the pixels are calculated.
+    class DemandStyle
+    end
+
+    # How the values in an image should be interpreted. For example, a
+    # three-band float image of type :lab should have its 
+    # pixels interpreted as coordinates in CIE Lab space.
+    #
+    # * `:multiband` generic many-band image
+    # * `:b_w` some kind of single-band image
+    # * `:histogram` a 1D image, eg. histogram or lookup table
+    # * `:fourier` image is in fourier space
+    # * `:xyz` the first three bands are CIE XYZ 
+    # * `:lab` pixels are in CIE Lab space
+    # * `:cmyk` the first four bands are in CMYK space
+    # * `:labq` implies #VIPS_CODING_LABQ
+    # * `:rgb` generic RGB space
+    # * `:cmc` a uniform colourspace based on CMC(1:1)
+    # * `:lch` pixels are in CIE LCh space
+    # * `:labs` CIE LAB coded as three signed 16-bit values
+    # * `:srgb` pixels are sRGB
+    # * `:hsv` pixels are HSV
+    # * `:scrgb` pixels are scRGB
+    # * `:yxy` pixels are CIE Yxy
+    # * `:rgb16` generic 16-bit RGB
+    # * `:grey16` generic 16-bit mono
+    # * `:matrix` a matrix
+    class Interpretation
+    end
+
+    # The format used for each band element. Each corresponds to a native C type
+    # for the current machine.
+    #
+    # * `:notset` invalid setting
+    # * `:uchar` unsigned char format
+    # * `:char` char format
+    # * `:ushort` unsigned short format
+    # * `:short` short format
+    # * `:uint` unsigned int format
+    # * `:int` int format
+    # * `:float` float format
+    # * `:complex` complex (two floats) format
+    # * `:double` double float format
+    # * `:dpcomplex` double complex (two double) format
+    class BandFormat
+    end
+
+    # How pixels are coded. 
+    #
+    # Normally, pixels are uncoded and can be manipulated as you would expect.
+    # However some file formats code pixels for compression, and sometimes it's
+    # useful to be able to manipulate images in the coded format.
+    #
+    # * `:none` pixels are not coded
+    # * `:labq` pixels encode 3 float CIELAB values as 4 uchar
+    # * `:rad` pixels encode 3 float RGB as 4 uchar (Radiance coding)
+    class Coding
+    end
+
+    # Some hints about the image loader.
+    #
+    # *   `:partial` means that the image can be read directly from the
+    #     file without needing to be unpacked to a temporary image first. 
+    #
+    # *   `:sequential` means that the loader supports lazy reading, but
+    #     only top-to-bottom (sequential) access. Formats like PNG can read 
+    #     sets of scanlines, for example, but only in order. 
+    #
+    #     If neither partial` or sequential` is set, the loader only supports 
+    #     whole image read. Setting both partial` and sequential` is an error.
+    #
+    # *   `:bigendian` means that image pixels are most-significant byte
+    #     first. Depending on the native byte order of the host machine, you may
+    #     need to swap bytes. See vips_copy().
+    class ForeignFlags
+    end
+
+    # This method generates yard comments for all the dynamically bound
     # vips operations. 
     #
     # Regenerate with something like: 
     #
     #   ruby > methods.rb
-    #   require 'vips8'
-    #   Vips::generate_rdoc
+    #   require 'vips8'; Vips::generate_yard
     #   ^D
 
-    def self.generate_rdoc
+    def self.generate_yard
+        # these have hand-written methods, see above
         no_generate = ["bandjoin", "ifthenelse"]
 
         generate_operation = lambda do |op|
@@ -1196,46 +1333,39 @@ module Vips
             # find the first input image, if any ... we will be a method of this
             # instance
             member_x = required_input.find do |x|
-                x.prop.value_type.type_is_a? GLib::Type["VipsImage"]
+                x.gtype.type_is_a? GLib::Type["VipsImage"]
             end
             if member_x != nil
                 required_input.delete member_x
             end
 
-            description = op.description
+            print "# @!method "
+            print "self." if not member_x 
+            print "#{nickname}("
+            print required_input.map(&:name).join(", ")
+            puts ", opts = {})"
 
-            puts "##"
-            if member_x 
-                puts "# :method: #{nickname}"
-            else
-                puts "# :singleton-method: #{nickname}"
+            puts "#   #{op.description.capitalize}."
+
+            required_input.each do |arg| 
+                puts "#   @param #{arg.name} [#{arg.type}] #{arg.blurb}"
             end
-            puts "# :call-seq:"
-            input = required_input.map(&:name).join(", ")
-            output = required_output.map(&:name).join(", ")
-            puts "#    #{nickname}(#{input}) => #{output}"
-            puts "#"
-            puts "# #{description.capitalize}."
-            if required_input.length > 0 
-                puts "#"
-                puts "# Input:"
-                required_input.each {|arg| puts "# #{arg.description}"}
+
+            puts "#   @param [Hash] opts Set of options"
+            optional_input.each do |arg| 
+                puts "#   @option opts [#{arg.type}] :#{arg.name} #{arg.blurb}"
             end
-            if required_output.length > 0 
-                puts "#"
-                puts "# Output:"
-                required_output.each {|arg| puts "# #{arg.description}"}
+            optional_output.each do |arg| 
+                puts "#   @option opts [#{arg.type}] :#{arg.name} #{arg.blurb}"
             end
-            if optional_input.length > 0 
-                puts "#"
-                puts "# Options:"
-                optional_input.each {|arg| puts "# #{arg.description}"}
-            end
-            if optional_output.length > 0 
-                puts "#"
-                puts "# Output options:"
-                optional_output.each {|arg| puts "# #{arg.description}"}
-            end
+
+            print "#   @return ["
+            print "Array<" if required_output.length > 1 
+            print required_output.map(&:type).join(", ")
+            print ">" if required_output.length > 1 
+            print "] "
+            puts required_output.map(&:blurb).join(", ")
+
             puts ""
         end
 
@@ -1255,13 +1385,13 @@ module Vips
             end
         end
 
-        puts "#--"
-        puts "# This file generated automatically. Do not edit!"
-        puts "#++"
-        puts ""
-        puts ""
         puts "module Vips"
         puts "  class Image"
+        puts ""
+
+        # gobject-introspection 3.0.7 crashes a lot if it GCs while doing 
+        # something
+        GC.disable
 
         generate_class.(GLib::Type["VipsOperation"])
 

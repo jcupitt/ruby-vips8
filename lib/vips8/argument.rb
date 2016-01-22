@@ -6,14 +6,30 @@ module Vips
     # @private
     class Argument 
         attr_reader :op, :name, :flags, :priority, :isset, :prop
+        attr_reader :blurb, :gtype, :type
+
+        # map gobject-introspection's ruby class names to ours
+        @@map_goi_to_vips = {
+            "TrueClass" => "Boolean",
+            "Vips::ArrayDouble" => "Array<Double>",
+            "Vips::ArrayInt" => "Array<Integer>",
+            "Vips::ArrayImage" => "Array<Image>",
+            "Vips::ArrayString" => "Array<String>",
+        }
 
         def initialize(op, name)
             @op = op
             @name = name.tr '-', '_'
             @prop = op.gtype.to_class.property name
+            @blurb = @prop.blurb
+            @gtype = prop.value_type
             @flags = op.get_argument_flags name
             @priority = op.get_argument_priority @name
             @isset = op.argument_isset @name
+
+            type = GLib::Type[gtype.name].to_class.name
+            type = @@map_goi_to_vips[type] if @@map_goi_to_vips.include? type
+            @type = type
         end
 
         private
@@ -109,17 +125,17 @@ module Vips
 
         def set_value(match_image, value)
             # array-ize
-            value = Argument::arrayize prop.value_type, value
+            value = Argument::arrayize gtype, value
 
             # blob-ize
-            if prop.value_type.type_is_a? GLib::Type["VipsBlob"]
+            if gtype.type_is_a? GLib::Type["VipsBlob"]
                 if not value.is_a? Vips::Blob
                     value = Vips::Blob.copy value
                 end
             end
 
             # image-ize
-            if prop.value_type.type_is_a? GLib::Type["VipsImage"]
+            if gtype.type_is_a? GLib::Type["VipsImage"]
                 if not value.is_a? Vips::Image
                     value = Argument::imageize match_image, value
                 end
@@ -140,14 +156,6 @@ module Vips
 
         def get_value
             Argument::unwrap @op.get_property(@name)
-        end
-
-        def description
-            blurb = prop.blurb
-            direction = (flags & :input) != 0 ?  "input" : "output"
-            type = prop.value_type.name
-
-            result = "[#{name}] #{blurb}, #{direction} #{type}"
         end
 
     end

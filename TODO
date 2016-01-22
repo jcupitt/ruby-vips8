@@ -4,23 +4,6 @@
 
   need to hide loads of stuff
 
-  rewrite the thing to generate rdoc to make yard instead, eg.:
-
-# @!method self.system(cmd_format, opts = {})
-#   Run an external command.
-#   @param cmd_format [String] Command to run
-#   @param [Hash] opts set of options
-#   @option opts [Array<Image>] :in Array of input images
-#   @option opts [String] :in_format Format for input filename
-#   @option opts [String] :out_format Format for output filename
-#   @return [Image, String] Output image, Command log
-
-# @!method add(right, opts = {})
-#   Add two images.
-#   @param right [Image] Right-hand image argument
-#   @param [Hash] opts set of options
-#   @return [Image] Output image
-
   check system return value
 
   how should we document output options?

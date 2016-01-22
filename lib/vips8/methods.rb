@@ -1,3419 +1,1807 @@
-#--
-# This file generated automatically. Do not edit!
-#++
-
-
 module Vips
   class Image
 
 # @!method self.system(cmd_format, opts = {})
 #   Run an external command.
 #   @param cmd_format [String] Command to run
-#   @param [Hash] opts set of options
+#   @param [Hash] opts Set of options
 #   @option opts [Array<Image>] :in Array of input images
 #   @option opts [String] :in_format Format for input filename
 #   @option opts [String] :out_format Format for output filename
-#   @return [Image, String] Output image, Command log
+#   @option opts [Vips::Image] :out Output image
+#   @option opts [String] :log Command log
+#   @return [] 
 
 # @!method add(right, opts = {})
 #   Add two images.
-#   @param right [Image] Right-hand image argument
-#   @param [Hash] opts set of options
-#   @return [Image] Output image
-
-##
-# :method: subtract
-# :call-seq:
-#    subtract(right) => out
-#
-# Subtract two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: multiply
-# :call-seq:
-#    multiply(right) => out
-#
-# Multiply two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: divide
-# :call-seq:
-#    divide(right) => out
-#
-# Divide two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: relational
-# :call-seq:
-#    relational(right, relational) => out
-#
-# Relational operation on two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-# [relational] relational to perform, input VipsOperationRelational
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: remainder
-# :call-seq:
-#    remainder(right) => out
-#
-# Remainder after integer division of two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: boolean
-# :call-seq:
-#    boolean(right, boolean) => out
-#
-# Boolean operation on two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-# [boolean] boolean to perform, input VipsOperationBoolean
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: math2
-# :call-seq:
-#    math2(right, math2) => out
-#
-# Binary math operations.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-# [math2] math to perform, input VipsOperationMath2
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: complex2
-# :call-seq:
-#    complex2(right, cmplx) => out
-#
-# Complex binary operations on two images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-# [cmplx] binary complex operation to perform, input VipsOperationComplex2
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: complexform
-# :call-seq:
-#    complexform(right) => out
-#
-# Form a complex image from two real images.
-#
-# Input:
-# [right] Right-hand image argument, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :singleton-method: sum
-# :call-seq:
-#    sum(in) => out
-#
-# Sum an array of images.
-#
-# Input:
-# [in] Array of input images, input VipsArrayImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: invert
-# :call-seq:
-#    invert() => out
-#
-# Invert an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: linear
-# :call-seq:
-#    linear(a, b) => out
-#
-# Calculate (a * in + b).
-#
-# Input:
-# [a] Multiply by this, input VipsArrayDouble
-# [b] Add this, input VipsArrayDouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output should be uchar, input gboolean
-
-##
-# :method: math
-# :call-seq:
-#    math(math) => out
-#
-# Apply a math operation to an image.
-#
-# Input:
-# [math] math to perform, input VipsOperationMath
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: abs
-# :call-seq:
-#    abs() => out
-#
-# Absolute value of an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: sign
-# :call-seq:
-#    sign() => out
-#
-# Unit vector of pixel.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: round
-# :call-seq:
-#    round(round) => out
-#
-# Perform a round function on an image.
-#
-# Input:
-# [round] rounding operation to perform, input VipsOperationRound
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: relational_const
-# :call-seq:
-#    relational_const(c, relational) => out
-#
-# Relational operations against a constant.
-#
-# Input:
-# [c] Array of constants, input VipsArrayDouble
-# [relational] relational to perform, input VipsOperationRelational
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: remainder_const
-# :call-seq:
-#    remainder_const(c) => out
-#
-# Remainder after integer division of an image and a constant.
-#
-# Input:
-# [c] Array of constants, input VipsArrayDouble
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: boolean_const
-# :call-seq:
-#    boolean_const(c, boolean) => out
-#
-# Boolean operations against a constant.
-#
-# Input:
-# [c] Array of constants, input VipsArrayDouble
-# [boolean] boolean to perform, input VipsOperationBoolean
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: math2_const
-# :call-seq:
-#    math2_const(c, math2) => out
-#
-# Pow( @in, @c ).
-#
-# Input:
-# [c] Array of constants, input VipsArrayDouble
-# [math2] math to perform, input VipsOperationMath2
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: complex
-# :call-seq:
-#    complex(cmplx) => out
-#
-# Perform a complex operation on an image.
-#
-# Input:
-# [cmplx] complex to perform, input VipsOperationComplex
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: complexget
-# :call-seq:
-#    complexget(get) => out
-#
-# Get a component from a complex image.
-#
-# Input:
-# [get] complex to perform, input VipsOperationComplexget
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: avg
-# :call-seq:
-#    avg() => out
-#
-# Find image average.
-#
-# Output:
-# [out] Output value, output gdouble
-
-##
-# :method: min
-# :call-seq:
-#    min() => out
-#
-# Find image minimum.
-#
-# Output:
-# [out] Output value, output gdouble
-#
-# Options:
-# [size] Number of minimum values to find, input gint
-#
-# Output options:
-# [x] Horizontal position of minimum, output gint
-# [y] Vertical position of minimum, output gint
-# [out_array] Array of output values, output VipsArrayDouble
-# [x_array] Array of horizontal positions, output VipsArrayInt
-# [y_array] Array of vertical positions, output VipsArrayInt
-
-##
-# :method: max
-# :call-seq:
-#    max() => out
-#
-# Find image maximum.
-#
-# Output:
-# [out] Output value, output gdouble
-#
-# Options:
-# [size] Number of maximum values to find, input gint
-#
-# Output options:
-# [x] Horizontal position of maximum, output gint
-# [y] Vertical position of maximum, output gint
-# [out_array] Array of output values, output VipsArrayDouble
-# [x_array] Array of horizontal positions, output VipsArrayInt
-# [y_array] Array of vertical positions, output VipsArrayInt
-
-##
-# :method: deviate
-# :call-seq:
-#    deviate() => out
-#
-# Find image standard deviation.
-#
-# Output:
-# [out] Output value, output gdouble
-
-##
-# :method: stats
-# :call-seq:
-#    stats() => out
-#
-# Find image average.
-#
-# Output:
-# [out] Output array of statistics, output VipsImage
-
-##
-# :method: hist_find
-# :call-seq:
-#    hist_find() => out
-#
-# Find image histogram.
-#
-# Output:
-# [out] Output histogram, output VipsImage
-#
-# Options:
-# [band] Find histogram of band, input gint
-
-##
-# :method: hist_find_ndim
-# :call-seq:
-#    hist_find_ndim() => out
-#
-# Find n-dimensional image histogram.
-#
-# Output:
-# [out] Output histogram, output VipsImage
-#
-# Options:
-# [bins] Number of bins in each dimension, input gint
-
-##
-# :method: hist_find_indexed
-# :call-seq:
-#    hist_find_indexed(index) => out
-#
-# Find indexed image histogram.
-#
-# Input:
-# [index] Index image, input VipsImage
-#
-# Output:
-# [out] Output histogram, output VipsImage
-
-##
-# :method: hough_line
-# :call-seq:
-#    hough_line() => out
-#
-# Find hough line transform.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [width] horizontal size of parameter space, input gint
-# [height] Vertical size of parameter space, input gint
-
-##
-# :method: hough_circle
-# :call-seq:
-#    hough_circle() => out
-#
-# Find hough circle transform.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [scale] Scale down dimensions by this factor, input gint
-# [min_radius] Smallest radius to search for, input gint
-# [max_radius] Largest radius to search for, input gint
-
-##
-# :method: project
-# :call-seq:
-#    project() => columns, rows
-#
-# Find image projections.
-#
-# Output:
-# [columns] Sums of columns, output VipsImage
-# [rows] Sums of rows, output VipsImage
-
-##
-# :method: profile
-# :call-seq:
-#    profile() => columns, rows
-#
-# Find image profiles.
-#
-# Output:
-# [columns] First non-zero pixel in column, output VipsImage
-# [rows] First non-zero pixel in row, output VipsImage
-
-##
-# :method: measure
-# :call-seq:
-#    measure(h, v) => out
-#
-# Measure a set of patches on a colour chart.
-#
-# Input:
-# [h] Number of patches across chart, input gint
-# [v] Number of patches down chart, input gint
-#
-# Output:
-# [out] Output array of statistics, output VipsImage
-#
-# Options:
-# [left] Left edge of extract area, input gint
-# [top] Top edge of extract area, input gint
-# [width] Width of extract area, input gint
-# [height] Height of extract area, input gint
-
-##
-# :method: getpoint
-# :call-seq:
-#    getpoint(x, y) => out_array
-#
-# Read a point from an image.
-#
-# Input:
-# [x] Point to read, input gint
-# [y] Point to read, input gint
-#
-# Output:
-# [out_array] Array of output values, output VipsArrayDouble
-
-##
-# :method: copy
-# :call-seq:
-#    copy() => out
-#
-# Copy an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [bands] Number of bands in image, input gint
-# [format] Pixel format in image, input VipsBandFormat
-# [coding] Pixel coding, input VipsCoding
-# [interpretation] Pixel interpretation, input VipsInterpretation
-# [xres] Horizontal resolution in pixels/mm, input gdouble
-# [yres] Vertical resolution in pixels/mm, input gdouble
-# [xoffset] Horizontal offset of origin, input gint
-# [yoffset] Vertical offset of origin, input gint
-
-##
-# :method: tilecache
-# :call-seq:
-#    tilecache() => out
-#
-# Cache an image as a set of tiles.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [tile_width] Tile width in pixels, input gint
-# [tile_height] Tile height in pixels, input gint
-# [max_tiles] Maximum number of tiles to cache, input gint
-# [access] Expected access pattern, input VipsAccess
-# [threaded] Allow threaded access, input gboolean
-# [persistent] Keep cache between evaluations, input gboolean
-
-##
-# :method: linecache
-# :call-seq:
-#    linecache() => out
-#
-# Cache an image as a set of lines.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [tile_height] Tile height in pixels, input gint
-# [access] Expected access pattern, input VipsAccess
-# [threaded] Allow threaded access, input gboolean
-# [persistent] Keep cache between evaluations, input gboolean
-
-##
-# :method: sequential
-# :call-seq:
-#    sequential() => out
-#
-# Check sequential access.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [trace] trace pixel requests, input gboolean
-# [tile_height] Tile height in pixels, input gint
-# [access] Expected access pattern, input VipsAccess
-
-##
-# :method: cache
-# :call-seq:
-#    cache() => out
-#
-# Cache an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [tile_width] Tile width in pixels, input gint
-# [tile_height] Tile height in pixels, input gint
-# [max_tiles] Maximum number of tiles to cache, input gint
-
-##
-# :method: embed
-# :call-seq:
-#    embed(x, y, width, height) => out
-#
-# Embed an image in a larger image.
-#
-# Input:
-# [x] Left edge of input in output, input gint
-# [y] Top edge of input in output, input gint
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [extend] How to generate the extra pixels, input VipsExtend
-# [background] Colour for background pixels, input VipsArrayDouble
-
-##
-# :method: flip
-# :call-seq:
-#    flip(direction) => out
-#
-# Flip an image.
-#
-# Input:
-# [direction] Direction to flip image, input VipsDirection
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: insert
-# :call-seq:
-#    insert(sub, x, y) => out
-#
-# Insert image @sub into @main at @x, @y.
-#
-# Input:
-# [sub] Sub-image to insert into main image, input VipsImage
-# [x] Left edge of sub in main, input gint
-# [y] Top edge of sub in main, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [expand] Expand output to hold all of both inputs, input gboolean
-# [background] Colour for new pixels, input VipsArrayDouble
-
-##
-# :method: join
-# :call-seq:
-#    join(in2, direction) => out
-#
-# Join a pair of images.
-#
-# Input:
-# [in2] Second input image, input VipsImage
-# [direction] Join left-right or up-down, input VipsDirection
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [align] Align on the low, centre or high coordinate edge, input VipsAlign
-# [expand] Expand output to hold all of both inputs, input gboolean
-# [shim] Pixels between images, input gint
-# [background] Colour for new pixels, input VipsArrayDouble
-
-##
-# :singleton-method: arrayjoin
-# :call-seq:
-#    arrayjoin(in) => out
-#
-# Join an array of images.
-#
-# Input:
-# [in] Array of input images, input VipsArrayImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [across] Number of images across grid, input gint
-# [shim] Pixels between images, input gint
-# [background] Colour for new pixels, input VipsArrayDouble
-# [halign] Align on the left, centre or right, input VipsAlign
-# [valign] Align on the top, centre or bottom, input VipsAlign
-# [hspacing] Horizontal spacing between images, input gint
-# [vspacing] Vertical spacing between images, input gint
-
-##
-# :method: crop
-# :call-seq:
-#    crop(left, top, width, height) => out
-#
-# Extract an area from an image.
-#
-# Input:
-# [left] Left edge of extract area, input gint
-# [top] Top edge of extract area, input gint
-# [width] Width of extract area, input gint
-# [height] Height of extract area, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: extract_area
-# :call-seq:
-#    extract_area(left, top, width, height) => out
-#
-# Extract an area from an image.
-#
-# Input:
-# [left] Left edge of extract area, input gint
-# [top] Top edge of extract area, input gint
-# [width] Width of extract area, input gint
-# [height] Height of extract area, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: extract_band
-# :call-seq:
-#    extract_band(band) => out
-#
-# Extract band from an image.
-#
-# Input:
-# [band] Band to extract, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [n] Number of bands to extract, input gint
-
-##
-# :method: bandjoin_const
-# :call-seq:
-#    bandjoin_const(c) => out
-#
-# Append a constant band to an image.
-#
-# Input:
-# [c] Array of constants to add, input VipsArrayDouble
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :singleton-method: bandrank
-# :call-seq:
-#    bandrank(in) => out
-#
-# Band-wise rank of a set of images.
-#
-# Input:
-# [in] Array of input images, input VipsArrayImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [index] Select this band element from sorted list, input gint
-
-##
-# :method: bandmean
-# :call-seq:
-#    bandmean() => out
-#
-# Band-wise average.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: bandbool
-# :call-seq:
-#    bandbool(boolean) => out
-#
-# Boolean operation across image bands.
-#
-# Input:
-# [boolean] boolean to perform, input VipsOperationBoolean
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: replicate
-# :call-seq:
-#    replicate(across, down) => out
-#
-# Replicate an image.
-#
-# Input:
-# [across] Repeat this many times horizontally, input gint
-# [down] Repeat this many times vertically, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: cast
-# :call-seq:
-#    cast(format) => out
-#
-# Cast an image.
-#
-# Input:
-# [format] Format to cast to, input VipsBandFormat
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [shift] Shift integer values up and down, input gboolean
-
-##
-# :method: rot
-# :call-seq:
-#    rot(angle) => out
-#
-# Rotate an image.
-#
-# Input:
-# [angle] Angle to rotate image, input VipsAngle
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: rot45
-# :call-seq:
-#    rot45() => out
-#
-# Rotate an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [angle] Angle to rotate image, input VipsAngle45
-
-##
-# :method: autorot
-# :call-seq:
-#    autorot() => out
-#
-# Autorotate image by exif tag.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Output options:
-# [angle] Angle image was rotated by, output VipsAngle
-
-##
-# :method: recomb
-# :call-seq:
-#    recomb(m) => out
-#
-# Linear recombination with matrix.
-#
-# Input:
-# [m] matrix of coefficients, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: bandfold
-# :call-seq:
-#    bandfold() => out
-#
-# Fold up x axis into bands.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [factor] Fold by this factor, input gint
-
-##
-# :method: bandunfold
-# :call-seq:
-#    bandunfold() => out
-#
-# Unfold image bands into x axis.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [factor] Unfold by this factor, input gint
-
-##
-# :method: flatten
-# :call-seq:
-#    flatten() => out
-#
-# Flatten alpha out of an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [background] Background value, input VipsArrayDouble
-# [max_alpha] Maximum value of alpha channel, input gdouble
-
-##
-# :method: premultiply
-# :call-seq:
-#    premultiply() => out
-#
-# Premultiply image alpha.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [max_alpha] Maximum value of alpha channel, input gdouble
-
-##
-# :method: unpremultiply
-# :call-seq:
-#    unpremultiply() => out
-#
-# Unpremultiply image alpha.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [max_alpha] Maximum value of alpha channel, input gdouble
-
-##
-# :method: grid
-# :call-seq:
-#    grid(tile_height, across, down) => out
-#
-# Grid an image.
-#
-# Input:
-# [tile_height] chop into tiles this high, input gint
-# [across] number of tiles across, input gint
-# [down] number of tiles down, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: scale
-# :call-seq:
-#    scale() => out
-#
-# Scale an image to uchar.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [log] Log scale, input gboolean
-# [exp] Exponent for log scale, input gdouble
-
-##
-# :method: wrap
-# :call-seq:
-#    wrap() => out
-#
-# Wrap image origin.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [x] Left edge of input in output, input gint
-# [y] Top edge of input in output, input gint
-
-##
-# :method: zoom
-# :call-seq:
-#    zoom(xfac, yfac) => out
-#
-# Zoom an image.
-#
-# Input:
-# [xfac] Horizontal zoom factor, input gint
-# [yfac] Vertical zoom factor, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: subsample
-# :call-seq:
-#    subsample(xfac, yfac) => out
-#
-# Subsample an image.
-#
-# Input:
-# [xfac] Horizontal subsample factor, input gint
-# [yfac] Vertical subsample factor, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [point] Point sample, input gboolean
-
-##
-# :method: msb
-# :call-seq:
-#    msb() => out
-#
-# Pick most-significant byte from an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [band] Band to msb, input gint
-
-##
-# :method: byteswap
-# :call-seq:
-#    byteswap() => out
-#
-# Byteswap an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: falsecolour
-# :call-seq:
-#    falsecolour() => out
-#
-# False-colour an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: gamma
-# :call-seq:
-#    gamma() => out
-#
-# Gamma an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [exponent] Gamma factor, input gdouble
-
-##
-# :singleton-method: black
-# :call-seq:
-#    black(width, height) => out
-#
-# Make a black image.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [bands] Number of bands in image, input gint
-
-##
-# :singleton-method: gaussnoise
-# :call-seq:
-#    gaussnoise(width, height) => out
-#
-# Make a gaussnoise image.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [mean] Mean of pixels in generated image, input gdouble
-# [sigma] Standard deviation of pixels in generated image, input gdouble
-
-##
-# :singleton-method: text
-# :call-seq:
-#    text(text) => out
-#
-# Make a text image.
-#
-# Input:
-# [text] Text to render, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [font] Font to render width, input gchararray
-# [width] Maximum image width in pixels, input gint
-# [align] Align on the low, centre or high edge, input VipsAlign
-# [dpi] DPI to render at, input gint
-# [spacing] Line spacing, input gint
-
-##
-# :singleton-method: xyz
-# :call-seq:
-#    xyz(width, height) => out
-#
-# Make an image where pixel values are coordinates.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [csize] Size of third dimension, input gint
-# [dsize] Size of fourth dimension, input gint
-# [esize] Size of fifth dimension, input gint
-
-##
-# :singleton-method: gaussmat
-# :call-seq:
-#    gaussmat(sigma, min_ampl) => out
-#
-# Make a gaussian image.
-#
-# Input:
-# [sigma] Sigma of Gaussian, input gdouble
-# [min_ampl] Minimum amplitude of Gaussian, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [separable] Generate separable Gaussian, input gboolean
-# [precision] Generate with this precision, input VipsPrecision
-
-##
-# :singleton-method: logmat
-# :call-seq:
-#    logmat(sigma, min_ampl) => out
-#
-# Make a laplacian of gaussian image.
-#
-# Input:
-# [sigma] Radius of Logmatian, input gdouble
-# [min_ampl] Minimum amplitude of Logmatian, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [separable] Generate separable Logmatian, input gboolean
-# [precision] Generate with this precision, input VipsPrecision
-
-##
-# :singleton-method: eye
-# :call-seq:
-#    eye(width, height) => out
-#
-# Make an image showing the eye's spatial response.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [factor] Maximum spatial frequency, input gdouble
-
-##
-# :singleton-method: grey
-# :call-seq:
-#    grey(width, height) => out
-#
-# Make a grey ramp image.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-
-##
-# :singleton-method: zone
-# :call-seq:
-#    zone(width, height) => out
-#
-# Make a zone plate.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-
-##
-# :singleton-method: sines
-# :call-seq:
-#    sines(width, height) => out
-#
-# Make a 2d sine wave.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [hfreq] Horizontal spatial frequency, input gdouble
-# [vfreq] Vertical spatial frequency, input gdouble
-
-##
-# :singleton-method: mask_ideal
-# :call-seq:
-#    mask_ideal(width, height, frequency_cutoff) => out
-#
-# Make an ideal filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [frequency_cutoff] Frequency cutoff, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-
-##
-# :singleton-method: mask_ideal_ring
-# :call-seq:
-#    mask_ideal_ring(width, height, frequency_cutoff, ringwidth) => out
-#
-# Make an ideal ring filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [frequency_cutoff] Frequency cutoff, input gdouble
-# [ringwidth] Ringwidth, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-
-##
-# :singleton-method: mask_ideal_band
-# :call-seq:
-#    mask_ideal_band(width, height, frequency_cutoff_x, frequency_cutoff_y, radius) => out
-#
-# Make an ideal band filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [frequency_cutoff_x] Frequency cutoff x, input gdouble
-# [frequency_cutoff_y] Frequency cutoff y, input gdouble
-# [radius] radius of circle, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-
-##
-# :singleton-method: mask_butterworth
-# :call-seq:
-#    mask_butterworth(width, height, order, frequency_cutoff, amplitude_cutoff) => out
-#
-# Make a butterworth filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [order] Filter order, input gdouble
-# [frequency_cutoff] Frequency cutoff, input gdouble
-# [amplitude_cutoff] Amplitude cutoff, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-
-##
-# :singleton-method: mask_butterworth_ring
-# :call-seq:
-#    mask_butterworth_ring(width, height, order, frequency_cutoff, amplitude_cutoff, ringwidth) => out
-#
-# Make a butterworth ring filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [order] Filter order, input gdouble
-# [frequency_cutoff] Frequency cutoff, input gdouble
-# [amplitude_cutoff] Amplitude cutoff, input gdouble
-# [ringwidth] Ringwidth, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-
-##
-# :singleton-method: mask_butterworth_band
-# :call-seq:
-#    mask_butterworth_band(width, height, order, frequency_cutoff_x, frequency_cutoff_y, radius, amplitude_cutoff) => out
-#
-# Make a butterworth_band filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [order] Filter order, input gdouble
-# [frequency_cutoff_x] Frequency cutoff x, input gdouble
-# [frequency_cutoff_y] Frequency cutoff y, input gdouble
-# [radius] radius of circle, input gdouble
-# [amplitude_cutoff] Amplitude cutoff, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-# [nodc] Remove DC component, input gboolean
-
-##
-# :singleton-method: mask_gaussian
-# :call-seq:
-#    mask_gaussian(width, height, frequency_cutoff, amplitude_cutoff) => out
-#
-# Make a gaussian filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [frequency_cutoff] Frequency cutoff, input gdouble
-# [amplitude_cutoff] Amplitude cutoff, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-
-##
-# :singleton-method: mask_gaussian_ring
-# :call-seq:
-#    mask_gaussian_ring(width, height, frequency_cutoff, amplitude_cutoff, ringwidth) => out
-#
-# Make a gaussian ring filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [frequency_cutoff] Frequency cutoff, input gdouble
-# [amplitude_cutoff] Amplitude cutoff, input gdouble
-# [ringwidth] Ringwidth, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-
-##
-# :singleton-method: mask_gaussian_band
-# :call-seq:
-#    mask_gaussian_band(width, height, frequency_cutoff_x, frequency_cutoff_y, radius, amplitude_cutoff) => out
-#
-# Make a gaussian filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [frequency_cutoff_x] Frequency cutoff x, input gdouble
-# [frequency_cutoff_y] Frequency cutoff y, input gdouble
-# [radius] radius of circle, input gdouble
-# [amplitude_cutoff] Amplitude cutoff, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-
-##
-# :singleton-method: mask_fractal
-# :call-seq:
-#    mask_fractal(width, height, fractal_dimension) => out
-#
-# Make fractal filter.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [fractal_dimension] Fractal dimension, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [uchar] Output an unsigned char image, input gboolean
-# [nodc] Remove DC component, input gboolean
-# [reject] Invert the sense of the filter, input gboolean
-# [optical] Rotate quadrants to optical space, input gboolean
-
-##
-# :method: buildlut
-# :call-seq:
-#    buildlut() => out
-#
-# Build a look-up table.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: invertlut
-# :call-seq:
-#    invertlut() => out
-#
-# Build an inverted look-up table.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [size] LUT size to generate, input gint
-
-##
-# :singleton-method: tonelut
-# :call-seq:
-#    tonelut() => out
-#
-# Build a look-up table.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [in_max] Size of LUT to build, input gint
-# [out_max] Maximum value in output LUT, input gint
-# [Lb] Lowest value in output, input gdouble
-# [Lw] Highest value in output, input gdouble
-# [Ps] Position of shadow, input gdouble
-# [Pm] Position of mid-tones, input gdouble
-# [Ph] Position of highlights, input gdouble
-# [S] Adjust shadows by this much, input gdouble
-# [M] Adjust mid-tones by this much, input gdouble
-# [H] Adjust highlights by this much, input gdouble
-
-##
-# :singleton-method: identity
-# :call-seq:
-#    identity() => out
-#
-# Make a 1d image where pixel values are indexes.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [bands] Number of bands in LUT, input gint
-# [ushort] Create a 16-bit LUT, input gboolean
-# [size] Size of 16-bit LUT, input gint
-
-##
-# :singleton-method: fractsurf
-# :call-seq:
-#    fractsurf(width, height, fractal_dimension) => out
-#
-# Make a fractal surface.
-#
-# Input:
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [fractal_dimension] Fractal dimension, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :singleton-method: radload
-# :call-seq:
-#    radload(filename) => out
-#
-# Load a radiance image from a file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: ppmload
-# :call-seq:
-#    ppmload(filename) => out
-#
-# Load ppm from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: csvload
-# :call-seq:
-#    csvload(filename) => out
-#
-# Load csv from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-# [skip] Skip this many lines at the start of the file, input gint
-# [lines] Read this many lines from the file, input gint
-# [whitespace] Set of whitespace characters, input gchararray
-# [separator] Set of separator characters, input gchararray
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: matrixload
-# :call-seq:
-#    matrixload(filename) => out
-#
-# Load matrix from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: analyzeload
-# :call-seq:
-#    analyzeload(filename) => out
-#
-# Load an analyze6 image.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: rawload
-# :call-seq:
-#    rawload(filename, width, height, bands) => out
-#
-# Load raw data from a file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-# [width] Image width in pixels, input gint
-# [height] Image height in pixels, input gint
-# [bands] Number of bands in image, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-# [offset] Offset in bytes from start of file, input guint64
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: vipsload
-# :call-seq:
-#    vipsload(filename) => out
-#
-# Load vips from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: pngload
-# :call-seq:
-#    pngload(filename) => out
-#
-# Load png from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: pngload_buffer
-# :call-seq:
-#    pngload_buffer(buffer) => out
-#
-# Load png from buffer.
-#
-# Input:
-# [buffer] Buffer to load from, input VipsBlob
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: matload
-# :call-seq:
-#    matload(filename) => out
-#
-# Load mat from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: jpegload
-# :call-seq:
-#    jpegload(filename) => out
-#
-# Load jpeg from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-# [shrink] Shrink factor on load, input gint
-# [fail] Fail on first warning, input gboolean
-# [autorotate] Rotate image using exif orientation, input gboolean
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: jpegload_buffer
-# :call-seq:
-#    jpegload_buffer(buffer) => out
-#
-# Load jpeg from buffer.
-#
-# Input:
-# [buffer] Buffer to load from, input VipsBlob
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-# [shrink] Shrink factor on load, input gint
-# [fail] Fail on first warning, input gboolean
-# [autorotate] Rotate image using exif orientation, input gboolean
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: webpload
-# :call-seq:
-#    webpload(filename) => out
-#
-# Load webp from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: webpload_buffer
-# :call-seq:
-#    webpload_buffer(buffer) => out
-#
-# Load webp from buffer.
-#
-# Input:
-# [buffer] Buffer to load from, input VipsBlob
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: tiffload
-# :call-seq:
-#    tiffload(filename) => out
-#
-# Load tiff from file.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-# [page] Load this page from the image, input gint
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: tiffload_buffer
-# :call-seq:
-#    tiffload_buffer(buffer) => out
-#
-# Load tiff from buffer.
-#
-# Input:
-# [buffer] Buffer to load from, input VipsBlob
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-# [page] Load this page from the image, input gint
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: openslideload
-# :call-seq:
-#    openslideload(filename) => out
-#
-# Load file with openslide.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-# [level] Load this level from the file, input gint
-# [autocrop] Crop to image bounds, input gboolean
-# [associated] Load this associated image, input gchararray
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: magickload
-# :call-seq:
-#    magickload(filename) => out
-#
-# Load file with imagemagick.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [all_frames] Read all frames from an image, input gboolean
-# [density] Canvas resolution for rendering vector formats like SVG, input gchararray
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: magickload_buffer
-# :call-seq:
-#    magickload_buffer(buffer) => out
-#
-# Load buffer with imagemagick.
-#
-# Input:
-# [buffer] Buffer to load from, input VipsBlob
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [all_frames] Read all frames from an image, input gboolean
-# [density] Canvas resolution for rendering vector formats like SVG, input gchararray
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: fitsload
-# :call-seq:
-#    fitsload(filename) => out
-#
-# Load a fits image.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :singleton-method: openexrload
-# :call-seq:
-#    openexrload(filename) => out
-#
-# Load an openexr image.
-#
-# Input:
-# [filename] Filename to load from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [disc] Open to disc, input gboolean
-# [access] Required access pattern for this file, input VipsAccess
-#
-# Output options:
-# [flags] Flags for this file, output VipsForeignFlags
-
-##
-# :method: radsave
-# :call-seq:
-#    radsave(filename) => 
-#
-# Save image to radiance file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: ppmsave
-# :call-seq:
-#    ppmsave(filename) => 
-#
-# Save image to ppm file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [ascii] save as ascii, input gboolean
-# [squash] save as one bit, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: csvsave
-# :call-seq:
-#    csvsave(filename) => 
-#
-# Save image to csv file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [separator] Separator characters, input gchararray
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: matrixsave
-# :call-seq:
-#    matrixsave(filename) => 
-#
-# Save image to matrix file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: matrixprint
-# :call-seq:
-#    matrixprint() => 
-#
-# Print matrix.
-#
-# Options:
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: rawsave
-# :call-seq:
-#    rawsave(filename) => 
-#
-# Save image to raw file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: rawsave_fd
-# :call-seq:
-#    rawsave_fd(fd) => 
-#
-# Write raw image to file descriptor.
-#
-# Input:
-# [fd] File descriptor to write to, input gint
-#
-# Options:
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: vipssave
-# :call-seq:
-#    vipssave(filename) => 
-#
-# Save image to vips file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: dzsave
-# :call-seq:
-#    dzsave(filename) => 
-#
-# Save image to deep zoom format.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [layout] Directory layout, input VipsForeignDzLayout
-# [suffix] Filename suffix for tiles, input gchararray
-# [overlap] Tile overlap in pixels, input gint
-# [tile_size] Tile size in pixels, input gint
-# [centre] Center image in tile, input gboolean
-# [depth] Pyramid depth, input VipsForeignDzDepth
-# [angle] Rotate image during save, input VipsAngle
-# [container] Pyramid container type, input VipsForeignDzContainer
-# [properties] Write a properties file to the output directory, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: pngsave
-# :call-seq:
-#    pngsave(filename) => 
-#
-# Save image to png file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [compression] Compression factor, input gint
-# [interlace] Interlace image, input gboolean
-# [profile] ICC profile to embed, input gchararray
-# [filter] libpng row filter flag(s), input VipsForeignPngFilter
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: pngsave_buffer
-# :call-seq:
-#    pngsave_buffer() => buffer
-#
-# Save image to png buffer.
-#
-# Output:
-# [buffer] Buffer to save to, output VipsBlob
-#
-# Options:
-# [compression] Compression factor, input gint
-# [interlace] Interlace image, input gboolean
-# [profile] ICC profile to embed, input gchararray
-# [filter] libpng row filter flag(s), input VipsForeignPngFilter
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: jpegsave
-# :call-seq:
-#    jpegsave(filename) => 
-#
-# Save image to jpeg file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [Q] Q factor, input gint
-# [profile] ICC profile to embed, input gchararray
-# [optimize_coding] Compute optimal Huffman coding tables, input gboolean
-# [interlace] Generate an interlaced (progressive) jpeg, input gboolean
-# [no_subsample] Disable chroma subsample, input gboolean
-# [trellis_quant] Apply trellis quantisation to each 8x8 block, input gboolean
-# [overshoot_deringing] Apply overshooting to samples with extreme values, input gboolean
-# [optimize_scans] Split the spectrum of DCT coefficients into separate scans, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: jpegsave_buffer
-# :call-seq:
-#    jpegsave_buffer() => buffer
-#
-# Save image to jpeg buffer.
-#
-# Output:
-# [buffer] Buffer to save to, output VipsBlob
-#
-# Options:
-# [Q] Q factor, input gint
-# [profile] ICC profile to embed, input gchararray
-# [optimize_coding] Compute optimal Huffman coding tables, input gboolean
-# [interlace] Generate an interlaced (progressive) jpeg, input gboolean
-# [no_subsample] Disable chroma subsample, input gboolean
-# [trellis_quant] Apply trellis quantisation to each 8x8 block, input gboolean
-# [overshoot_deringing] Apply overshooting to samples with extreme values, input gboolean
-# [optimize_scans] Split the spectrum of DCT coefficients into separate scans, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: jpegsave_mime
-# :call-seq:
-#    jpegsave_mime() => 
-#
-# Save image to jpeg mime.
-#
-# Options:
-# [Q] Q factor, input gint
-# [profile] ICC profile to embed, input gchararray
-# [optimize_coding] Compute optimal Huffman coding tables, input gboolean
-# [interlace] Generate an interlaced (progressive) jpeg, input gboolean
-# [no_subsample] Disable chroma subsample, input gboolean
-# [trellis_quant] Apply trellis quantisation to each 8x8 block, input gboolean
-# [overshoot_deringing] Apply overshooting to samples with extreme values, input gboolean
-# [optimize_scans] Split the spectrum of DCT coefficients into separate scans, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: webpsave
-# :call-seq:
-#    webpsave(filename) => 
-#
-# Save image to webp file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [Q] Q factor, input gint
-# [lossless] enable lossless compression, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: webpsave_buffer
-# :call-seq:
-#    webpsave_buffer() => buffer
-#
-# Save image to webp buffer.
-#
-# Output:
-# [buffer] Buffer to save to, output VipsBlob
-#
-# Options:
-# [Q] Q factor, input gint
-# [lossless] enable lossless compression, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: tiffsave
-# :call-seq:
-#    tiffsave(filename) => 
-#
-# Save image to tiff file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [compression] Compression for this file, input VipsForeignTiffCompression
-# [Q] Q factor, input gint
-# [predictor] Compression prediction, input VipsForeignTiffPredictor
-# [profile] ICC profile to embed, input gchararray
-# [tile] Write a tiled tiff, input gboolean
-# [tile_width] Tile width in pixels, input gint
-# [tile_height] Tile height in pixels, input gint
-# [pyramid] Write a pyramidal tiff, input gboolean
-# [miniswhite] Use 0 for white in 1-bit images, input gboolean
-# [squash] Squash images down to 1 bit, input gboolean
-# [resunit] Resolution unit, input VipsForeignTiffResunit
-# [xres] Horizontal resolution in pixels/mm, input gdouble
-# [yres] Vertical resolution in pixels/mm, input gdouble
-# [bigtiff] Write a bigtiff image, input gboolean
-# [properties] Write a properties document to IMAGEDESCRIPTION, input gboolean
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: fitssave
-# :call-seq:
-#    fitssave(filename) => 
-#
-# Save image to fits file.
-#
-# Input:
-# [filename] Filename to save to, input gchararray
-#
-# Options:
-# [strip] Strip all metadata from image, input gboolean
-# [background] Background value, input VipsArrayDouble
-
-##
-# :method: mapim
-# :call-seq:
-#    mapim(index) => out
-#
-# Resample with an mapim image.
-#
-# Input:
-# [index] Index pixels with this, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [interpolate] Interpolate pixels with this, input VipsInterpolate
-
-##
-# :method: shrink
-# :call-seq:
-#    shrink(xshrink, yshrink) => out
-#
-# Shrink an image.
-#
-# Input:
-# [xshrink] Horizontal shrink factor, input gdouble
-# [yshrink] Vertical shrink factor, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: shrinkh
-# :call-seq:
-#    shrinkh(xshrink) => out
-#
-# Shrink an image horizontally.
-#
-# Input:
-# [xshrink] Horizontal shrink factor, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: shrinkv
-# :call-seq:
-#    shrinkv(yshrink) => out
-#
-# Shrink an image vertically.
-#
-# Input:
-# [yshrink] Vertical shrink factor, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: shrink2
-# :call-seq:
-#    shrink2(xshrink, yshrink) => out
-#
-# Shrink an image.
-#
-# Input:
-# [xshrink] Horizontal shrink factor, input gdouble
-# [yshrink] Vertical shrink factor, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: quadratic
-# :call-seq:
-#    quadratic(coeff) => out
-#
-# Resample an image with a quadratic transform.
-#
-# Input:
-# [coeff] Coefficient matrix, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [interpolate] Interpolate values with this, input VipsInterpolate
-
-##
-# :method: affine
-# :call-seq:
-#    affine(matrix) => out
-#
-# Affine transform of an image.
-#
-# Input:
-# [matrix] Transformation matrix, input VipsArrayDouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [interpolate] Interpolate pixels with this, input VipsInterpolate
-# [oarea] Area of output to generate, input VipsArrayInt
-# [odx] Horizontal output displacement, input gdouble
-# [ody] Vertical output displacement, input gdouble
-# [idx] Horizontal input displacement, input gdouble
-# [idy] Vertical input displacement, input gdouble
-
-##
-# :method: similarity
-# :call-seq:
-#    similarity() => out
-#
-# Similarity transform of an image.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [interpolate] Interpolate pixels with this, input VipsInterpolate
-# [scale] Scale by this factor, input gdouble
-# [angle] Rotate anticlockwise by this many degrees, input gdouble
-# [odx] Horizontal output displacement, input gdouble
-# [ody] Vertical output displacement, input gdouble
-# [idx] Horizontal input displacement, input gdouble
-# [idy] Vertical input displacement, input gdouble
-
-##
-# :method: resize
-# :call-seq:
-#    resize(scale) => out
-#
-# Resize an image.
-#
-# Input:
-# [scale] Scale image by this factor, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [interpolate] Interpolate pixels with this, input VipsInterpolate
-# [vscale] Vertical scale image by this factor, input gdouble
-# [idx] Horizontal input displacement, input gdouble
-# [idy] Vertical input displacement, input gdouble
-
-##
-# :method: colourspace
-# :call-seq:
-#    colourspace(space) => out
-#
-# Convert to a new colourspace.
-#
-# Input:
-# [space] Destination colour space, input VipsInterpretation
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [source_space] Source colour space, input VipsInterpretation
-
-##
-# :method: Lab2XYZ
-# :call-seq:
-#    Lab2XYZ() => out
-#
-# Transform cielab to xyz.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [temp] Colour temperature, input VipsArrayDouble
-
-##
-# :method: XYZ2Lab
-# :call-seq:
-#    XYZ2Lab() => out
-#
-# Transform xyz to lab.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [temp] Colour temperature, input VipsArrayDouble
-
-##
-# :method: Lab2LCh
-# :call-seq:
-#    Lab2LCh() => out
-#
-# Transform lab to lch.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: LCh2Lab
-# :call-seq:
-#    LCh2Lab() => out
-#
-# Transform lch to lab.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: LCh2CMC
-# :call-seq:
-#    LCh2CMC() => out
-#
-# Transform lch to cmc.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: CMC2LCh
-# :call-seq:
-#    CMC2LCh() => out
-#
-# Transform lch to cmc.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: XYZ2Yxy
-# :call-seq:
-#    XYZ2Yxy() => out
-#
-# Transform xyz to yxy.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: Yxy2XYZ
-# :call-seq:
-#    Yxy2XYZ() => out
-#
-# Transform yxy to xyz.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: scRGB2XYZ
-# :call-seq:
-#    scRGB2XYZ() => out
-#
-# Transform scrgb to xyz.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: XYZ2scRGB
-# :call-seq:
-#    XYZ2scRGB() => out
-#
-# Transform xyz to scrgb.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: LabQ2Lab
-# :call-seq:
-#    LabQ2Lab() => out
-#
-# Unpack a labq image to float lab.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: Lab2LabQ
-# :call-seq:
-#    Lab2LabQ() => out
-#
-# Transform float lab to labq coding.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: LabQ2LabS
-# :call-seq:
-#    LabQ2LabS() => out
-#
-# Unpack a labq image to short lab.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: LabS2LabQ
-# :call-seq:
-#    LabS2LabQ() => out
-#
-# Transform short lab to labq coding.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: LabS2Lab
-# :call-seq:
-#    LabS2Lab() => out
-#
-# Transform signed short lab to float.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: Lab2LabS
-# :call-seq:
-#    Lab2LabS() => out
-#
-# Transform float lab to signed short.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: rad2float
-# :call-seq:
-#    rad2float() => out
-#
-# Unpack radiance coding to float rgb.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: float2rad
-# :call-seq:
-#    float2rad() => out
-#
-# Transform float rgb to radiance coding.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: LabQ2sRGB
-# :call-seq:
-#    LabQ2sRGB() => out
-#
-# Convert a labq image to srgb.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: sRGB2HSV
-# :call-seq:
-#    sRGB2HSV() => out
-#
-# Transform srgb to hsv.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: HSV2sRGB
-# :call-seq:
-#    HSV2sRGB() => out
-#
-# Transform hsv to srgb.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: icc_import
-# :call-seq:
-#    icc_import() => out
-#
-# Import from device with icc profile.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [pcs] Set Profile Connection Space, input VipsPCS
-# [intent] Rendering intent, input VipsIntent
-# [embedded] Use embedded input profile, if available, input gboolean
-# [input_profile] Filename to load input profile from, input gchararray
-
-##
-# :method: icc_export
-# :call-seq:
-#    icc_export() => out
-#
-# Output to device with icc profile.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [pcs] Set Profile Connection Space, input VipsPCS
-# [intent] Rendering intent, input VipsIntent
-# [output_profile] Filename to load output profile from, input gchararray
-# [depth] Output device space depth in bits, input gint
-
-##
-# :method: icc_transform
-# :call-seq:
-#    icc_transform(output_profile) => out
-#
-# Transform between devices with icc profiles.
-#
-# Input:
-# [output_profile] Filename to load output profile from, input gchararray
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [pcs] Set Profile Connection Space, input VipsPCS
-# [intent] Rendering intent, input VipsIntent
-# [embedded] Use embedded input profile, if available, input gboolean
-# [input_profile] Filename to load input profile from, input gchararray
-# [depth] Output device space depth in bits, input gint
-
-##
-# :method: dE76
-# :call-seq:
-#    dE76(right) => out
-#
-# Calculate de76.
-#
-# Input:
-# [right] Right-hand input image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: dE00
-# :call-seq:
-#    dE00(right) => out
-#
-# Calculate de00.
-#
-# Input:
-# [right] Right-hand input image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: dECMC
-# :call-seq:
-#    dECMC(right) => out
-#
-# Calculate decmc.
-#
-# Input:
-# [right] Right-hand input image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: sRGB2scRGB
-# :call-seq:
-#    sRGB2scRGB() => out
-#
-# Convert an srgb image to scrgb.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: scRGB2BW
-# :call-seq:
-#    scRGB2BW() => out
-#
-# Convert scrgb to bw.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [depth] Output device space depth in bits, input gint
-
-##
-# :method: scRGB2sRGB
-# :call-seq:
-#    scRGB2sRGB() => out
-#
-# Convert an scrgb image to srgb.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [depth] Output device space depth in bits, input gint
-
-##
-# :method: maplut
-# :call-seq:
-#    maplut(lut) => out
-#
-# Map an image though a lut.
-#
-# Input:
-# [lut] Look-up table image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [band] apply one-band lut to this band of in, input gint
-
-##
-# :method: percent
-# :call-seq:
-#    percent(percent) => threshold
-#
-# Find threshold for percent of pixels.
-#
-# Input:
-# [percent] Percent of pixels, input gdouble
-#
-# Output:
-# [threshold] Threshold above which lie percent of pixels, output gint
-
-##
-# :method: stdif
-# :call-seq:
-#    stdif(width, height) => out
-#
-# Statistical difference.
-#
-# Input:
-# [width] Window width in pixels, input gint
-# [height] Window height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [a] Weight of new mean, input gdouble
-# [s0] New deviation, input gdouble
-# [b] Weight of new deviation, input gdouble
-# [m0] New mean, input gdouble
-
-##
-# :method: hist_cum
-# :call-seq:
-#    hist_cum() => out
-#
-# Form cumulative histogram.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: hist_match
-# :call-seq:
-#    hist_match(ref) => out
-#
-# Match two histograms.
-#
-# Input:
-# [ref] Reference histogram, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: hist_norm
-# :call-seq:
-#    hist_norm() => out
-#
-# Normalise histogram.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: hist_equal
-# :call-seq:
-#    hist_equal() => out
-#
-# Histogram equalisation.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [band] Equalise with this band, input gint
-
-##
-# :method: hist_plot
-# :call-seq:
-#    hist_plot() => out
-#
-# Plot histogram.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: hist_local
-# :call-seq:
-#    hist_local(width, height) => out
-#
-# Local histogram equalisation.
-#
-# Input:
-# [width] Window width in pixels, input gint
-# [height] Window height in pixels, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: hist_ismonotonic
-# :call-seq:
-#    hist_ismonotonic() => monotonic
-#
-# Test for monotonicity.
-#
-# Output:
-# [monotonic] true if in is monotonic, output gboolean
-
-##
-# :method: hist_entropy
-# :call-seq:
-#    hist_entropy() => out
-#
-# Estimate image entropy.
-#
-# Output:
-# [out] Output value, output gdouble
-
-##
-# :method: conv
-# :call-seq:
-#    conv(mask) => out
-#
-# Convolution operation.
-#
-# Input:
-# [mask] Input matrix image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [precision] Convolve with this precision, input VipsPrecision
-# [layers] Use this many layers in approximation, input gint
-# [cluster] Cluster lines closer than this in approximation, input gint
-
-##
-# :method: compass
-# :call-seq:
-#    compass(mask) => out
-#
-# Convolve with rotating mask.
-#
-# Input:
-# [mask] Input matrix image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [times] Rotate and convolve this many times, input gint
-# [angle] Rotate mask by this much between convolutions, input VipsAngle45
-# [combine] Combine convolution results like this, input VipsCombine
-# [precision] Convolve with this precision, input VipsPrecision
-# [layers] Use this many layers in approximation, input gint
-# [cluster] Cluster lines closer than this in approximation, input gint
-
-##
-# :method: convsep
-# :call-seq:
-#    convsep(mask) => out
-#
-# Seperable convolution operation.
-#
-# Input:
-# [mask] Input matrix image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [precision] Convolve with this precision, input VipsPrecision
-# [layers] Use this many layers in approximation, input gint
-# [cluster] Cluster lines closer than this in approximation, input gint
-
-##
-# :method: fastcor
-# :call-seq:
-#    fastcor(ref) => out
-#
-# Fast correlation.
-#
-# Input:
-# [ref] Input reference image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: spcor
-# :call-seq:
-#    spcor(ref) => out
-#
-# Spatial correlation.
-#
-# Input:
-# [ref] Input reference image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: sharpen
-# :call-seq:
-#    sharpen() => out
-#
-# Unsharp masking for print.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [radius] Mask radius, input gint
-# [x1] Flat/jaggy threshold, input gdouble
-# [y2] Maximum brightening, input gdouble
-# [y3] Maximum darkening, input gdouble
-# [m1] Slope for flat areas, input gdouble
-# [m2] Slope for jaggy areas, input gdouble
-
-##
-# :method: gaussblur
-# :call-seq:
-#    gaussblur(sigma) => out
-#
-# Gaussian blur.
-#
-# Input:
-# [sigma] Sigma of Gaussian, input gdouble
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [min_ampl] Minimum amplitude of Gaussian, input gdouble
-# [precision] Convolve with this precision, input VipsPrecision
-
-##
-# :method: fwfft
-# :call-seq:
-#    fwfft() => out
-#
-# Forward fft.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: invfft
-# :call-seq:
-#    invfft() => out
-#
-# Inverse fft.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [real] Output only the real part of the transform, input gboolean
-
-##
-# :method: freqmult
-# :call-seq:
-#    freqmult(mask) => out
-#
-# Frequency-domain filtering.
-#
-# Input:
-# [mask] Input mask image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: spectrum
-# :call-seq:
-#    spectrum() => out
-#
-# Make displayable power spectrum.
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: phasecor
-# :call-seq:
-#    phasecor(in2) => out
-#
-# Calculate phase correlation.
-#
-# Input:
-# [in2] Second input image, input VipsImage
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: morph
-# :call-seq:
-#    morph(mask, morph) => out
-#
-# Morphology operation.
-#
-# Input:
-# [mask] Input matrix image, input VipsImage
-# [morph] Morphological operation to perform, input VipsOperationMorphology
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: rank
-# :call-seq:
-#    rank(width, height, index) => out
-#
-# Rank filter.
-#
-# Input:
-# [width] Window width in pixels, input gint
-# [height] Window height in pixels, input gint
-# [index] Select pixel at index, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-
-##
-# :method: countlines
-# :call-seq:
-#    countlines(direction) => nolines
-#
-# Count lines in an image.
-#
-# Input:
-# [direction] Countlines left-right or up-down, input VipsDirection
-#
-# Output:
-# [nolines] Number of lines, output gdouble
-
-##
-# :method: labelregions
-# :call-seq:
-#    labelregions() => mask
-#
-# Label regions in an image.
-#
-# Output:
-# [mask] Mask of region labels, output VipsImage
-#
-# Output options:
-# [segments] Number of discrete contigious regions, output gint
-
-##
-# :method: draw_rect
-# :call-seq:
-#    draw_rect(ink, left, top, width, height) => image
-#
-# Paint a rectangle on an image.
-#
-# Input:
-# [ink] Colour for pixels, input VipsArrayDouble
-# [left] Rect to fill, input gint
-# [top] Rect to fill, input gint
-# [width] Rect to fill, input gint
-# [height] Rect to fill, input gint
-#
-# Output:
-# [image] Image to draw on, input VipsImage
-#
-# Options:
-# [fill] Draw a solid object, input gboolean
-
-##
-# :method: draw_mask
-# :call-seq:
-#    draw_mask(ink, mask, x, y) => image
-#
-# Draw a mask on an image.
-#
-# Input:
-# [ink] Colour for pixels, input VipsArrayDouble
-# [mask] Mask of pixels to draw, input VipsImage
-# [x] Draw mask here, input gint
-# [y] Draw mask here, input gint
-#
-# Output:
-# [image] Image to draw on, input VipsImage
-
-##
-# :method: draw_line
-# :call-seq:
-#    draw_line(ink, x1, y1, x2, y2) => image
-#
-# Draw a line on an image.
-#
-# Input:
-# [ink] Colour for pixels, input VipsArrayDouble
-# [x1] Start of draw_line, input gint
-# [y1] Start of draw_line, input gint
-# [x2] End of draw_line, input gint
-# [y2] End of draw_line, input gint
-#
-# Output:
-# [image] Image to draw on, input VipsImage
-
-##
-# :method: draw_circle
-# :call-seq:
-#    draw_circle(ink, cx, cy, radius) => image
-#
-# Draw a circle on an image.
-#
-# Input:
-# [ink] Colour for pixels, input VipsArrayDouble
-# [cx] Centre of draw_circle, input gint
-# [cy] Centre of draw_circle, input gint
-# [radius] Radius in pixels, input gint
-#
-# Output:
-# [image] Image to draw on, input VipsImage
-#
-# Options:
-# [fill] Draw a solid object, input gboolean
-
-##
-# :method: draw_flood
-# :call-seq:
-#    draw_flood(ink, x, y) => image
-#
-# Flood-fill an area.
-#
-# Input:
-# [ink] Colour for pixels, input VipsArrayDouble
-# [x] DrawFlood start point, input gint
-# [y] DrawFlood start point, input gint
-#
-# Output:
-# [image] Image to draw on, input VipsImage
-#
-# Options:
-# [test] Test pixels in this image, input VipsImage
-# [equal] DrawFlood while equal to edge, input gboolean
-#
-# Output options:
-# [left] Left edge of modified area, output gint
-# [top] top edge of modified area, output gint
-# [width] width of modified area, output gint
-# [height] height of modified area, output gint
-
-##
-# :method: draw_image
-# :call-seq:
-#    draw_image(sub, x, y) => image
-#
-# Paint an image into another image.
-#
-# Input:
-# [sub] Sub-image to insert into main image, input VipsImage
-# [x] Draw image here, input gint
-# [y] Draw image here, input gint
-#
-# Output:
-# [image] Image to draw on, input VipsImage
-#
-# Options:
-# [mode] Combining mode, input VipsCombineMode
-
-##
-# :method: draw_smudge
-# :call-seq:
-#    draw_smudge(left, top, width, height) => image
-#
-# Blur a rectangle on an image.
-#
-# Input:
-# [left] Rect to fill, input gint
-# [top] Rect to fill, input gint
-# [width] Rect to fill, input gint
-# [height] Rect to fill, input gint
-#
-# Output:
-# [image] Image to draw on, input VipsImage
-
-##
-# :method: merge
-# :call-seq:
-#    merge(sec, direction, dx, dy) => out
-#
-# Merge two images.
-#
-# Input:
-# [sec] Secondary image, input VipsImage
-# [direction] Horizontal or vertcial merge, input VipsDirection
-# [dx] Horizontal displacement from sec to ref, input gint
-# [dy] Vertical displacement from sec to ref, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [mblend] Maximum blend size, input gint
-
-##
-# :method: mosaic
-# :call-seq:
-#    mosaic(sec, direction, xref, yref, xsec, ysec) => out
-#
-# Mosaic two images.
-#
-# Input:
-# [sec] Secondary image, input VipsImage
-# [direction] Horizontal or vertcial mosaic, input VipsDirection
-# [xref] Position of reference tie-point, input gint
-# [yref] Position of reference tie-point, input gint
-# [xsec] Position of secondary tie-point, input gint
-# [ysec] Position of secondary tie-point, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [hwindow] Half window size, input gint
-# [harea] Half area size, input gint
-# [mblend] Maximum blend size, input gint
-# [bandno] Band to search for features on, input gint
-#
-# Output options:
-# [dx0] Detected integer offset, output gint
-# [dy0] Detected integer offset, output gint
-# [scale1] Detected scale, output gdouble
-# [angle1] Detected rotation, output gdouble
-# [dx1] Detected first-order displacement, output gdouble
-# [dy1] Detected first-order displacement, output gdouble
-
-##
-# :method: mosaic1
-# :call-seq:
-#    mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) => out
-#
-# First-order mosaic of two images.
-#
-# Input:
-# [sec] Secondary image, input VipsImage
-# [direction] Horizontal or vertcial mosaic, input VipsDirection
-# [xr1] Position of first reference tie-point, input gint
-# [yr1] Position of first reference tie-point, input gint
-# [xs1] Position of first secondary tie-point, input gint
-# [ys1] Position of first secondary tie-point, input gint
-# [xr2] Position of second reference tie-point, input gint
-# [yr2] Position of second reference tie-point, input gint
-# [xs2] Position of second secondary tie-point, input gint
-# [ys2] Position of second secondary tie-point, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [hwindow] Half window size, input gint
-# [harea] Half area size, input gint
-# [search] Search to improve tie-points, input gboolean
-# [interpolate] Interpolate pixels with this, input VipsInterpolate
-# [mblend] Maximum blend size, input gint
-# [bandno] Band to search for features on, input gint
-
-##
-# :method: match
-# :call-seq:
-#    match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) => out
-#
-# First-order match of two images.
-#
-# Input:
-# [sec] Secondary image, input VipsImage
-# [xr1] Position of first reference tie-point, input gint
-# [yr1] Position of first reference tie-point, input gint
-# [xs1] Position of first secondary tie-point, input gint
-# [ys1] Position of first secondary tie-point, input gint
-# [xr2] Position of second reference tie-point, input gint
-# [yr2] Position of second reference tie-point, input gint
-# [xs2] Position of second secondary tie-point, input gint
-# [ys2] Position of second secondary tie-point, input gint
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [hwindow] Half window size, input gint
-# [harea] Half area size, input gint
-# [search] Search to improve tie-points, input gboolean
-# [interpolate] Interpolate pixels with this, input VipsInterpolate
-
-##
-# :method: globalbalance
-# :call-seq:
-#    globalbalance() => out
-#
-# Global balance an image mosaic.
-#
-# Output:
-# [out] Output image, output VipsImage
-#
-# Options:
-# [gamma] Image gamma, input gdouble
-# [int_output] Integer output, input gboolean
+#   @param right [Vips::Image] Right-hand image argument
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method subtract(right, opts = {})
+#   Subtract two images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method multiply(right, opts = {})
+#   Multiply two images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method divide(right, opts = {})
+#   Divide two images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method relational(right, relational, opts = {})
+#   Relational operation on two images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param relational [Vips::OperationRelational] relational to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method remainder(right, opts = {})
+#   Remainder after integer division of two images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method boolean(right, boolean, opts = {})
+#   Boolean operation on two images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param boolean [Vips::OperationBoolean] boolean to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method math2(right, math2, opts = {})
+#   Binary math operations.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param math2 [Vips::OperationMath2] math to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method complex2(right, cmplx, opts = {})
+#   Complex binary operations on two images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param cmplx [Vips::OperationComplex2] binary complex operation to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method complexform(right, opts = {})
+#   Form a complex image from two real images.
+#   @param right [Vips::Image] Right-hand image argument
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method self.sum(in, opts = {})
+#   Sum an array of images.
+#   @param in [Array<Image>] Array of input images
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method invert(, opts = {})
+#   Invert an image.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method linear(a, b, opts = {})
+#   Calculate (a * in + b).
+#   @param a [Array<Double>] Multiply by this
+#   @param b [Array<Double>] Add this
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output should be uchar
+#   @return [Vips::Image] Output image
+
+# @!method math(math, opts = {})
+#   Apply a math operation to an image.
+#   @param math [Vips::OperationMath] math to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method abs(, opts = {})
+#   Absolute value of an image.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method sign(, opts = {})
+#   Unit vector of pixel.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method round(round, opts = {})
+#   Perform a round function on an image.
+#   @param round [Vips::OperationRound] rounding operation to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method relational_const(c, relational, opts = {})
+#   Relational operations against a constant.
+#   @param c [Array<Double>] Array of constants
+#   @param relational [Vips::OperationRelational] relational to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method remainder_const(c, opts = {})
+#   Remainder after integer division of an image and a constant.
+#   @param c [Array<Double>] Array of constants
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method boolean_const(c, boolean, opts = {})
+#   Boolean operations against a constant.
+#   @param c [Array<Double>] Array of constants
+#   @param boolean [Vips::OperationBoolean] boolean to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method math2_const(c, math2, opts = {})
+#   Pow( @in, @c ).
+#   @param c [Array<Double>] Array of constants
+#   @param math2 [Vips::OperationMath2] math to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method complex(cmplx, opts = {})
+#   Perform a complex operation on an image.
+#   @param cmplx [Vips::OperationComplex] complex to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method complexget(get, opts = {})
+#   Get a component from a complex image.
+#   @param get [Vips::OperationComplexget] complex to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method avg(, opts = {})
+#   Find image average.
+#   @param [Hash] opts Set of options
+#   @return [Float] Output value
+
+# @!method min(, opts = {})
+#   Find image minimum.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :size Number of minimum values to find
+#   @option opts [Integer] :x Horizontal position of minimum
+#   @option opts [Integer] :y Vertical position of minimum
+#   @option opts [Array<Double>] :out_array Array of output values
+#   @option opts [Array<Integer>] :x_array Array of horizontal positions
+#   @option opts [Array<Integer>] :y_array Array of vertical positions
+#   @return [Float] Output value
+
+# @!method max(, opts = {})
+#   Find image maximum.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :size Number of maximum values to find
+#   @option opts [Integer] :x Horizontal position of maximum
+#   @option opts [Integer] :y Vertical position of maximum
+#   @option opts [Array<Double>] :out_array Array of output values
+#   @option opts [Array<Integer>] :x_array Array of horizontal positions
+#   @option opts [Array<Integer>] :y_array Array of vertical positions
+#   @return [Float] Output value
+
+# @!method deviate(, opts = {})
+#   Find image standard deviation.
+#   @param [Hash] opts Set of options
+#   @return [Float] Output value
+
+# @!method stats(, opts = {})
+#   Find image average.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output array of statistics
+
+# @!method hist_find(, opts = {})
+#   Find image histogram.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :band Find histogram of band
+#   @return [Vips::Image] Output histogram
+
+# @!method hist_find_ndim(, opts = {})
+#   Find n-dimensional image histogram.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :bins Number of bins in each dimension
+#   @return [Vips::Image] Output histogram
+
+# @!method hist_find_indexed(index, opts = {})
+#   Find indexed image histogram.
+#   @param index [Vips::Image] Index image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output histogram
+
+# @!method hough_line(, opts = {})
+#   Find hough line transform.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :width horizontal size of parameter space
+#   @option opts [Integer] :height Vertical size of parameter space
+#   @return [Vips::Image] Output image
+
+# @!method hough_circle(, opts = {})
+#   Find hough circle transform.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :scale Scale down dimensions by this factor
+#   @option opts [Integer] :min_radius Smallest radius to search for
+#   @option opts [Integer] :max_radius Largest radius to search for
+#   @return [Vips::Image] Output image
+
+# @!method project(, opts = {})
+#   Find image projections.
+#   @param [Hash] opts Set of options
+#   @return [Array<Vips::Image, Vips::Image>] Sums of columns, Sums of rows
+
+# @!method profile(, opts = {})
+#   Find image profiles.
+#   @param [Hash] opts Set of options
+#   @return [Array<Vips::Image, Vips::Image>] First non-zero pixel in column, First non-zero pixel in row
+
+# @!method measure(h, v, opts = {})
+#   Measure a set of patches on a colour chart.
+#   @param h [Integer] Number of patches across chart
+#   @param v [Integer] Number of patches down chart
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :left Left edge of extract area
+#   @option opts [Integer] :top Top edge of extract area
+#   @option opts [Integer] :width Width of extract area
+#   @option opts [Integer] :height Height of extract area
+#   @return [Vips::Image] Output array of statistics
+
+# @!method getpoint(x, y, opts = {})
+#   Read a point from an image.
+#   @param x [Integer] Point to read
+#   @param y [Integer] Point to read
+#   @param [Hash] opts Set of options
+#   @return [Array<Double>] Array of output values
+
+# @!method copy(, opts = {})
+#   Copy an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :width Image width in pixels
+#   @option opts [Integer] :height Image height in pixels
+#   @option opts [Integer] :bands Number of bands in image
+#   @option opts [Vips::BandFormat] :format Pixel format in image
+#   @option opts [Vips::Coding] :coding Pixel coding
+#   @option opts [Vips::Interpretation] :interpretation Pixel interpretation
+#   @option opts [Float] :xres Horizontal resolution in pixels/mm
+#   @option opts [Float] :yres Vertical resolution in pixels/mm
+#   @option opts [Integer] :xoffset Horizontal offset of origin
+#   @option opts [Integer] :yoffset Vertical offset of origin
+#   @return [Vips::Image] Output image
+
+# @!method tilecache(, opts = {})
+#   Cache an image as a set of tiles.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :tile_width Tile width in pixels
+#   @option opts [Integer] :tile_height Tile height in pixels
+#   @option opts [Integer] :max_tiles Maximum number of tiles to cache
+#   @option opts [Vips::Access] :access Expected access pattern
+#   @option opts [Boolean] :threaded Allow threaded access
+#   @option opts [Boolean] :persistent Keep cache between evaluations
+#   @return [Vips::Image] Output image
+
+# @!method linecache(, opts = {})
+#   Cache an image as a set of lines.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :tile_height Tile height in pixels
+#   @option opts [Vips::Access] :access Expected access pattern
+#   @option opts [Boolean] :threaded Allow threaded access
+#   @option opts [Boolean] :persistent Keep cache between evaluations
+#   @return [Vips::Image] Output image
+
+# @!method sequential(, opts = {})
+#   Check sequential access.
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :trace trace pixel requests
+#   @option opts [Integer] :tile_height Tile height in pixels
+#   @option opts [Vips::Access] :access Expected access pattern
+#   @return [Vips::Image] Output image
+
+# @!method cache(, opts = {})
+#   Cache an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :tile_width Tile width in pixels
+#   @option opts [Integer] :tile_height Tile height in pixels
+#   @option opts [Integer] :max_tiles Maximum number of tiles to cache
+#   @return [Vips::Image] Output image
+
+# @!method embed(x, y, width, height, opts = {})
+#   Embed an image in a larger image.
+#   @param x [Integer] Left edge of input in output
+#   @param y [Integer] Top edge of input in output
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Extend] :extend How to generate the extra pixels
+#   @option opts [Array<Double>] :background Colour for background pixels
+#   @return [Vips::Image] Output image
+
+# @!method flip(direction, opts = {})
+#   Flip an image.
+#   @param direction [Vips::Direction] Direction to flip image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method insert(sub, x, y, opts = {})
+#   Insert image @sub into @main at @x, @y.
+#   @param sub [Vips::Image] Sub-image to insert into main image
+#   @param x [Integer] Left edge of sub in main
+#   @param y [Integer] Top edge of sub in main
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :expand Expand output to hold all of both inputs
+#   @option opts [Array<Double>] :background Colour for new pixels
+#   @return [Vips::Image] Output image
+
+# @!method join(in2, direction, opts = {})
+#   Join a pair of images.
+#   @param in2 [Vips::Image] Second input image
+#   @param direction [Vips::Direction] Join left-right or up-down
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Align] :align Align on the low, centre or high coordinate edge
+#   @option opts [Boolean] :expand Expand output to hold all of both inputs
+#   @option opts [Integer] :shim Pixels between images
+#   @option opts [Array<Double>] :background Colour for new pixels
+#   @return [Vips::Image] Output image
+
+# @!method self.arrayjoin(in, opts = {})
+#   Join an array of images.
+#   @param in [Array<Image>] Array of input images
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :across Number of images across grid
+#   @option opts [Integer] :shim Pixels between images
+#   @option opts [Array<Double>] :background Colour for new pixels
+#   @option opts [Vips::Align] :halign Align on the left, centre or right
+#   @option opts [Vips::Align] :valign Align on the top, centre or bottom
+#   @option opts [Integer] :hspacing Horizontal spacing between images
+#   @option opts [Integer] :vspacing Vertical spacing between images
+#   @return [Vips::Image] Output image
+
+# @!method extract_area(left, top, width, height, opts = {})
+#   Extract an area from an image.
+#   @param left [Integer] Left edge of extract area
+#   @param top [Integer] Top edge of extract area
+#   @param width [Integer] Width of extract area
+#   @param height [Integer] Height of extract area
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method extract_area(left, top, width, height, opts = {})
+#   Extract an area from an image.
+#   @param left [Integer] Left edge of extract area
+#   @param top [Integer] Top edge of extract area
+#   @param width [Integer] Width of extract area
+#   @param height [Integer] Height of extract area
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method extract_band(band, opts = {})
+#   Extract band from an image.
+#   @param band [Integer] Band to extract
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :n Number of bands to extract
+#   @return [Vips::Image] Output image
+
+# @!method bandjoin_const(c, opts = {})
+#   Append a constant band to an image.
+#   @param c [Array<Double>] Array of constants to add
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method self.bandrank(in, opts = {})
+#   Band-wise rank of a set of images.
+#   @param in [Array<Image>] Array of input images
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :index Select this band element from sorted list
+#   @return [Vips::Image] Output image
+
+# @!method bandmean(, opts = {})
+#   Band-wise average.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method bandbool(boolean, opts = {})
+#   Boolean operation across image bands.
+#   @param boolean [Vips::OperationBoolean] boolean to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method replicate(across, down, opts = {})
+#   Replicate an image.
+#   @param across [Integer] Repeat this many times horizontally
+#   @param down [Integer] Repeat this many times vertically
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method cast(format, opts = {})
+#   Cast an image.
+#   @param format [Vips::BandFormat] Format to cast to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :shift Shift integer values up and down
+#   @return [Vips::Image] Output image
+
+# @!method rot(angle, opts = {})
+#   Rotate an image.
+#   @param angle [Vips::Angle] Angle to rotate image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method rot45(, opts = {})
+#   Rotate an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Angle45] :angle Angle to rotate image
+#   @return [Vips::Image] Output image
+
+# @!method autorot(, opts = {})
+#   Autorotate image by exif tag.
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Angle] :angle Angle image was rotated by
+#   @return [Vips::Image] Output image
+
+# @!method recomb(m, opts = {})
+#   Linear recombination with matrix.
+#   @param m [Vips::Image] matrix of coefficients
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method bandfold(, opts = {})
+#   Fold up x axis into bands.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :factor Fold by this factor
+#   @return [Vips::Image] Output image
+
+# @!method bandunfold(, opts = {})
+#   Unfold image bands into x axis.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :factor Unfold by this factor
+#   @return [Vips::Image] Output image
+
+# @!method flatten(, opts = {})
+#   Flatten alpha out of an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Array<Double>] :background Background value
+#   @option opts [Float] :max_alpha Maximum value of alpha channel
+#   @return [Vips::Image] Output image
+
+# @!method premultiply(, opts = {})
+#   Premultiply image alpha.
+#   @param [Hash] opts Set of options
+#   @option opts [Float] :max_alpha Maximum value of alpha channel
+#   @return [Vips::Image] Output image
+
+# @!method unpremultiply(, opts = {})
+#   Unpremultiply image alpha.
+#   @param [Hash] opts Set of options
+#   @option opts [Float] :max_alpha Maximum value of alpha channel
+#   @return [Vips::Image] Output image
+
+# @!method grid(tile_height, across, down, opts = {})
+#   Grid an image.
+#   @param tile_height [Integer] chop into tiles this high
+#   @param across [Integer] number of tiles across
+#   @param down [Integer] number of tiles down
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method scale(, opts = {})
+#   Scale an image to uchar.
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :log Log scale
+#   @option opts [Float] :exp Exponent for log scale
+#   @return [Vips::Image] Output image
+
+# @!method wrap(, opts = {})
+#   Wrap image origin.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :x Left edge of input in output
+#   @option opts [Integer] :y Top edge of input in output
+#   @return [Vips::Image] Output image
+
+# @!method zoom(xfac, yfac, opts = {})
+#   Zoom an image.
+#   @param xfac [Integer] Horizontal zoom factor
+#   @param yfac [Integer] Vertical zoom factor
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method subsample(xfac, yfac, opts = {})
+#   Subsample an image.
+#   @param xfac [Integer] Horizontal subsample factor
+#   @param yfac [Integer] Vertical subsample factor
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :point Point sample
+#   @return [Vips::Image] Output image
+
+# @!method msb(, opts = {})
+#   Pick most-significant byte from an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :band Band to msb
+#   @return [Vips::Image] Output image
+
+# @!method byteswap(, opts = {})
+#   Byteswap an image.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method falsecolour(, opts = {})
+#   False-colour an image.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method gamma(, opts = {})
+#   Gamma an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Float] :exponent Gamma factor
+#   @return [Vips::Image] Output image
+
+# @!method self.black(width, height, opts = {})
+#   Make a black image.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :bands Number of bands in image
+#   @return [Vips::Image] Output image
+
+# @!method self.gaussnoise(width, height, opts = {})
+#   Make a gaussnoise image.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Float] :mean Mean of pixels in generated image
+#   @option opts [Float] :sigma Standard deviation of pixels in generated image
+#   @return [Vips::Image] Output image
+
+# @!method self.text(text, opts = {})
+#   Make a text image.
+#   @param text [String] Text to render
+#   @param [Hash] opts Set of options
+#   @option opts [String] :font Font to render width
+#   @option opts [Integer] :width Maximum image width in pixels
+#   @option opts [Vips::Align] :align Align on the low, centre or high edge
+#   @option opts [Integer] :dpi DPI to render at
+#   @option opts [Integer] :spacing Line spacing
+#   @return [Vips::Image] Output image
+
+# @!method self.xyz(width, height, opts = {})
+#   Make an image where pixel values are coordinates.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :csize Size of third dimension
+#   @option opts [Integer] :dsize Size of fourth dimension
+#   @option opts [Integer] :esize Size of fifth dimension
+#   @return [Vips::Image] Output image
+
+# @!method self.gaussmat(sigma, min_ampl, opts = {})
+#   Make a gaussian image.
+#   @param sigma [Float] Sigma of Gaussian
+#   @param min_ampl [Float] Minimum amplitude of Gaussian
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :separable Generate separable Gaussian
+#   @option opts [Vips::Precision] :precision Generate with this precision
+#   @return [Vips::Image] Output image
+
+# @!method self.logmat(sigma, min_ampl, opts = {})
+#   Make a laplacian of gaussian image.
+#   @param sigma [Float] Radius of Logmatian
+#   @param min_ampl [Float] Minimum amplitude of Logmatian
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :separable Generate separable Logmatian
+#   @option opts [Vips::Precision] :precision Generate with this precision
+#   @return [Vips::Image] Output image
+
+# @!method self.eye(width, height, opts = {})
+#   Make an image showing the eye's spatial response.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Float] :factor Maximum spatial frequency
+#   @return [Vips::Image] Output image
+
+# @!method self.grey(width, height, opts = {})
+#   Make a grey ramp image.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @return [Vips::Image] Output image
+
+# @!method self.zone(width, height, opts = {})
+#   Make a zone plate.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @return [Vips::Image] Output image
+
+# @!method self.sines(width, height, opts = {})
+#   Make a 2d sine wave.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Float] :hfreq Horizontal spatial frequency
+#   @option opts [Float] :vfreq Vertical spatial frequency
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_ideal(width, height, frequency_cutoff, opts = {})
+#   Make an ideal filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param frequency_cutoff [Float] Frequency cutoff
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_ideal_ring(width, height, frequency_cutoff, ringwidth, opts = {})
+#   Make an ideal ring filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param frequency_cutoff [Float] Frequency cutoff
+#   @param ringwidth [Float] Ringwidth
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_ideal_band(width, height, frequency_cutoff_x, frequency_cutoff_y, radius, opts = {})
+#   Make an ideal band filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param frequency_cutoff_x [Float] Frequency cutoff x
+#   @param frequency_cutoff_y [Float] Frequency cutoff y
+#   @param radius [Float] radius of circle
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_butterworth(width, height, order, frequency_cutoff, amplitude_cutoff, opts = {})
+#   Make a butterworth filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param order [Float] Filter order
+#   @param frequency_cutoff [Float] Frequency cutoff
+#   @param amplitude_cutoff [Float] Amplitude cutoff
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_butterworth_ring(width, height, order, frequency_cutoff, amplitude_cutoff, ringwidth, opts = {})
+#   Make a butterworth ring filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param order [Float] Filter order
+#   @param frequency_cutoff [Float] Frequency cutoff
+#   @param amplitude_cutoff [Float] Amplitude cutoff
+#   @param ringwidth [Float] Ringwidth
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_butterworth_band(width, height, order, frequency_cutoff_x, frequency_cutoff_y, radius, amplitude_cutoff, opts = {})
+#   Make a butterworth_band filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param order [Float] Filter order
+#   @param frequency_cutoff_x [Float] Frequency cutoff x
+#   @param frequency_cutoff_y [Float] Frequency cutoff y
+#   @param radius [Float] radius of circle
+#   @param amplitude_cutoff [Float] Amplitude cutoff
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @option opts [Boolean] :nodc Remove DC component
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_gaussian(width, height, frequency_cutoff, amplitude_cutoff, opts = {})
+#   Make a gaussian filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param frequency_cutoff [Float] Frequency cutoff
+#   @param amplitude_cutoff [Float] Amplitude cutoff
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_gaussian_ring(width, height, frequency_cutoff, amplitude_cutoff, ringwidth, opts = {})
+#   Make a gaussian ring filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param frequency_cutoff [Float] Frequency cutoff
+#   @param amplitude_cutoff [Float] Amplitude cutoff
+#   @param ringwidth [Float] Ringwidth
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_gaussian_band(width, height, frequency_cutoff_x, frequency_cutoff_y, radius, amplitude_cutoff, opts = {})
+#   Make a gaussian filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param frequency_cutoff_x [Float] Frequency cutoff x
+#   @param frequency_cutoff_y [Float] Frequency cutoff y
+#   @param radius [Float] radius of circle
+#   @param amplitude_cutoff [Float] Amplitude cutoff
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @return [Vips::Image] Output image
+
+# @!method self.mask_fractal(width, height, fractal_dimension, opts = {})
+#   Make fractal filter.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param fractal_dimension [Float] Fractal dimension
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :uchar Output an unsigned char image
+#   @option opts [Boolean] :nodc Remove DC component
+#   @option opts [Boolean] :reject Invert the sense of the filter
+#   @option opts [Boolean] :optical Rotate quadrants to optical space
+#   @return [Vips::Image] Output image
+
+# @!method buildlut(, opts = {})
+#   Build a look-up table.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method invertlut(, opts = {})
+#   Build an inverted look-up table.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :size LUT size to generate
+#   @return [Vips::Image] Output image
+
+# @!method self.tonelut(, opts = {})
+#   Build a look-up table.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :in_max Size of LUT to build
+#   @option opts [Integer] :out_max Maximum value in output LUT
+#   @option opts [Float] :Lb Lowest value in output
+#   @option opts [Float] :Lw Highest value in output
+#   @option opts [Float] :Ps Position of shadow
+#   @option opts [Float] :Pm Position of mid-tones
+#   @option opts [Float] :Ph Position of highlights
+#   @option opts [Float] :S Adjust shadows by this much
+#   @option opts [Float] :M Adjust mid-tones by this much
+#   @option opts [Float] :H Adjust highlights by this much
+#   @return [Vips::Image] Output image
+
+# @!method self.identity(, opts = {})
+#   Make a 1d image where pixel values are indexes.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :bands Number of bands in LUT
+#   @option opts [Boolean] :ushort Create a 16-bit LUT
+#   @option opts [Integer] :size Size of 16-bit LUT
+#   @return [Vips::Image] Output image
+
+# @!method self.fractsurf(width, height, fractal_dimension, opts = {})
+#   Make a fractal surface.
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param fractal_dimension [Float] Fractal dimension
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method self.radload(filename, opts = {})
+#   Load a radiance image from a file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.ppmload(filename, opts = {})
+#   Load ppm from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.csvload(filename, opts = {})
+#   Load csv from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Integer] :skip Skip this many lines at the start of the file
+#   @option opts [Integer] :lines Read this many lines from the file
+#   @option opts [String] :whitespace Set of whitespace characters
+#   @option opts [String] :separator Set of separator characters
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.matrixload(filename, opts = {})
+#   Load matrix from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.analyzeload(filename, opts = {})
+#   Load an analyze6 image.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.rawload(filename, width, height, bands, opts = {})
+#   Load raw data from a file.
+#   @param filename [String] Filename to load from
+#   @param width [Integer] Image width in pixels
+#   @param height [Integer] Image height in pixels
+#   @param bands [Integer] Number of bands in image
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Integer] :offset Offset in bytes from start of file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.vipsload(filename, opts = {})
+#   Load vips from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.pngload(filename, opts = {})
+#   Load png from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.pngload_buffer(buffer, opts = {})
+#   Load png from buffer.
+#   @param buffer [Vips::Blob] Buffer to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.matload(filename, opts = {})
+#   Load mat from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.jpegload(filename, opts = {})
+#   Load jpeg from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Integer] :shrink Shrink factor on load
+#   @option opts [Boolean] :fail Fail on first warning
+#   @option opts [Boolean] :autorotate Rotate image using exif orientation
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.jpegload_buffer(buffer, opts = {})
+#   Load jpeg from buffer.
+#   @param buffer [Vips::Blob] Buffer to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Integer] :shrink Shrink factor on load
+#   @option opts [Boolean] :fail Fail on first warning
+#   @option opts [Boolean] :autorotate Rotate image using exif orientation
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.webpload(filename, opts = {})
+#   Load webp from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.webpload_buffer(buffer, opts = {})
+#   Load webp from buffer.
+#   @param buffer [Vips::Blob] Buffer to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.tiffload(filename, opts = {})
+#   Load tiff from file.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Integer] :page Load this page from the image
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.tiffload_buffer(buffer, opts = {})
+#   Load tiff from buffer.
+#   @param buffer [Vips::Blob] Buffer to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Integer] :page Load this page from the image
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.openslideload(filename, opts = {})
+#   Load file with openslide.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Integer] :level Load this level from the file
+#   @option opts [Boolean] :autocrop Crop to image bounds
+#   @option opts [String] :associated Load this associated image
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.magickload(filename, opts = {})
+#   Load file with imagemagick.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :all_frames Read all frames from an image
+#   @option opts [String] :density Canvas resolution for rendering vector formats like SVG
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.magickload_buffer(buffer, opts = {})
+#   Load buffer with imagemagick.
+#   @param buffer [Vips::Blob] Buffer to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :all_frames Read all frames from an image
+#   @option opts [String] :density Canvas resolution for rendering vector formats like SVG
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.fitsload(filename, opts = {})
+#   Load a fits image.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method self.openexrload(filename, opts = {})
+#   Load an openexr image.
+#   @param filename [String] Filename to load from
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :disc Open to disc
+#   @option opts [Vips::Access] :access Required access pattern for this file
+#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @return [Vips::Image] Output image
+
+# @!method radsave(filename, opts = {})
+#   Save image to radiance file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method ppmsave(filename, opts = {})
+#   Save image to ppm file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :ascii save as ascii
+#   @option opts [Boolean] :squash save as one bit
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method csvsave(filename, opts = {})
+#   Save image to csv file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [String] :separator Separator characters
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method matrixsave(filename, opts = {})
+#   Save image to matrix file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method matrixprint(, opts = {})
+#   Print matrix.
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method rawsave(filename, opts = {})
+#   Save image to raw file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method rawsave_fd(fd, opts = {})
+#   Write raw image to file descriptor.
+#   @param fd [Integer] File descriptor to write to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method vipssave(filename, opts = {})
+#   Save image to vips file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method dzsave(filename, opts = {})
+#   Save image to deep zoom format.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::ForeignDzLayout] :layout Directory layout
+#   @option opts [String] :suffix Filename suffix for tiles
+#   @option opts [Integer] :overlap Tile overlap in pixels
+#   @option opts [Integer] :tile_size Tile size in pixels
+#   @option opts [Boolean] :centre Center image in tile
+#   @option opts [Vips::ForeignDzDepth] :depth Pyramid depth
+#   @option opts [Vips::Angle] :angle Rotate image during save
+#   @option opts [Vips::ForeignDzContainer] :container Pyramid container type
+#   @option opts [Boolean] :properties Write a properties file to the output directory
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method pngsave(filename, opts = {})
+#   Save image to png file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :compression Compression factor
+#   @option opts [Boolean] :interlace Interlace image
+#   @option opts [String] :profile ICC profile to embed
+#   @option opts [Vips::ForeignPngFilter] :filter libpng row filter flag(s)
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method pngsave_buffer(, opts = {})
+#   Save image to png buffer.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :compression Compression factor
+#   @option opts [Boolean] :interlace Interlace image
+#   @option opts [String] :profile ICC profile to embed
+#   @option opts [Vips::ForeignPngFilter] :filter libpng row filter flag(s)
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [Vips::Blob] Buffer to save to
+
+# @!method jpegsave(filename, opts = {})
+#   Save image to jpeg file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :Q Q factor
+#   @option opts [String] :profile ICC profile to embed
+#   @option opts [Boolean] :optimize_coding Compute optimal Huffman coding tables
+#   @option opts [Boolean] :interlace Generate an interlaced (progressive) jpeg
+#   @option opts [Boolean] :no_subsample Disable chroma subsample
+#   @option opts [Boolean] :trellis_quant Apply trellis quantisation to each 8x8 block
+#   @option opts [Boolean] :overshoot_deringing Apply overshooting to samples with extreme values
+#   @option opts [Boolean] :optimize_scans Split the spectrum of DCT coefficients into separate scans
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method jpegsave_buffer(, opts = {})
+#   Save image to jpeg buffer.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :Q Q factor
+#   @option opts [String] :profile ICC profile to embed
+#   @option opts [Boolean] :optimize_coding Compute optimal Huffman coding tables
+#   @option opts [Boolean] :interlace Generate an interlaced (progressive) jpeg
+#   @option opts [Boolean] :no_subsample Disable chroma subsample
+#   @option opts [Boolean] :trellis_quant Apply trellis quantisation to each 8x8 block
+#   @option opts [Boolean] :overshoot_deringing Apply overshooting to samples with extreme values
+#   @option opts [Boolean] :optimize_scans Split the spectrum of DCT coefficients into separate scans
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [Vips::Blob] Buffer to save to
+
+# @!method jpegsave_mime(, opts = {})
+#   Save image to jpeg mime.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :Q Q factor
+#   @option opts [String] :profile ICC profile to embed
+#   @option opts [Boolean] :optimize_coding Compute optimal Huffman coding tables
+#   @option opts [Boolean] :interlace Generate an interlaced (progressive) jpeg
+#   @option opts [Boolean] :no_subsample Disable chroma subsample
+#   @option opts [Boolean] :trellis_quant Apply trellis quantisation to each 8x8 block
+#   @option opts [Boolean] :overshoot_deringing Apply overshooting to samples with extreme values
+#   @option opts [Boolean] :optimize_scans Split the spectrum of DCT coefficients into separate scans
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method webpsave(filename, opts = {})
+#   Save image to webp file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :Q Q factor
+#   @option opts [Boolean] :lossless enable lossless compression
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method webpsave_buffer(, opts = {})
+#   Save image to webp buffer.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :Q Q factor
+#   @option opts [Boolean] :lossless enable lossless compression
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [Vips::Blob] Buffer to save to
+
+# @!method tiffsave(filename, opts = {})
+#   Save image to tiff file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::ForeignTiffCompression] :compression Compression for this file
+#   @option opts [Integer] :Q Q factor
+#   @option opts [Vips::ForeignTiffPredictor] :predictor Compression prediction
+#   @option opts [String] :profile ICC profile to embed
+#   @option opts [Boolean] :tile Write a tiled tiff
+#   @option opts [Integer] :tile_width Tile width in pixels
+#   @option opts [Integer] :tile_height Tile height in pixels
+#   @option opts [Boolean] :pyramid Write a pyramidal tiff
+#   @option opts [Boolean] :miniswhite Use 0 for white in 1-bit images
+#   @option opts [Boolean] :squash Squash images down to 1 bit
+#   @option opts [Vips::ForeignTiffResunit] :resunit Resolution unit
+#   @option opts [Float] :xres Horizontal resolution in pixels/mm
+#   @option opts [Float] :yres Vertical resolution in pixels/mm
+#   @option opts [Boolean] :bigtiff Write a bigtiff image
+#   @option opts [Boolean] :properties Write a properties document to IMAGEDESCRIPTION
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method fitssave(filename, opts = {})
+#   Save image to fits file.
+#   @param filename [String] Filename to save to
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :strip Strip all metadata from image
+#   @option opts [Array<Double>] :background Background value
+#   @return [] 
+
+# @!method mapim(index, opts = {})
+#   Resample with an mapim image.
+#   @param index [Vips::Image] Index pixels with this
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Interpolate] :interpolate Interpolate pixels with this
+#   @return [Vips::Image] Output image
+
+# @!method shrink(xshrink, yshrink, opts = {})
+#   Shrink an image.
+#   @param xshrink [Float] Horizontal shrink factor
+#   @param yshrink [Float] Vertical shrink factor
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method shrinkh(xshrink, opts = {})
+#   Shrink an image horizontally.
+#   @param xshrink [Integer] Horizontal shrink factor
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method shrinkv(yshrink, opts = {})
+#   Shrink an image vertically.
+#   @param yshrink [Integer] Vertical shrink factor
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method shrink2(xshrink, yshrink, opts = {})
+#   Shrink an image.
+#   @param xshrink [Float] Horizontal shrink factor
+#   @param yshrink [Float] Vertical shrink factor
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method quadratic(coeff, opts = {})
+#   Resample an image with a quadratic transform.
+#   @param coeff [Vips::Image] Coefficient matrix
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Interpolate] :interpolate Interpolate values with this
+#   @return [Vips::Image] Output image
+
+# @!method affine(matrix, opts = {})
+#   Affine transform of an image.
+#   @param matrix [Array<Double>] Transformation matrix
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Interpolate] :interpolate Interpolate pixels with this
+#   @option opts [Array<Integer>] :oarea Area of output to generate
+#   @option opts [Float] :odx Horizontal output displacement
+#   @option opts [Float] :ody Vertical output displacement
+#   @option opts [Float] :idx Horizontal input displacement
+#   @option opts [Float] :idy Vertical input displacement
+#   @return [Vips::Image] Output image
+
+# @!method similarity(, opts = {})
+#   Similarity transform of an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Interpolate] :interpolate Interpolate pixels with this
+#   @option opts [Float] :scale Scale by this factor
+#   @option opts [Float] :angle Rotate anticlockwise by this many degrees
+#   @option opts [Float] :odx Horizontal output displacement
+#   @option opts [Float] :ody Vertical output displacement
+#   @option opts [Float] :idx Horizontal input displacement
+#   @option opts [Float] :idy Vertical input displacement
+#   @return [Vips::Image] Output image
+
+# @!method resize(scale, opts = {})
+#   Resize an image.
+#   @param scale [Float] Scale image by this factor
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Interpolate] :interpolate Interpolate pixels with this
+#   @option opts [Float] :vscale Vertical scale image by this factor
+#   @option opts [Float] :idx Horizontal input displacement
+#   @option opts [Float] :idy Vertical input displacement
+#   @return [Vips::Image] Output image
+
+# @!method colourspace(space, opts = {})
+#   Convert to a new colourspace.
+#   @param space [Vips::Interpretation] Destination colour space
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Interpretation] :source_space Source colour space
+#   @return [Vips::Image] Output image
+
+# @!method Lab2XYZ(, opts = {})
+#   Transform cielab to xyz.
+#   @param [Hash] opts Set of options
+#   @option opts [Array<Double>] :temp Colour temperature
+#   @return [Vips::Image] Output image
+
+# @!method XYZ2Lab(, opts = {})
+#   Transform xyz to lab.
+#   @param [Hash] opts Set of options
+#   @option opts [Array<Double>] :temp Colour temperature
+#   @return [Vips::Image] Output image
+
+# @!method Lab2LCh(, opts = {})
+#   Transform lab to lch.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method LCh2Lab(, opts = {})
+#   Transform lch to lab.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method LCh2CMC(, opts = {})
+#   Transform lch to cmc.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method CMC2LCh(, opts = {})
+#   Transform lch to cmc.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method XYZ2Yxy(, opts = {})
+#   Transform xyz to yxy.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method Yxy2XYZ(, opts = {})
+#   Transform yxy to xyz.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method scRGB2XYZ(, opts = {})
+#   Transform scrgb to xyz.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method XYZ2scRGB(, opts = {})
+#   Transform xyz to scrgb.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method LabQ2Lab(, opts = {})
+#   Unpack a labq image to float lab.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method Lab2LabQ(, opts = {})
+#   Transform float lab to labq coding.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method LabQ2LabS(, opts = {})
+#   Unpack a labq image to short lab.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method LabS2LabQ(, opts = {})
+#   Transform short lab to labq coding.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method LabS2Lab(, opts = {})
+#   Transform signed short lab to float.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method Lab2LabS(, opts = {})
+#   Transform float lab to signed short.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method rad2float(, opts = {})
+#   Unpack radiance coding to float rgb.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method float2rad(, opts = {})
+#   Transform float rgb to radiance coding.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method LabQ2sRGB(, opts = {})
+#   Convert a labq image to srgb.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method sRGB2HSV(, opts = {})
+#   Transform srgb to hsv.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method HSV2sRGB(, opts = {})
+#   Transform hsv to srgb.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method icc_import(, opts = {})
+#   Import from device with icc profile.
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::PCS] :pcs Set Profile Connection Space
+#   @option opts [Vips::Intent] :intent Rendering intent
+#   @option opts [Boolean] :embedded Use embedded input profile, if available
+#   @option opts [String] :input_profile Filename to load input profile from
+#   @return [Vips::Image] Output image
+
+# @!method icc_export(, opts = {})
+#   Output to device with icc profile.
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::PCS] :pcs Set Profile Connection Space
+#   @option opts [Vips::Intent] :intent Rendering intent
+#   @option opts [String] :output_profile Filename to load output profile from
+#   @option opts [Integer] :depth Output device space depth in bits
+#   @return [Vips::Image] Output image
+
+# @!method icc_transform(output_profile, opts = {})
+#   Transform between devices with icc profiles.
+#   @param output_profile [String] Filename to load output profile from
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::PCS] :pcs Set Profile Connection Space
+#   @option opts [Vips::Intent] :intent Rendering intent
+#   @option opts [Boolean] :embedded Use embedded input profile, if available
+#   @option opts [String] :input_profile Filename to load input profile from
+#   @option opts [Integer] :depth Output device space depth in bits
+#   @return [Vips::Image] Output image
+
+# @!method dE76(right, opts = {})
+#   Calculate de76.
+#   @param right [Vips::Image] Right-hand input image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method dE00(right, opts = {})
+#   Calculate de00.
+#   @param right [Vips::Image] Right-hand input image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method dECMC(right, opts = {})
+#   Calculate decmc.
+#   @param right [Vips::Image] Right-hand input image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method sRGB2scRGB(, opts = {})
+#   Convert an srgb image to scrgb.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method scRGB2BW(, opts = {})
+#   Convert scrgb to bw.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :depth Output device space depth in bits
+#   @return [Vips::Image] Output image
+
+# @!method scRGB2sRGB(, opts = {})
+#   Convert an scrgb image to srgb.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :depth Output device space depth in bits
+#   @return [Vips::Image] Output image
+
+# @!method maplut(lut, opts = {})
+#   Map an image though a lut.
+#   @param lut [Vips::Image] Look-up table image
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :band apply one-band lut to this band of in
+#   @return [Vips::Image] Output image
+
+# @!method percent(percent, opts = {})
+#   Find threshold for percent of pixels.
+#   @param percent [Float] Percent of pixels
+#   @param [Hash] opts Set of options
+#   @return [Integer] Threshold above which lie percent of pixels
+
+# @!method stdif(width, height, opts = {})
+#   Statistical difference.
+#   @param width [Integer] Window width in pixels
+#   @param height [Integer] Window height in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Float] :a Weight of new mean
+#   @option opts [Float] :s0 New deviation
+#   @option opts [Float] :b Weight of new deviation
+#   @option opts [Float] :m0 New mean
+#   @return [Vips::Image] Output image
+
+# @!method hist_cum(, opts = {})
+#   Form cumulative histogram.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method hist_match(ref, opts = {})
+#   Match two histograms.
+#   @param ref [Vips::Image] Reference histogram
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method hist_norm(, opts = {})
+#   Normalise histogram.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method hist_equal(, opts = {})
+#   Histogram equalisation.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :band Equalise with this band
+#   @return [Vips::Image] Output image
+
+# @!method hist_plot(, opts = {})
+#   Plot histogram.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method hist_local(width, height, opts = {})
+#   Local histogram equalisation.
+#   @param width [Integer] Window width in pixels
+#   @param height [Integer] Window height in pixels
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method hist_ismonotonic(, opts = {})
+#   Test for monotonicity.
+#   @param [Hash] opts Set of options
+#   @return [Boolean] true if in is monotonic
+
+# @!method hist_entropy(, opts = {})
+#   Estimate image entropy.
+#   @param [Hash] opts Set of options
+#   @return [Float] Output value
+
+# @!method conv(mask, opts = {})
+#   Convolution operation.
+#   @param mask [Vips::Image] Input matrix image
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Precision] :precision Convolve with this precision
+#   @option opts [Integer] :layers Use this many layers in approximation
+#   @option opts [Integer] :cluster Cluster lines closer than this in approximation
+#   @return [Vips::Image] Output image
+
+# @!method compass(mask, opts = {})
+#   Convolve with rotating mask.
+#   @param mask [Vips::Image] Input matrix image
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :times Rotate and convolve this many times
+#   @option opts [Vips::Angle45] :angle Rotate mask by this much between convolutions
+#   @option opts [Vips::Combine] :combine Combine convolution results like this
+#   @option opts [Vips::Precision] :precision Convolve with this precision
+#   @option opts [Integer] :layers Use this many layers in approximation
+#   @option opts [Integer] :cluster Cluster lines closer than this in approximation
+#   @return [Vips::Image] Output image
+
+# @!method convsep(mask, opts = {})
+#   Seperable convolution operation.
+#   @param mask [Vips::Image] Input matrix image
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Precision] :precision Convolve with this precision
+#   @option opts [Integer] :layers Use this many layers in approximation
+#   @option opts [Integer] :cluster Cluster lines closer than this in approximation
+#   @return [Vips::Image] Output image
+
+# @!method fastcor(ref, opts = {})
+#   Fast correlation.
+#   @param ref [Vips::Image] Input reference image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method spcor(ref, opts = {})
+#   Spatial correlation.
+#   @param ref [Vips::Image] Input reference image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method sharpen(, opts = {})
+#   Unsharp masking for print.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :radius Mask radius
+#   @option opts [Float] :x1 Flat/jaggy threshold
+#   @option opts [Float] :y2 Maximum brightening
+#   @option opts [Float] :y3 Maximum darkening
+#   @option opts [Float] :m1 Slope for flat areas
+#   @option opts [Float] :m2 Slope for jaggy areas
+#   @return [Vips::Image] Output image
+
+# @!method gaussblur(sigma, opts = {})
+#   Gaussian blur.
+#   @param sigma [Float] Sigma of Gaussian
+#   @param [Hash] opts Set of options
+#   @option opts [Float] :min_ampl Minimum amplitude of Gaussian
+#   @option opts [Vips::Precision] :precision Convolve with this precision
+#   @return [Vips::Image] Output image
+
+# @!method fwfft(, opts = {})
+#   Forward fft.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method invfft(, opts = {})
+#   Inverse fft.
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :real Output only the real part of the transform
+#   @return [Vips::Image] Output image
+
+# @!method freqmult(mask, opts = {})
+#   Frequency-domain filtering.
+#   @param mask [Vips::Image] Input mask image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method spectrum(, opts = {})
+#   Make displayable power spectrum.
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method phasecor(in2, opts = {})
+#   Calculate phase correlation.
+#   @param in2 [Vips::Image] Second input image
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method morph(mask, morph, opts = {})
+#   Morphology operation.
+#   @param mask [Vips::Image] Input matrix image
+#   @param morph [Vips::OperationMorphology] Morphological operation to perform
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method rank(width, height, index, opts = {})
+#   Rank filter.
+#   @param width [Integer] Window width in pixels
+#   @param height [Integer] Window height in pixels
+#   @param index [Integer] Select pixel at index
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Output image
+
+# @!method countlines(direction, opts = {})
+#   Count lines in an image.
+#   @param direction [Vips::Direction] Countlines left-right or up-down
+#   @param [Hash] opts Set of options
+#   @return [Float] Number of lines
+
+# @!method labelregions(, opts = {})
+#   Label regions in an image.
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :segments Number of discrete contigious regions
+#   @return [Vips::Image] Mask of region labels
+
+# @!method draw_rect(ink, left, top, width, height, opts = {})
+#   Paint a rectangle on an image.
+#   @param ink [Array<Double>] Colour for pixels
+#   @param left [Integer] Rect to fill
+#   @param top [Integer] Rect to fill
+#   @param width [Integer] Rect to fill
+#   @param height [Integer] Rect to fill
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :fill Draw a solid object
+#   @return [Vips::Image] Image to draw on
+
+# @!method draw_mask(ink, mask, x, y, opts = {})
+#   Draw a mask on an image.
+#   @param ink [Array<Double>] Colour for pixels
+#   @param mask [Vips::Image] Mask of pixels to draw
+#   @param x [Integer] Draw mask here
+#   @param y [Integer] Draw mask here
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Image to draw on
+
+# @!method draw_line(ink, x1, y1, x2, y2, opts = {})
+#   Draw a line on an image.
+#   @param ink [Array<Double>] Colour for pixels
+#   @param x1 [Integer] Start of draw_line
+#   @param y1 [Integer] Start of draw_line
+#   @param x2 [Integer] End of draw_line
+#   @param y2 [Integer] End of draw_line
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Image to draw on
+
+# @!method draw_circle(ink, cx, cy, radius, opts = {})
+#   Draw a circle on an image.
+#   @param ink [Array<Double>] Colour for pixels
+#   @param cx [Integer] Centre of draw_circle
+#   @param cy [Integer] Centre of draw_circle
+#   @param radius [Integer] Radius in pixels
+#   @param [Hash] opts Set of options
+#   @option opts [Boolean] :fill Draw a solid object
+#   @return [Vips::Image] Image to draw on
+
+# @!method draw_flood(ink, x, y, opts = {})
+#   Flood-fill an area.
+#   @param ink [Array<Double>] Colour for pixels
+#   @param x [Integer] DrawFlood start point
+#   @param y [Integer] DrawFlood start point
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::Image] :test Test pixels in this image
+#   @option opts [Boolean] :equal DrawFlood while equal to edge
+#   @option opts [Integer] :left Left edge of modified area
+#   @option opts [Integer] :top top edge of modified area
+#   @option opts [Integer] :width width of modified area
+#   @option opts [Integer] :height height of modified area
+#   @return [Vips::Image] Image to draw on
+
+# @!method draw_image(sub, x, y, opts = {})
+#   Paint an image into another image.
+#   @param sub [Vips::Image] Sub-image to insert into main image
+#   @param x [Integer] Draw image here
+#   @param y [Integer] Draw image here
+#   @param [Hash] opts Set of options
+#   @option opts [Vips::CombineMode] :mode Combining mode
+#   @return [Vips::Image] Image to draw on
+
+# @!method draw_smudge(left, top, width, height, opts = {})
+#   Blur a rectangle on an image.
+#   @param left [Integer] Rect to fill
+#   @param top [Integer] Rect to fill
+#   @param width [Integer] Rect to fill
+#   @param height [Integer] Rect to fill
+#   @param [Hash] opts Set of options
+#   @return [Vips::Image] Image to draw on
+
+# @!method merge(sec, direction, dx, dy, opts = {})
+#   Merge two images.
+#   @param sec [Vips::Image] Secondary image
+#   @param direction [Vips::Direction] Horizontal or vertcial merge
+#   @param dx [Integer] Horizontal displacement from sec to ref
+#   @param dy [Integer] Vertical displacement from sec to ref
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :mblend Maximum blend size
+#   @return [Vips::Image] Output image
+
+# @!method mosaic(sec, direction, xref, yref, xsec, ysec, opts = {})
+#   Mosaic two images.
+#   @param sec [Vips::Image] Secondary image
+#   @param direction [Vips::Direction] Horizontal or vertcial mosaic
+#   @param xref [Integer] Position of reference tie-point
+#   @param yref [Integer] Position of reference tie-point
+#   @param xsec [Integer] Position of secondary tie-point
+#   @param ysec [Integer] Position of secondary tie-point
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :hwindow Half window size
+#   @option opts [Integer] :harea Half area size
+#   @option opts [Integer] :mblend Maximum blend size
+#   @option opts [Integer] :bandno Band to search for features on
+#   @option opts [Integer] :dx0 Detected integer offset
+#   @option opts [Integer] :dy0 Detected integer offset
+#   @option opts [Float] :scale1 Detected scale
+#   @option opts [Float] :angle1 Detected rotation
+#   @option opts [Float] :dx1 Detected first-order displacement
+#   @option opts [Float] :dy1 Detected first-order displacement
+#   @return [Vips::Image] Output image
+
+# @!method mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, opts = {})
+#   First-order mosaic of two images.
+#   @param sec [Vips::Image] Secondary image
+#   @param direction [Vips::Direction] Horizontal or vertcial mosaic
+#   @param xr1 [Integer] Position of first reference tie-point
+#   @param yr1 [Integer] Position of first reference tie-point
+#   @param xs1 [Integer] Position of first secondary tie-point
+#   @param ys1 [Integer] Position of first secondary tie-point
+#   @param xr2 [Integer] Position of second reference tie-point
+#   @param yr2 [Integer] Position of second reference tie-point
+#   @param xs2 [Integer] Position of second secondary tie-point
+#   @param ys2 [Integer] Position of second secondary tie-point
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :hwindow Half window size
+#   @option opts [Integer] :harea Half area size
+#   @option opts [Boolean] :search Search to improve tie-points
+#   @option opts [Vips::Interpolate] :interpolate Interpolate pixels with this
+#   @option opts [Integer] :mblend Maximum blend size
+#   @option opts [Integer] :bandno Band to search for features on
+#   @return [Vips::Image] Output image
+
+# @!method match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, opts = {})
+#   First-order match of two images.
+#   @param sec [Vips::Image] Secondary image
+#   @param xr1 [Integer] Position of first reference tie-point
+#   @param yr1 [Integer] Position of first reference tie-point
+#   @param xs1 [Integer] Position of first secondary tie-point
+#   @param ys1 [Integer] Position of first secondary tie-point
+#   @param xr2 [Integer] Position of second reference tie-point
+#   @param yr2 [Integer] Position of second reference tie-point
+#   @param xs2 [Integer] Position of second secondary tie-point
+#   @param ys2 [Integer] Position of second secondary tie-point
+#   @param [Hash] opts Set of options
+#   @option opts [Integer] :hwindow Half window size
+#   @option opts [Integer] :harea Half area size
+#   @option opts [Boolean] :search Search to improve tie-points
+#   @option opts [Vips::Interpolate] :interpolate Interpolate pixels with this
+#   @return [Vips::Image] Output image
+
+# @!method globalbalance(, opts = {})
+#   Global balance an image mosaic.
+#   @param [Hash] opts Set of options
+#   @option opts [Float] :gamma Image gamma
+#   @option opts [Boolean] :int_output Integer output
+#   @return [Vips::Image] Output image
 
   end
 end
