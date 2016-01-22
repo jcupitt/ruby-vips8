@@ -249,7 +249,8 @@
 #
 # The wrapper defines a few extra useful utility functions: 
 # {Vips::Image.get_value}, {Vips::Image.set_value}, {Vips::Image.bandsplit}, 
-# {Vips::Image.maxpos}, {Vips::Image.minpos}. 
+# {Vips::Image.maxpos}, {Vips::Image.minpos}, 
+# {Vips::Image.median}.
 
 module Vips
 
