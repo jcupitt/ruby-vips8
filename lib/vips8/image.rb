@@ -562,6 +562,23 @@ module Vips
         # @!attribute [r] yres
         #   @return [Float] vertical image resolution, in pixels per mm
 
+        # Fetch a `GType` from an image. `GType` will be 0 for no such field.
+        #
+        # @see get
+        # @see get_value
+        # @!method get_typeof(name)
+        # @param name [String] Metadata field to fetch
+        # @return [Integer] GType
+
+        # Fetch a `GValue` from an image. The return status is 0 for success, -1
+        # for failure.
+        #
+        # @see get_value
+        # @see get_typeof
+        # @!method get(name)
+        # @param name [String] Metadata field to fetch
+        # @return [Integer, GValue] Return status, GValue from image
+
         # Set a `GValue` on an image
         #
         # @see set_value
@@ -569,12 +586,29 @@ module Vips
         # @param name [String] Metadata field to set
         # @param value [GValue] GValue to set
 
-        # Fetch a `GValue` from an image
+        # Get a metadata item from an image. Ruby types are constructed 
+        # automatically from the `GValue`, if possible. 
         #
-        # @see get_value
-        # @!method get(name)
-        # @param name [String] Metadata field to fetch
-        # @return [GValue] GValue from image
+        # For example, you can read the ICC profile from an image like this:
+        #
+        # ```
+        # profile = image.get_value "icc-profile-data"
+        # ```
+        #
+        # and profile will be an array containing the profile. 
+        #
+        # @see get
+        # @param name [String] Metadata field to set
+        # @return [void] Value of field
+        def get_value(name)
+            ret, gval = get name
+            if ret[0] != 0
+                raise Vips::Error, "Field #{name} not found."
+            end
+            value = gval.value
+
+            Argument::unwrap(value)
+        end
 
         # Set a metadata item on an image. Ruby types are automatically
         # transformed into the matching `GValue`, if possible. 
@@ -613,30 +647,6 @@ module Vips
             end
 
             set name, value
-        end
-
-        # Get a metadata item from an image. Ruby types are constructed 
-        # automatically from the `GValue`, if possible. 
-        #
-        # For example, you can read the ICC profile from an image like this:
-        #
-        # ```
-        # profile = image.get_value "icc-profile-data"
-        # ```
-        #
-        # and profile will be an array containing the profile. 
-        #
-        # @see get
-        # @param name [String] Metadata field to set
-        # @return [void] Value of field
-        def get_value(name)
-            ret, gval = get name
-            if ret[0] != 0
-                raise Vips::Error, "Field #{name} not found."
-            end
-            value = gval.value
-
-            Argument::unwrap(value)
         end
 
         # Add an image, constant or array. 

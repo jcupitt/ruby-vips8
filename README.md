@@ -1,28 +1,99 @@
 # ruby-vips8
 
-Ruby binding for the vips8 API. This is still not quite done.
+This gem provides a Ruby binding for the [vips image processing
+library](http://www.vips.ecs.soton.ac.uk). It wraps version 8 of the API.
 
 The older vips7-based 
-[ruby-vips](https://github.com/jcupitt/ruby-vips) gem might be more robust. 
+[ruby-vips](https://github.com/jcupitt/ruby-vips) gem is still being
+maintained. 
 
-This binding is based on the `gobject-introspection` gem. Try
-`gir_ffi-vips` for one based on `gir_ffi`.
+`ruby-vips8` is fast and it can work without needing the 
+entire image to be loaded into memory. For example, the benchmark at 
+[vips-benchmarks](https://github.com/stanislaw/vips-benchmarks) loads a large
+image, crops, shrinks, sharpens and saves again:
 
-# To try it out
+```text
+real time in seconds, fastest of three runs
+benchmark	tiff	jpeg
+ruby-vips.rb	0.25	0.33	
+ruby-vips8.rb	0.45	0.52	
+image-magick	0.86	1.03	
+rmagick.rb	0.92	1.01	
+image_sci.rb	1.11	0.88	
 
-Make sure you have vips-8.2 or later installed and that `Vips-8.0.typelib` is
-on your `GI_TYPELIB_PATH`. Then install with:
-
-```bash
-$ rake install
+peak memory use in bytes
+benchmark	peak RSS
+ruby-vips.rb	52828
+ruby-vips8.rb	60464
+image_sci.rb	146228
+rmagick.rb	350136
 ```
 
-And take a look in `examples/`. There is full rdoc documentation, take a look
+See also [benchmarks at the official libvips
+website](http://www.vips.ecs.soton.ac.uk/index.php?title=Speed_and_Memory_Use).
+There's a handy blog post explaining [how libvips opens
+files](http://libvips.blogspot.co.uk/2012/06/how-libvips-opens-file.html)
+which gives some more background.
+
+ruby-vips allows you to set up pipelines that don't get executed until you
+output the image to disk or to a string. This means you can create,
+manipulate, and pass around Image objects without incurring any memory or CPU
+costs. The image is not actually processed until you write the image to memory
+or to disk.
+
+## Requirements
+
+  * OS X or Linux
+  * libvips 8.2 and later
+
+## Installation prerequisites
+
+### OS X 
+
+Install [homebrew](http://mxcl.github.com/homebrew) and enter:
+
+```bash
+$ brew install homebrew/science/vips
+```
+
+To verify that your vips install is working, try:
+
+```bash
+$ vips --version
+vips-8.2.1
+```
+
+Make sure you have `Vips-8.0.typelib` on your `GI_TYPELIB_PATH`. Enter
+something like:
+
+```bash
+$ export GI_TYPELIB_PATH=/usr/local/lib/girepository-1.0
+```
+
+### Other platforms
+
+You need to install libvips from source since 8.2 has not been packaged yet. 
+
+## Installing the gem.
+
+```bash
+$ gem install ruby-vips8
+```
+
+or include it in Gemfile:
+
+```ruby
+gem 'ruby-vips8'
+```
+
+And take a look in `examples/`. There is full yard documentation, take a look
 there too.
 
 # Example
 
 ```ruby
+require 'vips8'
+
 im = Vips::Image.new_from_file filename
 
 # put im at position (100, 100) in a 3000 x 3000 pixel image, 

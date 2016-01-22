@@ -25,6 +25,7 @@ vendor_girepository_dir = vendor_dir + "lib" + "girepository-1.0"
 GObjectIntrospection.prepend_typelib_path(vendor_girepository_dir)
 
 module Vips
+    # @private
     LOG_DOMAIN = "VIPS"
     GLib::Log.set_log_domain(LOG_DOMAIN)
 
@@ -39,6 +40,7 @@ module Vips
     end
 
     class << self
+        # @private
         def const_missing(name)
             log "Vips::const_missing: #{name}"
         
@@ -50,6 +52,7 @@ module Vips
             end
         end
 
+        # @private
         def method_missing(name, *args, &block)
             log "Vips::method_missing: #{name}, #{args}, #{block}"
 
@@ -61,6 +64,7 @@ module Vips
             end
         end
 
+        # @private
         def init(*argv)
             log "Vips::init: #{argv}"
 

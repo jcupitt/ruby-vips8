@@ -1,9 +1,8 @@
 
 module Vips
 
+    # The ruby-vips8 error class. 
     class Error < RuntimeError
-        # The ruby-vips8 error class. 
-        #
         # @param msg [String] The error message. If this is not supplied, grab
         #   and clear the vips error buffer and use that. 
         def initialize(msg = nil)
@@ -17,6 +16,9 @@ module Vips
             end
         end
 
+        # Pretty-print a {Vips::Error}.
+        #
+        # @return [String] The error message
         def to_s
             if @details != nil
                 @details
