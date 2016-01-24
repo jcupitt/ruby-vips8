@@ -75,7 +75,16 @@ module Vips
             end
 
             loader = Loader.new(self, argv)
-            loader.load("Vips")
+            begin
+                loader.load("Vips")
+            rescue 
+                puts "Unable to load Vips"
+                puts "  Check that the vips library has been installed and is"
+                puts "  on your library path."
+                puts "  Check that the typelib `Vips-8.0.typelib` has been "
+                puts "  installed, and that it is on your GI_TYPELIB_PATH."
+                raise
+            end
 
             require 'vips8/error'
             require 'vips8/argument'
@@ -128,7 +137,7 @@ module Vips
 end
 
 at_exit {
-        Vips::shutdown
+        Vips::shutdown if Vips.respond_to? :shutdown
 }
 
 # this makes vips keep a list of all active objects which we can print out
