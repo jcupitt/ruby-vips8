@@ -2,6 +2,12 @@
 
   http://sourceforge.net/p/ruby-gnome2/mailman/ruby-gnome2-devel-en/thread/CAGNS0RuZ5N6bha3M7B0%2BYf2M9-oni44idzZO17mtQiykS%2BmJKQ%40mail.gmail.com/#msg34790843
 
+- try to diagnose common install problems 
+
+	Vips-8.0.typelib not found
+	GI_ not set
+	libvips not found
+
 - reread docs, esp. the explanatory parts
 
 - add complex constants, eg. 

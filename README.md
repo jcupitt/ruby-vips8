@@ -19,20 +19,19 @@ image, crops, shrinks, sharpens and saves again:
 
 ```text
 real time in seconds, fastest of three runs
-benchmark	tiff	jpeg
-ruby-vips.rb	2.77	2.98	
-ruby-vips8.rb	2.97	3.29	
-image-magick	8.18	9.71	
-rmagick.rb	9.22	10.06	
-image_sci.rb	9.39	7.20	
+benchmark       tiff	jpeg
+ruby-vips.rb    2.77	2.98	
+ruby-vips8.rb   2.97	3.29	
+image-magick    8.18	9.71	
+rmagick.rb      9.22	10.06	
+image_sci.rb    9.39	7.20	
 
 peak memory use in bytes
-benchmark	peak RSS
-ruby-vips.rb	107340
-ruby-vips8.rb	117604
-image_sci.rb	146536
-rmagick.rb	3352020
-```
+benchmark       peak RSS
+ruby-vips.rb    107340
+ruby-vips8.rb   117604
+image_sci.rb    146536
+rmagick.rb      3352020
 ```
 
 See also [benchmarks at the official libvips
