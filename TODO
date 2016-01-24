@@ -10,6 +10,8 @@
 
 - reread docs, esp. the explanatory parts
 
+- need docs for interpolate?
+
 - add complex constants, eg. 
 
 	Complex(1, 2)

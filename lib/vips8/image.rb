@@ -4,7 +4,7 @@
 # gem](https://rubygems.org/gems/gobject-introspection). 
 #
 # It needs vips-8.2 or later to be installed, 
-# and `Vips-8.0.typelib`>, the vips typelib, needs to be on your 
+# and `Vips-8.0.typelib`, the vips typelib, needs to be on your 
 # `GI_TYPELIB_PATH`.
 #
 # # Example
@@ -62,19 +62,23 @@
 # gobject-introspection generates `Vips-8.0.typelib`, a file 
 # describing how to use libvips.
 #
-# The `gobject-introspection` gem loads this typelib and uses it to let you call 
+# The `gobject-introspection` gem loads this typelib and uses it to let you 
+# call 
 # functions in libvips directly from Ruby. However, the interface you get 
-# from raw gobject-introspection is rather ugly, so ruby-vips8 adds a set 
+# from raw gobject-introspection is rather ugly, so the `ruby-vips8` gem 
+# adds a set 
 # of overrides which try to make it nicer to use. 
 #
-# The API you end up with is a Ruby-ish version of the C API. Full documentation
+# The API you end up with is a Ruby-ish version of the [VIPS C 
+# API](http://www.vips.ecs.soton.ac.uk/supported/current/doc/html/libvips/). 
+# Full documentation
 # on the operations and what they do is there, you can use it directly. This
 # document explains the extra features of the Ruby API and lists the available 
-# libvips operations very briefly. 
+# operations very briefly. 
 #
 # # Automatic wrapping
 #
-# ruby-vips8 adds a {Image.method_missing} handler to {Image} and uses
+# `ruby-vips8` adds a {Image.method_missing} handler to {Image} and uses
 # it to look up vips operations. For example, the libvips operation `add`, which
 # appears in C as `vips_add()`, appears in Ruby as {Vips::Image.add}. 
 #
@@ -85,7 +89,8 @@
 # required input arguments. If the final supplied argument is a hash, it is used
 # to set any optional input arguments. The result is the required output 
 # argument if there is only one result, or an array of values if the operation
-# produces several results. 
+# produces several results. If the operation has optional output objects, they
+# are returned as a final hash.
 #
 # For example, {Vips::Image.min}, the vips operation that searches an image for 
 # the minimum value, has a large number of optional arguments. You can use it to
@@ -98,17 +103,20 @@
 # You can ask it to return the position of the minimum with `:x` and `:y`.
 #   
 # ```ruby
-# min_value, x_pos, y_pos = image.min :x => true, :y => true
+# min_value, opts = min :x => true, :y => true
+# x_pos = opts['x']
+# y_pos = opts['y']
 # ```
 #
-# Now `x_pos` and `y_pos` will have the coordinates of the minimum value. There's
-# actually a convenience function for this, {Vips::Image.minpos}.
+# Now `x_pos` and `y_pos` will have the coordinates of the minimum value. 
+# There's actually a convenience function for this, {Vips::Image.minpos}.
 #
 # You can also ask for the top /n/ minimum, for example:
 #
 # ```ruby
-# min_value, x_pos, y_pos = image.min :size => 10,
-#     :x_array => true, :y_array => true
+# min_value, opts = min :size => 10, :x_array => true, :y_array => true
+# x_pos = opts['x_array']
+# y_pos = opts['y_array']
 # ```
 #
 # Now `x_pos` and `y_pos` will be 10-element arrays. 
@@ -117,10 +125,10 @@
 # chain them. For example, you can write:
 #
 # ```ruby
-# result_image = image.imag.cos
+# result_image = image.real.cos
 # ```
 #
-# to calculate the cosine of the imaginary part of a complex image. 
+# to calculate the cosine of the real part of a complex image. 
 # There are also a full set
 # of arithmetic operator overloads, see below.
 #
@@ -196,11 +204,13 @@
 # libvips and writes a summary of each operation and the arguments and options
 # that operation expects. 
 # 
-# Use the C API docs for more detail.
+# Use the [C API 
+# docs](http://www.vips.ecs.soton.ac.uk/supported/current/doc/html/libvips) 
+# for more detail.
 #
 # # Exceptions
 #
-# The wrapper spots errors from vips operations and raises the {Error}
+# The wrapper spots errors from vips operations and raises the {Vips::Error}
 # exception. You can catch it in the usual way. 
 # 
 # # Draw operations
@@ -1196,125 +1206,6 @@ module Vips
 
     end
 
-    # The type of access an operation has to supply. 
-    # 
-    # *   `:random` means requests can come in any order. 
-    # 
-    # *   `:sequential` means requests will be top-to-bottom, but with some
-    #     amount of buffering behind the read point for small non-local
-    #     accesses. 
-    #
-    # *   `:sequential_unbuffered` means requests will be strictly
-    #     top-to-bottom with no read-behind. This can save some memory.
-    class Access
-    end
-
-    # Operations can hint to the VIPS image IO 
-    # system about the kind of demand geometry they prefer. 
-    #   
-    # These demand styles are given below in order of increasing
-    # restrictiveness.  When demanding output from a pipeline, 
-    # vips_image_generate()
-    # will use the most restrictive of the styles requested by the operations 
-    # in the pipeline.
-    #   
-    # *   `:thinstrip` --- This operation would like to output strips 
-    #     the width of the image and a few pels high. This is option suitable 
-    #     for point-to-point operations, such as those in the arithmetic 
-    #     package.
-    #    
-    #     This option is only efficient for cases where each output pel depends 
-    #     upon the pel in the corresponding position in the input image.
-    # 
-    # * `:fatstrip` --- This operation would like to output strips 
-    #     the width of the image and as high as possible. This option is 
-    #     suitable for area operations which do not violently transform 
-    #     coordinates, such as vips_conv(). 
-    #   
-    # * `:smalltile` --- This is the most general demand format.
-    #     Output is demanded in small (around 100x100 pel) sections. This style 
-    #     works reasonably efficiently, even for bizzare operations like 45 
-    #     degree rotate.
-    #   
-    # * `:any` --- This image is not being demand-read from a disc 
-    #     file (even indirectly) so any demand style is OK. It's used for 
-    #     things like vips_black() where the pixels are calculated.
-    class DemandStyle
-    end
-
-    # How the values in an image should be interpreted. For example, a
-    # three-band float image of type :lab should have its 
-    # pixels interpreted as coordinates in CIE Lab space.
-    #
-    # * `:multiband` generic many-band image
-    # * `:b_w` some kind of single-band image
-    # * `:histogram` a 1D image, eg. histogram or lookup table
-    # * `:fourier` image is in fourier space
-    # * `:xyz` the first three bands are CIE XYZ 
-    # * `:lab` pixels are in CIE Lab space
-    # * `:cmyk` the first four bands are in CMYK space
-    # * `:labq` implies #VIPS_CODING_LABQ
-    # * `:rgb` generic RGB space
-    # * `:cmc` a uniform colourspace based on CMC(1:1)
-    # * `:lch` pixels are in CIE LCh space
-    # * `:labs` CIE LAB coded as three signed 16-bit values
-    # * `:srgb` pixels are sRGB
-    # * `:hsv` pixels are HSV
-    # * `:scrgb` pixels are scRGB
-    # * `:yxy` pixels are CIE Yxy
-    # * `:rgb16` generic 16-bit RGB
-    # * `:grey16` generic 16-bit mono
-    # * `:matrix` a matrix
-    class Interpretation
-    end
-
-    # The format used for each band element. Each corresponds to a native C type
-    # for the current machine.
-    #
-    # * `:notset` invalid setting
-    # * `:uchar` unsigned char format
-    # * `:char` char format
-    # * `:ushort` unsigned short format
-    # * `:short` short format
-    # * `:uint` unsigned int format
-    # * `:int` int format
-    # * `:float` float format
-    # * `:complex` complex (two floats) format
-    # * `:double` double float format
-    # * `:dpcomplex` double complex (two double) format
-    class BandFormat
-    end
-
-    # How pixels are coded. 
-    #
-    # Normally, pixels are uncoded and can be manipulated as you would expect.
-    # However some file formats code pixels for compression, and sometimes it's
-    # useful to be able to manipulate images in the coded format.
-    #
-    # * `:none` pixels are not coded
-    # * `:labq` pixels encode 3 float CIELAB values as 4 uchar
-    # * `:rad` pixels encode 3 float RGB as 4 uchar (Radiance coding)
-    class Coding
-    end
-
-    # Some hints about the image loader.
-    #
-    # *   `:partial` means that the image can be read directly from the
-    #     file without needing to be unpacked to a temporary image first. 
-    #
-    # *   `:sequential` means that the loader supports lazy reading, but
-    #     only top-to-bottom (sequential) access. Formats like PNG can read 
-    #     sets of scanlines, for example, but only in order. 
-    #
-    #     If neither partial` or sequential` is set, the loader only supports 
-    #     whole image read. Setting both partial` and sequential` is an error.
-    #
-    # *   `:bigendian` means that image pixels are most-significant byte
-    #     first. Depending on the native byte order of the host machine, you may
-    #     need to swap bytes. See vips_copy().
-    class ForeignFlags
-    end
-
     # This method generates yard comments for all the dynamically bound
     # vips operations. 
     #
@@ -1399,7 +1290,8 @@ module Vips
                 puts "#   @option opts [#{arg.type}] :#{arg.name} #{arg.blurb}"
             end
             optional_output.each do |arg| 
-                puts "#   @option opts [#{arg.type}] :#{arg.name} #{arg.blurb}"
+                print "#   @option opts [#{arg.type}] :#{arg.name}"
+                puts " Output #{arg.blurb}"
             end
 
             print "#   @return ["

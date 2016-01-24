@@ -1,4 +1,3 @@
-
 module Vips
 
     # The ruby-vips8 error class. 

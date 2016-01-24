@@ -8,8 +8,8 @@ module Vips
 #   @option opts [Array<Image>] :in Array of input images
 #   @option opts [String] :in_format Format for input filename
 #   @option opts [String] :out_format Format for output filename
-#   @option opts [Vips::Image] :out Output image
-#   @option opts [String] :log Command log
+#   @option opts [Vips::Image] :out Output -- Output image
+#   @option opts [String] :log Output -- Command log
 #   @return [nil, Hash<Symbol => Object>] Hash of optional output items
 
 # @!method add(right, opts = {})
@@ -165,22 +165,22 @@ module Vips
 #   Find image minimum.
 #   @param [Hash] opts Set of options
 #   @option opts [Integer] :size Number of minimum values to find
-#   @option opts [Integer] :x Horizontal position of minimum
-#   @option opts [Integer] :y Vertical position of minimum
-#   @option opts [Array<Double>] :out_array Array of output values
-#   @option opts [Array<Integer>] :x_array Array of horizontal positions
-#   @option opts [Array<Integer>] :y_array Array of vertical positions
+#   @option opts [Integer] :x Output -- Horizontal position of minimum
+#   @option opts [Integer] :y Output -- Vertical position of minimum
+#   @option opts [Array<Double>] :out_array Output -- Array of output values
+#   @option opts [Array<Integer>] :x_array Output -- Array of horizontal positions
+#   @option opts [Array<Integer>] :y_array Output -- Array of vertical positions
 #   @return [Float, Hash<Symbol => Object>] Output value, Hash of optional output items
 
 # @!method max(, opts = {})
 #   Find image maximum.
 #   @param [Hash] opts Set of options
 #   @option opts [Integer] :size Number of maximum values to find
-#   @option opts [Integer] :x Horizontal position of maximum
-#   @option opts [Integer] :y Vertical position of maximum
-#   @option opts [Array<Double>] :out_array Array of output values
-#   @option opts [Array<Integer>] :x_array Array of horizontal positions
-#   @option opts [Array<Integer>] :y_array Array of vertical positions
+#   @option opts [Integer] :x Output -- Horizontal position of maximum
+#   @option opts [Integer] :y Output -- Vertical position of maximum
+#   @option opts [Array<Double>] :out_array Output -- Array of output values
+#   @option opts [Array<Integer>] :x_array Output -- Array of horizontal positions
+#   @option opts [Array<Integer>] :y_array Output -- Array of vertical positions
 #   @return [Float, Hash<Symbol => Object>] Output value, Hash of optional output items
 
 # @!method deviate(, opts = {})
@@ -434,7 +434,7 @@ module Vips
 # @!method autorot(, opts = {})
 #   Autorotate image by exif tag.
 #   @param [Hash] opts Set of options
-#   @option opts [Vips::Angle] :angle Angle image was rotated by
+#   @option opts [Vips::Angle] :angle Output -- Angle image was rotated by
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method recomb(m, opts = {})
@@ -810,7 +810,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.ppmload(filename, opts = {})
@@ -819,7 +819,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.csvload(filename, opts = {})
@@ -832,7 +832,7 @@ module Vips
 #   @option opts [Integer] :lines Read this many lines from the file
 #   @option opts [String] :whitespace Set of whitespace characters
 #   @option opts [String] :separator Set of separator characters
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.matrixload(filename, opts = {})
@@ -841,7 +841,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.analyzeload(filename, opts = {})
@@ -850,7 +850,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.rawload(filename, width, height, bands, opts = {})
@@ -863,7 +863,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Integer] :offset Offset in bytes from start of file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.vipsload(filename, opts = {})
@@ -872,7 +872,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.pngload(filename, opts = {})
@@ -881,7 +881,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.pngload_buffer(buffer, opts = {})
@@ -890,7 +890,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.matload(filename, opts = {})
@@ -899,7 +899,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.jpegload(filename, opts = {})
@@ -911,7 +911,7 @@ module Vips
 #   @option opts [Integer] :shrink Shrink factor on load
 #   @option opts [Boolean] :fail Fail on first warning
 #   @option opts [Boolean] :autorotate Rotate image using exif orientation
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.jpegload_buffer(buffer, opts = {})
@@ -923,7 +923,7 @@ module Vips
 #   @option opts [Integer] :shrink Shrink factor on load
 #   @option opts [Boolean] :fail Fail on first warning
 #   @option opts [Boolean] :autorotate Rotate image using exif orientation
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.webpload(filename, opts = {})
@@ -932,7 +932,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.webpload_buffer(buffer, opts = {})
@@ -941,7 +941,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.tiffload(filename, opts = {})
@@ -951,7 +951,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Integer] :page Load this page from the image
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.tiffload_buffer(buffer, opts = {})
@@ -961,7 +961,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Integer] :page Load this page from the image
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.openslideload(filename, opts = {})
@@ -973,7 +973,7 @@ module Vips
 #   @option opts [Integer] :level Load this level from the file
 #   @option opts [Boolean] :autocrop Crop to image bounds
 #   @option opts [String] :associated Load this associated image
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.magickload(filename, opts = {})
@@ -984,7 +984,7 @@ module Vips
 #   @option opts [String] :density Canvas resolution for rendering vector formats like SVG
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.magickload_buffer(buffer, opts = {})
@@ -995,7 +995,7 @@ module Vips
 #   @option opts [String] :density Canvas resolution for rendering vector formats like SVG
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.fitsload(filename, opts = {})
@@ -1004,7 +1004,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.openexrload(filename, opts = {})
@@ -1013,7 +1013,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
-#   @option opts [Vips::ForeignFlags] :flags Flags for this file
+#   @option opts [Vips::ForeignFlags] :flags Output -- Flags for this file
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method radsave(filename, opts = {})
@@ -1651,7 +1651,7 @@ module Vips
 # @!method labelregions(, opts = {})
 #   Label regions in an image.
 #   @param [Hash] opts Set of options
-#   @option opts [Integer] :segments Number of discrete contigious regions
+#   @option opts [Integer] :segments Output -- Number of discrete contigious regions
 #   @return [Vips::Image, Hash<Symbol => Object>] Mask of region labels, Hash of optional output items
 
 # @!method draw_rect(ink, left, top, width, height, opts = {})
@@ -1702,10 +1702,10 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Vips::Image] :test Test pixels in this image
 #   @option opts [Boolean] :equal DrawFlood while equal to edge
-#   @option opts [Integer] :left Left edge of modified area
-#   @option opts [Integer] :top top edge of modified area
-#   @option opts [Integer] :width width of modified area
-#   @option opts [Integer] :height height of modified area
+#   @option opts [Integer] :left Output -- Left edge of modified area
+#   @option opts [Integer] :top Output -- top edge of modified area
+#   @option opts [Integer] :width Output -- width of modified area
+#   @option opts [Integer] :height Output -- height of modified area
 #   @return [Vips::Image, Hash<Symbol => Object>] Image to draw on, Hash of optional output items
 
 # @!method draw_image(sub, x, y, opts = {})
@@ -1749,12 +1749,12 @@ module Vips
 #   @option opts [Integer] :harea Half area size
 #   @option opts [Integer] :mblend Maximum blend size
 #   @option opts [Integer] :bandno Band to search for features on
-#   @option opts [Integer] :dx0 Detected integer offset
-#   @option opts [Integer] :dy0 Detected integer offset
-#   @option opts [Float] :scale1 Detected scale
-#   @option opts [Float] :angle1 Detected rotation
-#   @option opts [Float] :dx1 Detected first-order displacement
-#   @option opts [Float] :dy1 Detected first-order displacement
+#   @option opts [Integer] :dx0 Output -- Detected integer offset
+#   @option opts [Integer] :dy0 Output -- Detected integer offset
+#   @option opts [Float] :scale1 Output -- Detected scale
+#   @option opts [Float] :angle1 Output -- Detected rotation
+#   @option opts [Float] :dx1 Output -- Detected first-order displacement
+#   @option opts [Float] :dy1 Output -- Detected first-order displacement
 #   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, opts = {})
