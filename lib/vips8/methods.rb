@@ -10,7 +10,7 @@ module Vips
 #   @option opts [String] :out_format Format for output filename
 #   @option opts [Vips::Image] :out Output image
 #   @option opts [String] :log Command log
-#   @return [] 
+#   @return [nil, Hash<Symbol => Object>] Hash of optional output items
 
 # @!method add(right, opts = {})
 #   Add two images.
@@ -170,7 +170,7 @@ module Vips
 #   @option opts [Array<Double>] :out_array Array of output values
 #   @option opts [Array<Integer>] :x_array Array of horizontal positions
 #   @option opts [Array<Integer>] :y_array Array of vertical positions
-#   @return [Float] Output value
+#   @return [Float, Hash<Symbol => Object>] Output value, Hash of optional output items
 
 # @!method max(, opts = {})
 #   Find image maximum.
@@ -181,7 +181,7 @@ module Vips
 #   @option opts [Array<Double>] :out_array Array of output values
 #   @option opts [Array<Integer>] :x_array Array of horizontal positions
 #   @option opts [Array<Integer>] :y_array Array of vertical positions
-#   @return [Float] Output value
+#   @return [Float, Hash<Symbol => Object>] Output value, Hash of optional output items
 
 # @!method deviate(, opts = {})
 #   Find image standard deviation.
@@ -229,12 +229,12 @@ module Vips
 # @!method project(, opts = {})
 #   Find image projections.
 #   @param [Hash] opts Set of options
-#   @return [Array<Vips::Image, Vips::Image>] Sums of columns, Sums of rows
+#   @return [Array<] Sums of columns, Sums of rows
 
 # @!method profile(, opts = {})
 #   Find image profiles.
 #   @param [Hash] opts Set of options
-#   @return [Array<Vips::Image, Vips::Image>] First non-zero pixel in column, First non-zero pixel in row
+#   @return [Array<] First non-zero pixel in column, First non-zero pixel in row
 
 # @!method measure(h, v, opts = {})
 #   Measure a set of patches on a colour chart.
@@ -435,7 +435,7 @@ module Vips
 #   Autorotate image by exif tag.
 #   @param [Hash] opts Set of options
 #   @option opts [Vips::Angle] :angle Angle image was rotated by
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method recomb(m, opts = {})
 #   Linear recombination with matrix.
@@ -811,7 +811,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.ppmload(filename, opts = {})
 #   Load ppm from file.
@@ -820,7 +820,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.csvload(filename, opts = {})
 #   Load csv from file.
@@ -833,7 +833,7 @@ module Vips
 #   @option opts [String] :whitespace Set of whitespace characters
 #   @option opts [String] :separator Set of separator characters
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.matrixload(filename, opts = {})
 #   Load matrix from file.
@@ -842,7 +842,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.analyzeload(filename, opts = {})
 #   Load an analyze6 image.
@@ -851,7 +851,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.rawload(filename, width, height, bands, opts = {})
 #   Load raw data from a file.
@@ -864,7 +864,7 @@ module Vips
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Integer] :offset Offset in bytes from start of file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.vipsload(filename, opts = {})
 #   Load vips from file.
@@ -873,7 +873,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.pngload(filename, opts = {})
 #   Load png from file.
@@ -882,7 +882,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.pngload_buffer(buffer, opts = {})
 #   Load png from buffer.
@@ -891,7 +891,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.matload(filename, opts = {})
 #   Load mat from file.
@@ -900,7 +900,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.jpegload(filename, opts = {})
 #   Load jpeg from file.
@@ -912,7 +912,7 @@ module Vips
 #   @option opts [Boolean] :fail Fail on first warning
 #   @option opts [Boolean] :autorotate Rotate image using exif orientation
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.jpegload_buffer(buffer, opts = {})
 #   Load jpeg from buffer.
@@ -924,7 +924,7 @@ module Vips
 #   @option opts [Boolean] :fail Fail on first warning
 #   @option opts [Boolean] :autorotate Rotate image using exif orientation
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.webpload(filename, opts = {})
 #   Load webp from file.
@@ -933,7 +933,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.webpload_buffer(buffer, opts = {})
 #   Load webp from buffer.
@@ -942,7 +942,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.tiffload(filename, opts = {})
 #   Load tiff from file.
@@ -952,7 +952,7 @@ module Vips
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Integer] :page Load this page from the image
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.tiffload_buffer(buffer, opts = {})
 #   Load tiff from buffer.
@@ -962,7 +962,7 @@ module Vips
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Integer] :page Load this page from the image
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.openslideload(filename, opts = {})
 #   Load file with openslide.
@@ -974,7 +974,7 @@ module Vips
 #   @option opts [Boolean] :autocrop Crop to image bounds
 #   @option opts [String] :associated Load this associated image
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.magickload(filename, opts = {})
 #   Load file with imagemagick.
@@ -985,7 +985,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.magickload_buffer(buffer, opts = {})
 #   Load buffer with imagemagick.
@@ -996,7 +996,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.fitsload(filename, opts = {})
 #   Load a fits image.
@@ -1005,7 +1005,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method self.openexrload(filename, opts = {})
 #   Load an openexr image.
@@ -1014,7 +1014,7 @@ module Vips
 #   @option opts [Boolean] :disc Open to disc
 #   @option opts [Vips::Access] :access Required access pattern for this file
 #   @option opts [Vips::ForeignFlags] :flags Flags for this file
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method radsave(filename, opts = {})
 #   Save image to radiance file.
@@ -1022,7 +1022,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method ppmsave(filename, opts = {})
 #   Save image to ppm file.
@@ -1032,7 +1032,7 @@ module Vips
 #   @option opts [Boolean] :squash save as one bit
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method csvsave(filename, opts = {})
 #   Save image to csv file.
@@ -1041,7 +1041,7 @@ module Vips
 #   @option opts [String] :separator Separator characters
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method matrixsave(filename, opts = {})
 #   Save image to matrix file.
@@ -1049,14 +1049,14 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method matrixprint(, opts = {})
 #   Print matrix.
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method rawsave(filename, opts = {})
 #   Save image to raw file.
@@ -1064,7 +1064,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method rawsave_fd(fd, opts = {})
 #   Write raw image to file descriptor.
@@ -1072,7 +1072,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method vipssave(filename, opts = {})
 #   Save image to vips file.
@@ -1080,7 +1080,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method dzsave(filename, opts = {})
 #   Save image to deep zoom format.
@@ -1097,7 +1097,7 @@ module Vips
 #   @option opts [Boolean] :properties Write a properties file to the output directory
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method pngsave(filename, opts = {})
 #   Save image to png file.
@@ -1109,7 +1109,7 @@ module Vips
 #   @option opts [Vips::ForeignPngFilter] :filter libpng row filter flag(s)
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method pngsave_buffer(, opts = {})
 #   Save image to png buffer.
@@ -1136,7 +1136,7 @@ module Vips
 #   @option opts [Boolean] :optimize_scans Split the spectrum of DCT coefficients into separate scans
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method jpegsave_buffer(, opts = {})
 #   Save image to jpeg buffer.
@@ -1166,7 +1166,7 @@ module Vips
 #   @option opts [Boolean] :optimize_scans Split the spectrum of DCT coefficients into separate scans
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method webpsave(filename, opts = {})
 #   Save image to webp file.
@@ -1176,7 +1176,7 @@ module Vips
 #   @option opts [Boolean] :lossless enable lossless compression
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method webpsave_buffer(, opts = {})
 #   Save image to webp buffer.
@@ -1208,7 +1208,7 @@ module Vips
 #   @option opts [Boolean] :properties Write a properties document to IMAGEDESCRIPTION
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method fitssave(filename, opts = {})
 #   Save image to fits file.
@@ -1216,7 +1216,7 @@ module Vips
 #   @param [Hash] opts Set of options
 #   @option opts [Boolean] :strip Strip all metadata from image
 #   @option opts [Array<Double>] :background Background value
-#   @return [] 
+#   @return [nil] 
 
 # @!method mapim(index, opts = {})
 #   Resample with an mapim image.
@@ -1652,7 +1652,7 @@ module Vips
 #   Label regions in an image.
 #   @param [Hash] opts Set of options
 #   @option opts [Integer] :segments Number of discrete contigious regions
-#   @return [Vips::Image] Mask of region labels
+#   @return [Vips::Image, Hash<Symbol => Object>] Mask of region labels, Hash of optional output items
 
 # @!method draw_rect(ink, left, top, width, height, opts = {})
 #   Paint a rectangle on an image.
@@ -1706,7 +1706,7 @@ module Vips
 #   @option opts [Integer] :top top edge of modified area
 #   @option opts [Integer] :width width of modified area
 #   @option opts [Integer] :height height of modified area
-#   @return [Vips::Image] Image to draw on
+#   @return [Vips::Image, Hash<Symbol => Object>] Image to draw on, Hash of optional output items
 
 # @!method draw_image(sub, x, y, opts = {})
 #   Paint an image into another image.
@@ -1755,7 +1755,7 @@ module Vips
 #   @option opts [Float] :angle1 Detected rotation
 #   @option opts [Float] :dx1 Detected first-order displacement
 #   @option opts [Float] :dy1 Detected first-order displacement
-#   @return [Vips::Image] Output image
+#   @return [Vips::Image, Hash<Symbol => Object>] Output image, Hash of optional output items
 
 # @!method mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, opts = {})
 #   First-order mosaic of two images.

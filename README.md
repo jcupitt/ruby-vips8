@@ -2,31 +2,37 @@
 
 This gem provides a Ruby binding for the [vips image processing
 library](http://www.vips.ecs.soton.ac.uk). It wraps version 8 of the API.
-
-The older vips7-based 
-[ruby-vips](https://github.com/jcupitt/ruby-vips) gem is still being
-maintained. 
+The older vips7-based [ruby-vips](https://github.com/jcupitt/ruby-vips)
+gem is still being maintained.
 
 `ruby-vips8` is fast and it can work without needing the 
-entire image to be loaded into memory. For example, the benchmark at 
+entire image to be loaded into memory. 
+`ruby-vips8` allows you to set up pipelines that don't get executed until you
+output the image to disk or to a string. This means you can create,
+manipulate, and pass around Image objects without incurring any memory or CPU
+costs. The image is not actually processed until you write the image to memory
+or to disk.
+
+For example, the benchmark at 
 [vips-benchmarks](https://github.com/stanislaw/vips-benchmarks) loads a large
 image, crops, shrinks, sharpens and saves again:
 
 ```text
 real time in seconds, fastest of three runs
 benchmark	tiff	jpeg
-ruby-vips.rb	0.25	0.33	
-ruby-vips8.rb	0.45	0.52	
-image-magick	0.86	1.03	
-rmagick.rb	0.92	1.01	
-image_sci.rb	1.11	0.88	
+ruby-vips.rb	2.77	2.98	
+ruby-vips8.rb	2.97	3.29	
+image-magick	8.18	9.71	
+rmagick.rb	9.22	10.06	
+image_sci.rb	9.39	7.20	
 
 peak memory use in bytes
 benchmark	peak RSS
-ruby-vips.rb	52828
-ruby-vips8.rb	60464
-image_sci.rb	146228
-rmagick.rb	350136
+ruby-vips.rb	107340
+ruby-vips8.rb	117604
+image_sci.rb	146536
+rmagick.rb	3352020
+```
 ```
 
 See also [benchmarks at the official libvips
@@ -34,12 +40,6 @@ website](http://www.vips.ecs.soton.ac.uk/index.php?title=Speed_and_Memory_Use).
 There's a handy blog post explaining [how libvips opens
 files](http://libvips.blogspot.co.uk/2012/06/how-libvips-opens-file.html)
 which gives some more background.
-
-ruby-vips allows you to set up pipelines that don't get executed until you
-output the image to disk or to a string. This means you can create,
-manipulate, and pass around Image objects without incurring any memory or CPU
-costs. The image is not actually processed until you write the image to memory
-or to disk.
 
 ## Requirements
 
@@ -72,7 +72,13 @@ $ export GI_TYPELIB_PATH=/usr/local/lib/girepository-1.0
 
 ### Other platforms
 
-You need to install libvips from source since 8.2 has not been packaged yet. 
+You need to install libvips from source since 8.2 has not been packaged yet
+(Jan 2016).
+
+Download a tarball from the 
+[libvips website](http://www.vips.ecs.soton.ac.uk/supported/current), or build
+from [the git repository](https://github.com/jcupitt/libvips) and see the
+README.
 
 ## Installing the gem.
 
