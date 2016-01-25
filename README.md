@@ -15,7 +15,7 @@ or to disk.
 
 For example, the benchmark at 
 [vips-benchmarks](https://github.com/stanislaw/vips-benchmarks) loads a large
-image, crops, shrinks, sharpens and saves again:
+image, crops, shrinks, sharpens and saves again, and repeats 10 times. 
 
 ```text
 real time in seconds, fastest of three runs

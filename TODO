@@ -1,5 +1,3 @@
-- "rake" is segv-ing, seems to be GCing a buffer away?
-
 - mail about the getpoint unimplemented error
 
   http://sourceforge.net/p/ruby-gnome2/mailman/ruby-gnome2-devel-en/thread/CAGNS0RuZ5N6bha3M7B0%2BYf2M9-oni44idzZO17mtQiykS%2BmJKQ%40mail.gmail.com/#msg34790843

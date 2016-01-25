@@ -1,3 +1,4 @@
+
 # This module provides a set of overrides for the [vips image processing 
 # library](http://www.vips.ecs.soton.ac.uk)
 # used via the [gobject-introspection
@@ -32,6 +33,12 @@
 # This example loads a file, boosts the green channel (I'm not sure why), 
 # sharpens the image, and saves it back to disc again. 
 #
+# Reading this example line by line, we have:
+#
+# ```ruby
+# im = Vips::Image.new_from_file ARGV[0], :access => :sequential
+# ```
+#
 # {Image.new_from_file} can load any image file supported by vips. In this
 # example, we will be accessing pixels top-to-bottom as we sweep through the
 # image reading and writing, so `:sequential` access mode is best for us. The
@@ -41,14 +48,36 @@
 # on the various modes available. You can also load formatted images from 
 # memory buffers or create images that wrap C-style memory arrays. 
 #
+# The next line:
+#
+# ```ruby
+# im *= [1, 2, 1]
+# ```
+#
 # Multiplying the image by an array constant uses one array element for each
 # image band. This line assumes that the input image has three bands and will
 # double the middle band. For RGB images, that's doubling green.
 #
+# Next we have:
+#
+# ```ruby
+# mask = Vips::Image.new_from_array [
+#         [-1, -1, -1],
+#         [-1, 16, -1],
+#         [-1, -1, -1]], 8
+# im = im.conv mask
+# ```
+#
 # {Image.new_from_array} creates an image from an array constant. The 8 at
 # the end sets the scale: the amount to divide the image by after 
 # integer convolution. See the libvips API docs for `vips_conv()` (the operation
-# invoked by {Vips::Image.conv}) for details. 
+# invoked by {Vips::Image.conv}) for details on the convolution operator. 
+#
+# Finally:
+#
+# ```ruby
+# im.write_to_file ARGV[1]
+# ```
 #
 # {Vips::Image.write_to_file} writes an image back to the filesystem. It can 
 # write any format supported by vips: the file type is set from the filename 
@@ -111,7 +140,7 @@
 # Now `x_pos` and `y_pos` will have the coordinates of the minimum value. 
 # There's actually a convenience function for this, {Vips::Image.minpos}.
 #
-# You can also ask for the top /n/ minimum, for example:
+# You can also ask for the top *n* minimum, for example:
 #
 # ```ruby
 # min_value, opts = min :size => 10, :x_array => true, :y_array => true
@@ -199,8 +228,8 @@
 # 
 # # Automatic YARD documentation
 #
-# These API docs are generated automatically by {Vips::generate_yard}. It 
-# examines
+# The bulk of these API docs are generated automatically by 
+# {Vips::generate_yard}. It examines
 # libvips and writes a summary of each operation and the arguments and options
 # that operation expects. 
 # 
@@ -307,7 +336,7 @@ module Vips
             image
         end
 
-        # Write can fail due to no file descriptors, memory can fill if
+        # Write can fail due to no file descriptors and memory can fill if
         # large objects are not collected fairly soon. We can't try a 
         # write and GC and retry on fail, since the write may take a 
         # long time and may not be repeatable.
@@ -535,8 +564,6 @@ module Vips
         #
         # @param name [String] filename to write to
         def write_to_file(name, opts = {})
-            write_gc
-
             filename = Vips::filename_get_filename name
             option_string = Vips::filename_get_options name
             saver = Vips::Foreign.find_save filename
@@ -545,6 +572,8 @@ module Vips
             end
 
             Vips::call_base saver, self, option_string, [filename, opts]
+
+            write_gc
         end
 
         # Write this image to a memory buffer. Save options may be encoded in 
@@ -573,8 +602,6 @@ module Vips
         # @macro vips.saveopts
         # @return [String] the image saved in the specified format
         def write_to_buffer(format_string, opts = {})
-            write_gc
-
             filename = Vips::filename_get_filename format_string
             option_string = Vips::filename_get_options format_string
             saver = Vips::Foreign.find_save_buffer filename
@@ -582,7 +609,11 @@ module Vips
                 raise Vips::Error, "No known saver for '#{filename}'."
             end
 
-            Vips::call_base saver, self, option_string, [opts]
+            buffer = Vips::call_base saver, self, option_string, [opts]
+
+            write_gc
+
+            return buffer
         end
 
         # @!attribute [r] width
