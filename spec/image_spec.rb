@@ -268,7 +268,8 @@ RSpec.describe Vips::Image do
         end
 
         it 'has rounding members' do
-            image = Vips::Image.black(16, 16) + 0.5
+            # need to avoid rounding down to 0.499999
+            image = Vips::Image.black(16, 16) + 0.500001
 
             expect(image.floor.avg).to eq(0)
             expect(image.ceil.avg).to eq(1)

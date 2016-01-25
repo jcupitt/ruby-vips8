@@ -438,7 +438,7 @@ module Vips
                 raise Vips::Error
             end
 
-            Vips::call_base loader, nil, option_string, [data] + opts
+            Vips::call_base loader, nil, option_string, [data, opts]
         end
 
         # Create a new Image from a 1D or 2D array. A 1D array becomes an
@@ -535,6 +535,8 @@ module Vips
         #
         # @param name [String] filename to write to
         def write_to_file(name, opts = {})
+            write_gc
+
             filename = Vips::filename_get_filename name
             option_string = Vips::filename_get_options name
             saver = Vips::Foreign.find_save filename
@@ -543,8 +545,6 @@ module Vips
             end
 
             Vips::call_base saver, self, option_string, [filename, opts]
-
-            write_gc
         end
 
         # Write this image to a memory buffer. Save options may be encoded in 
@@ -573,6 +573,8 @@ module Vips
         # @macro vips.saveopts
         # @return [String] the image saved in the specified format
         def write_to_buffer(format_string, opts = {})
+            write_gc
+
             filename = Vips::filename_get_filename format_string
             option_string = Vips::filename_get_options format_string
             saver = Vips::Foreign.find_save_buffer filename
@@ -580,11 +582,7 @@ module Vips
                 raise Vips::Error, "No known saver for '#{filename}'."
             end
 
-            buffer = Vips::call_base saver, self, option_string, [opts]
-
-            write_gc
-
-            return buffer
+            Vips::call_base saver, self, option_string, [opts]
         end
 
         # @!attribute [r] width
@@ -1203,7 +1201,7 @@ module Vips
                 el = Argument::imageize match_image, el
             end
 
-            Vips::call_base "ifthenelse", self, "", [th, el] + opts
+            Vips::call_base "ifthenelse", self, "", [th, el, opts]
         end
 
     end
