@@ -438,7 +438,7 @@ module Vips
                 raise Vips::Error
             end
 
-            Vips::call_base loader, nil, option_string, [data] + args
+            Vips::call_base loader, nil, option_string, [data] + opts
         end
 
         # Create a new Image from a 1D or 2D array. A 1D array becomes an
@@ -580,9 +580,11 @@ module Vips
                 raise Vips::Error, "No known saver for '#{filename}'."
             end
 
-            Vips::call_base saver, self, option_string, [opts]
+            buffer = Vips::call_base saver, self, option_string, [opts]
 
             write_gc
+
+            return buffer
         end
 
         # @!attribute [r] width
@@ -1201,7 +1203,7 @@ module Vips
                 el = Argument::imageize match_image, el
             end
 
-            Vips::call_base "ifthenelse", self, "", [th, el] + args
+            Vips::call_base "ifthenelse", self, "", [th, el] + opts
         end
 
     end
