@@ -62,8 +62,9 @@ $ vips --version
 vips-8.2.1
 ```
 
-Make sure you have `Vips-8.0.typelib` on your `GI_TYPELIB_PATH`. Enter
-something like:
+Depending on how your system is configured, you may need to add the 
+directory containing `Vips-8.0.typelib` to your
+your `GI_TYPELIB_PATH`. Something like:
 
 ```bash
 $ export GI_TYPELIB_PATH=/usr/local/lib/girepository-1.0
