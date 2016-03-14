@@ -5,13 +5,12 @@ library](http://www.vips.ecs.soton.ac.uk). It wraps version 8 of the API.
 The older vips7-based [ruby-vips](https://github.com/jcupitt/ruby-vips)
 gem is still being maintained.
 
-`ruby-vips8` is fast and it can work without needing the 
-entire image to be loaded into memory. 
-`ruby-vips8` allows you to set up pipelines that don't get executed until you
-output the image to disk or to a string. This means you can create,
-manipulate, and pass around Image objects without incurring any memory or CPU
-costs. The image is not actually processed until you write the image to memory
-or to disk.
+`ruby-vips8` is fast and it can work without needing to have the 
+entire image loaded into memory. Programs that use `ruby-vips8` don't
+manipulate images directly, instead they create pipelines of image processing
+operations building on a source image. When the end of the pipe is connected
+to a destination, the whole pipline executes at once, streaming the image
+in parallel from source to destination a section at a time. 
 
 For example, the benchmark at 
 [vips-benchmarks](https://github.com/stanislaw/vips-benchmarks) loads a large
@@ -107,7 +106,6 @@ im = Vips::Image.new_from_file filename
 # left / right, see
 # http://www.vips.ecs.soton.ac.uk/supported/current/doc/html/libvips/libvips-conversion.html#vips-embed
 im = im.embed 100, 100, 3000, 3000, :extend => :mirror
-im.write_to_file output_filename
 
 # multiply the green (middle) band by 2, leave the other two alone
 im *= [1, 2, 1]
@@ -118,6 +116,9 @@ mask = Vips::Image.new_from_array [
     [-1, 16, -1],
     [-1, -1, -1]], 8
 im = im.conv mask
+
+# finally, write the result back to a file on disk
+im.write_to_file output_filename
 ```
 
 # What's wrong with ruby-vips?
