@@ -1,4 +1,3 @@
-
 # This module provides a set of overrides for the [vips image processing 
 # library](http://www.vips.ecs.soton.ac.uk)
 # used via the [gobject-introspection
