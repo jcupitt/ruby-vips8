@@ -1,9 +1,25 @@
 # ruby-vips8
 
-*This gem now deprecated* This gem has been renamed as `ruby-vips` version 1.0.
-All you need to do to switch is update your `Gemfile` to ask for `ruby-vips` 
-1.0+ and chenge `require 'vips8'` to `require 'vips'`. Sorry for any
-inconvenience. 
+❕ ❕ ❕
+**This gem has been renamed to `ruby-vips` (version 1.0)**
+❕ ❕ ❕
+
+All you need to do to switch is (1) update your `Gemfile` to ask for `ruby-vips` and (2)
+change `require 'vips8'` to `require 'vips'` (see example below).
+
+```ruby
+# Gemfile
+gem 'ruby-vips8', '~> 0.1.0' # OLD
+gem 'ruby-vips', '~> 1.0' # NEW
+
+# your-ruby-code.rb
+require 'vips8' # OLD
+require 'vips' # NEW
+```
+
+Sorry for any inconvenience!
+
+***
 
 This gem provides a Ruby binding for the [vips image processing
 library](http://www.vips.ecs.soton.ac.uk). It wraps version 8 of the API.
