@@ -1,8 +1,7 @@
 # ruby-vips8
 
-❕ ❕ ❕
+❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  
 **This gem has been renamed to `ruby-vips` (version 1.0)**
-❕ ❕ ❕
 
 All you need to do to switch is (1) update your `Gemfile` to ask for `ruby-vips` and (2)
 change `require 'vips8'` to `require 'vips'` (see example below).
@@ -18,6 +17,8 @@ require 'vips' # NEW
 ```
 
 Sorry for any inconvenience!
+
+❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  
 
 ***
 
@@ -142,12 +143,7 @@ im = im.conv mask
 im.write_to_file output_filename
 ```
 
-# What's wrong with ruby-vips?
-
-There's an existing Ruby binding for vips
-[here](https://github.com/jcupitt/ruby-vips). It was written by a Ruby
-expert, it works well, it includes a test-suite, and has pretty full
-documentation. Why do another?
+# Changes due to vips7 -> vips8
 
 ruby-vips is based on the old vips7 API. There's now vips8, which adds several
 very useful new features:
