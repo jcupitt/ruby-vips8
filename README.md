@@ -3,6 +3,8 @@
 ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  ❗ ️❗ ❗  
 **This gem has been renamed to `ruby-vips` (version 1.0)**
 
+Go here for the current version of this repo: https://github.com/libvips/ruby-vips
+
 All you need to do to switch is (1) update your `Gemfile` to ask for `ruby-vips` and (2)
 change `require 'vips8'` to `require 'vips'` (see example below).
 
